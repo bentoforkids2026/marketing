@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Bento for Kids</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EC; --cream-2:#F3ECD9; --moss:#5E7F58; --moss-dark:#41593C;
+    --marigold:#E8A33D; --coral:#E8735C; --ink:#263230; --ink-soft:#5B6864; --line:#E4DCC8; --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Plus Jakarta Sans',sans-serif; background:var(--cream); color:var(--ink);}
+  h1,h2,h3{font-family:'Baloo 2',sans-serif; color:var(--moss-dark); margin:0 0 .4em;}
+  .wrap{max-width:1080px; margin:0 auto; padding:20px;}
+  input,select,textarea,button{font-family:inherit; font-size:14px;}
+  input,select,textarea{
+    padding:9px 11px; border:1.5px solid var(--line); border-radius:8px; background:var(--white); color:var(--ink); width:100%;
+  }
+  button{cursor:pointer; border:none; border-radius:8px; padding:9px 16px; font-weight:700;}
+  .btn-primary{background:var(--moss); color:var(--white);}
+  .btn-primary:hover{background:var(--moss-dark);}
+  .btn-ghost{background:var(--cream-2); color:var(--moss-dark);}
+
+  /* ---- login ---- */
+  #loginScreen{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;}
+  .login-card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:32px; max-width:340px; width:100%; text-align:center;}
+  .login-card input{margin:14px 0;}
+  #loginError{color:var(--coral); font-size:13px; min-height:1.2em; margin-bottom:6px;}
+
+  /* ---- app shell ---- */
+  #app{display:none;}
+  header{background:var(--moss-dark); color:var(--white); padding:16px 0;}
+  header .wrap{display:flex; align-items:center; justify-content:space-between;}
+  header h1{color:var(--white); font-size:19px;}
+  header button{background:none; color:#DCE7D8; text-decoration:underline; font-weight:600;}
+  .tabs{display:flex; gap:6px; margin:20px 0; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+  .tab-btn{
+    background:none; border:none; padding:10px 16px; font-weight:700; color:var(--ink-soft);
+    border-bottom:3px solid transparent; border-radius:0;
+  }
+  .tab-btn.active{color:var(--moss-dark); border-bottom-color:var(--coral);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  /* ---- cards / tables ---- */
+  .card{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:16px;}
+  .stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px;}
+  .stat{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:16px;}
+  .stat b{display:block; font-family:'Baloo 2',sans-serif; font-size:24px; color:var(--coral);}
+  .stat span{font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th,td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{color:var(--ink-soft); font-size:11.5px; text-transform:uppercase; letter-spacing:.02em;}
+  .table-wrap{overflow-x:auto;}
+  .badge{display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700;}
+  .badge-yes{background:#E4EFDF; color:var(--moss-dark);}
+  .badge-no{background:#FDF1EE; color:var(--coral);}
+  .save-msg{font-size:12.5px; font-weight:600; color:var(--moss-dark); margin-left:10px;}
+
+  /* ---- product editor ---- */
+  .p-row{display:grid; grid-template-columns:1.4fr 1fr .8fr 1.3fr 1.6fr .6fr auto; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid var(--line);}
+  .p-row.head{font-size:11px; font-weight:700; color:var(--ink-soft); text-transform:uppercase;}
+  @media(max-width:900px){ .p-row{grid-template-columns:1fr; gap:4px;} .p-row.head{display:none;} .p-row:not(.head){border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px;} }
+  .p-row img, .p-row .noimg{width:36px; height:36px; border-radius:8px; object-fit:cover; background:var(--cream-2);}
+
+  .promo-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;}
+  .promo-field label{font-size:12.5px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:4px;}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <h2>🍱 Admin Bento for Kids</h2>
+    <p style="color:var(--ink-soft); font-size:13px;">Masukkan password admin untuk lanjut.</p>
+    <input type="password" id="loginPassword" placeholder="Password admin">
+    <div id="loginError"></div>
+    <button class="btn-primary" id="loginBtn" style="width:100%;">Masuk</button>
+    <p style="font-size:11.5px; color:var(--ink-soft); margin-top:14px;">
+      Butuh <code>APPS_SCRIPT_URL</code> yang sama dengan di <code>index.html</code>, sudah diisi otomatis di bawah.
+    </p>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="wrap">
+      <h1>🍱 Admin Bento for Kids</h1>
+      <button id="logoutBtn" type="button">Keluar</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="produk">Produk</button>
+      <button class="tab-btn" data-tab="promo">Promo &amp; Diskon</button>
+      <button class="tab-btn" data-tab="analitik">Analitik</button>
+    </div>
+
+    <!-- ===== TAB PRODUK ===== -->
+    <div class="tab-panel active" id="tab-produk">
+      <div class="card">
+        <h3>Kelola Produk</h3>
+        <p style="font-size:12.5px; color:var(--ink-soft);">
+          Ubah harga, deskripsi, atau nonaktifkan produk. Untuk gambar, tempel URL foto
+          (mis. link Google Drive/Imgur yang sudah "anyone with link can view") — belum ada upload
+          langsung dari sini.
+        </p>
+        <div class="p-row head">
+          <span>Nama</span><span>Kategori</span><span>Harga</span><span>URL Gambar</span><span>Deskripsi</span><span>Aktif</span><span></span>
+        </div>
+        <div id="productList"></div>
+        <button class="btn-ghost" id="addProductBtn" type="button" style="margin-top:12px;">+ Tambah Produk Baru</button>
+      </div>
+    </div>
+
+    <!-- ===== TAB PROMO ===== -->
+    <div class="tab-panel" id="tab-promo">
+      <div class="card">
+        <h3>Diskon Bertingkat</h3>
+        <p style="font-size:12.5px; color:var(--ink-soft);">Diskon otomatis aktif begitu subtotal keranjang customer mencapai angka minimal di bawah ini.</p>
+        <div class="promo-grid">
+          <div class="promo-field"><label>Tier 1 — Minimal Belanja (Rp)</label><input type="number" id="tier1_min"></div>
+          <div class="promo-field"><label>Tier 1 — Diskon (%)</label><input type="number" id="tier1_rate" step="0.1"></div>
+          <div class="promo-field"><label>Tier 2 — Minimal Belanja (Rp)</label><input type="number" id="tier2_min"></div>
+          <div class="promo-field"><label>Tier 2 — Diskon (%)</label><input type="number" id="tier2_rate" step="0.1"></div>
+          <div class="promo-field"><label>Tier 3 — Minimal Belanja (Rp)</label><input type="number" id="tier3_min"></div>
+          <div class="promo-field"><label>Tier 3 — Diskon (%)</label><input type="number" id="tier3_rate" step="0.1"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Minimal Belanja Program Bekal</h3>
+        <div class="promo-grid">
+          <div class="promo-field"><label>Program 7 Hari (Rp)</label><input type="number" id="program_7_min"></div>
+          <div class="promo-field"><label>Program 14 Hari (Rp)</label><input type="number" id="program_14_min"></div>
+          <div class="promo-field"><label>Program 30 Hari (Rp)</label><input type="number" id="program_30_min"></div>
+        </div>
+      </div>
+      <button class="btn-primary" id="savePromoBtn" type="button">Simpan Promo</button>
+      <span class="save-msg" id="promoSaveMsg"></span>
+    </div>
+
+    <!-- ===== TAB ANALITIK ===== -->
+    <div class="tab-panel" id="tab-analitik">
+      <div class="stat-grid" id="statGrid"></div>
+
+      <div class="card">
+        <h3>Funnel Pengunjung</h3>
+        <div class="table-wrap"><table id="funnelTable"></table></div>
+      </div>
+
+      <div class="card">
+        <h3>Sumber Traffic (UTM)</h3>
+        <div class="table-wrap"><table id="utmTable"></table></div>
+      </div>
+
+      <div class="card">
+        <h3>Leads Belum Submit (data terisi sebagian)</h3>
+        <p style="font-size:12.5px; color:var(--ink-soft);">Data ini terekam otomatis begitu pengunjung mengisi form, walau belum klik tombol kirim.</p>
+        <div class="table-wrap"><table id="partialTable"></table></div>
+      </div>
+
+      <div class="card">
+        <h3>Keranjang Aktif / Ditinggalkan</h3>
+        <p style="font-size:12.5px; color:var(--ink-soft);">Isi keranjang per sesi pengunjung, termasuk yang belum checkout.</p>
+        <div class="table-wrap"><table id="cartTable"></table></div>
+      </div>
+
+      <div class="card">
+        <h3>Leads Masuk (submit lengkap)</h3>
+        <div class="table-wrap"><table id="leadsTable"></table></div>
+      </div>
+
+      <div class="card">
+        <h3>Order / Checkout WhatsApp</h3>
+        <div class="table-wrap"><table id="ordersTable"></table></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Samakan dengan CONFIG.APPS_SCRIPT_URL di index.html
+  var APPS_SCRIPT_URL = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
+  var password = '';
+  var DATA = { products: [], promos: {}, sessions: [], partial_leads: [], leads: [], orders: [] };
+
+  function fmt(n) { n = Number(n) || 0; return 'Rp' + n.toLocaleString('id-ID'); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- login ---------- */
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('loginPassword').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+
+  function doLogin() {
+    var pw = document.getElementById('loginPassword').value;
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PASTE_') === 0) {
+      document.getElementById('loginError').textContent = 'APPS_SCRIPT_URL belum diisi di admin.html.';
+      return;
+    }
+    document.getElementById('loginError').textContent = 'Memuat...';
+    fetch(APPS_SCRIPT_URL + '?action=admin&password=' + encodeURIComponent(pw))
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (!res.ok) { document.getElementById('loginError').textContent = res.error || 'Gagal masuk.'; return; }
+        password = pw;
+        DATA = res;
+        sessionStorage.setItem('bfk_admin_pw', pw);
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        renderAll();
+      })
+      .catch(function () { document.getElementById('loginError').textContent = 'Tidak bisa terhubung ke Apps Script.'; });
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    sessionStorage.removeItem('bfk_admin_pw');
+    location.reload();
+  });
+
+  // auto-login kalau sesi masih ada
+  var savedPw = sessionStorage.getItem('bfk_admin_pw');
+  if (savedPw) { document.getElementById('loginPassword').value = savedPw; doLogin(); }
+
+  /* ---------- tabs ---------- */
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  function renderAll() {
+    renderProducts();
+    renderPromos();
+    renderAnalytics();
+  }
+
+  /* ---------- PRODUK ---------- */
+  function renderProducts() {
+    var list = document.getElementById('productList');
+    list.innerHTML = DATA.products.map(function (p, i) { return productRowHtml(p, i); }).join('');
+  }
+  function productRowHtml(p, i) {
+    return '' +
+      '<div class="p-row" data-idx="' + i + '">' +
+        '<input type="text" data-f="name" value="' + esc(p.name) + '" placeholder="Nama produk">' +
+        '<input type="text" data-f="category" value="' + esc(p.category) + '" placeholder="kategori-slug">' +
+        '<input type="number" data-f="price" value="' + (p.price || 0) + '">' +
+        '<input type="text" data-f="image" value="' + esc(p.image) + '" placeholder="https://...">' +
+        '<input type="text" data-f="desc" value="' + esc(p.desc) + '" placeholder="Deskripsi singkat">' +
+        '<select data-f="active"><option value="yes"' + (p.active !== false ? ' selected' : '') + '>Aktif</option><option value="no"' + (p.active === false ? ' selected' : '') + '>Nonaktif</option></select>' +
+        '<button class="btn-primary" data-save="' + i + '" type="button">Simpan</button>' +
+      '</div>';
+  }
+  document.getElementById('addProductBtn').addEventListener('click', function () {
+    DATA.products.push({ id: 'produk-' + Date.now(), name: '', category: '', price: 0, image: '', desc: '', active: true });
+    renderProducts();
+  });
+  document.getElementById('productList').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-save]');
+    if (!btn) return;
+    var idx = Number(btn.getAttribute('data-save'));
+    var row = btn.closest('.p-row');
+    var p = DATA.products[idx];
+    row.querySelectorAll('[data-f]').forEach(function (input) {
+      var f = input.getAttribute('data-f');
+      p[f] = f === 'active' ? input.value === 'yes' : (f === 'price' ? Number(input.value) : input.value);
+    });
+    if (!p.id) p.id = (p.name || 'produk').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
+    btn.textContent = 'Menyimpan...';
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'product_update', password: password, product: p })
+    }).then(function (r) { return r.json(); }).then(function (res) {
+      btn.textContent = res.ok ? 'Tersimpan ✓' : 'Gagal';
+      setTimeout(function () { btn.textContent = 'Simpan'; }, 1500);
+    });
+  });
+
+  /* ---------- PROMO ---------- */
+  function renderPromos() {
+    var pr = DATA.promos || {};
+    ['tier1_min', 'tier2_min', 'tier3_min', 'program_7_min', 'program_14_min', 'program_30_min'].forEach(function (k) {
+      document.getElementById(k).value = pr[k] || 0;
+    });
+    ['tier1_rate', 'tier2_rate', 'tier3_rate'].forEach(function (k) {
+      document.getElementById(k).value = pr[k] ? Math.round(pr[k] * 1000) / 10 : 0; // simpan sbg desimal, tampil sbg %
+    });
+  }
+  document.getElementById('savePromoBtn').addEventListener('click', function () {
+    var payload = {
+      tier1_min: Number(document.getElementById('tier1_min').value),
+      tier1_rate: Number(document.getElementById('tier1_rate').value) / 100,
+      tier2_min: Number(document.getElementById('tier2_min').value),
+      tier2_rate: Number(document.getElementById('tier2_rate').value) / 100,
+      tier3_min: Number(document.getElementById('tier3_min').value),
+      tier3_rate: Number(document.getElementById('tier3_rate').value) / 100,
+      program_7_min: Number(document.getElementById('program_7_min').value),
+      program_14_min: Number(document.getElementById('program_14_min').value),
+      program_30_min: Number(document.getElementById('program_30_min').value)
+    };
+    document.getElementById('promoSaveMsg').textContent = 'Menyimpan...';
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'promo_update', password: password, promos: payload })
+    }).then(function (r) { return r.json(); }).then(function (res) {
+      document.getElementById('promoSaveMsg').textContent = res.ok ? 'Tersimpan ✓ (perubahan berlaku di web dalam beberapa detik)' : 'Gagal menyimpan';
+    });
+  });
+
+  /* ---------- ANALITIK ---------- */
+  function renderAnalytics() {
+    var sessions = DATA.sessions || [];
+    var partials = DATA.partial_leads || [];
+    var leads = DATA.leads || [];
+    var orders = DATA.orders || [];
+
+    var totalVisitors = sessions.length;
+    var reachedCart = sessions.filter(function (s) { return s.reached_cart === 'YES'; }).length;
+    var reachedForm = sessions.filter(function (s) { return s.reached_form === 'YES'; }).length;
+    var reachedSubmit = sessions.filter(function (s) { return s.reached_submit === 'YES'; }).length;
+
+    document.getElementById('statGrid').innerHTML = [
+      ['Total Pengunjung (sesi)', totalVisitors],
+      ['Sampai Keranjang', reachedCart],
+      ['Sampai Isi Form', reachedForm],
+      ['Submit Form', reachedSubmit],
+      ['Leads Belum Submit', partials.filter(function (p) { return p.status === 'PARTIAL'; }).length],
+      ['Order via WhatsApp', orders.length]
+    ].map(function (s) { return '<div class="stat"><b>' + s[1] + '</b><span>' + s[0] + '</span></div>'; }).join('');
+
+    // Funnel table
+    document.getElementById('funnelTable').innerHTML =
+      '<tr><th>Tahap</th><th>Jumlah Sesi</th><th>% dari Total</th></tr>' +
+      [['Buka Website', totalVisitors], ['Lihat Katalog', sessions.filter(function (s) { return s.reached_catalog === 'YES'; }).length],
+       ['Isi Keranjang', reachedCart], ['Buka Form', reachedForm], ['Submit Form', reachedSubmit]]
+        .map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + (totalVisitors ? Math.round(r[1] / totalVisitors * 100) : 0) + '%</td></tr>'; }).join('');
+
+    // UTM table
+    var utmCount = {};
+    sessions.forEach(function (s) {
+      var key = (s.source || '(direct)') + ' / ' + (s.medium || '-') + ' / ' + (s.campaign || '-');
+      utmCount[key] = (utmCount[key] || 0) + 1;
+    });
+    var utmRows = Object.keys(utmCount).sort(function (a, b) { return utmCount[b] - utmCount[a]; });
+    document.getElementById('utmTable').innerHTML =
+      '<tr><th>Source / Medium / Campaign</th><th>Sesi</th></tr>' +
+      (utmRows.length ? utmRows.map(function (k) { return '<tr><td>' + esc(k) + '</td><td>' + utmCount[k] + '</td></tr>'; }).join('') : '<tr><td colspan="2">Belum ada data.</td></tr>');
+
+    // Partial leads table
+    document.getElementById('partialTable').innerHTML =
+      '<tr><th>Terakhir Update</th><th>Nama</th><th>WhatsApp</th><th>Usia Anak</th><th>Domisili</th><th>Sumber</th><th>Status</th></tr>' +
+      (partials.length ? partials.map(function (p) {
+        return '<tr><td>' + fmtDate(p.last_updated) + '</td><td>' + esc(p.name) + '</td><td>' + esc(p.whatsapp) + '</td><td>' + esc(p.child_age) + '</td><td>' + esc(p.city) + '</td><td>' + esc(p.source) + '</td>' +
+          '<td><span class="badge ' + (p.status === 'CONVERTED' ? 'badge-yes' : 'badge-no') + '">' + esc(p.status) + '</span></td></tr>';
+      }).join('') : '<tr><td colspan="7">Belum ada data.</td></tr>');
+
+    // Cart snapshot table
+    var cartSessions = sessions.filter(function (s) { return s.cart_snapshot; });
+    document.getElementById('cartTable').innerHTML =
+      '<tr><th>Terakhir Aktif</th><th>Isi Keranjang</th><th>Total</th><th>Sudah Submit?</th><th>Sumber</th></tr>' +
+      (cartSessions.length ? cartSessions.map(function (s) {
+        return '<tr><td>' + fmtDate(s.last_seen) + '</td><td>' + esc(s.cart_snapshot) + '</td><td>' + fmt(s.cart_total) + '</td>' +
+          '<td><span class="badge ' + (s.reached_submit === 'YES' ? 'badge-yes' : 'badge-no') + '">' + (s.reached_submit === 'YES' ? 'Ya' : 'Belum') + '</span></td><td>' + esc(s.source) + '</td></tr>';
+      }).join('') : '<tr><td colspan="5">Belum ada data.</td></tr>');
+
+    // Leads table
+    document.getElementById('leadsTable').innerHTML =
+      '<tr><th>Waktu</th><th>Nama</th><th>WhatsApp</th><th>Usia Anak</th><th>Domisili</th><th>Sumber</th></tr>' +
+      (leads.length ? leads.slice().reverse().map(function (l) {
+        return '<tr><td>' + fmtDate(l.created_at) + '</td><td>' + esc(l.name) + '</td><td>' + esc(l.whatsapp) + '</td><td>' + esc(l.child_age) + '</td><td>' + esc(l.city) + '</td><td>' + esc(l.source) + '</td></tr>';
+      }).join('') : '<tr><td colspan="6">Belum ada data.</td></tr>');
+
+    // Orders table
+    document.getElementById('ordersTable').innerHTML =
+      '<tr><th>Waktu</th><th>Item</th><th>Total</th><th>Diskon</th><th>Program</th></tr>' +
+      (orders.length ? orders.slice().reverse().map(function (o) {
+        return '<tr><td>' + fmtDate(o.created_at) + '</td><td>' + esc(o.items_summary) + '</td><td>' + fmt(o.total) + '</td><td>' + esc(o.discount_pct) + '%</td><td>' + esc(o.program) + '</td></tr>';
+      }).join('') : '<tr><td colspan="5">Belum ada data.</td></tr>');
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '-';
+    var d = new Date(iso);
+    if (isNaN(d)) return String(iso);
+    return d.toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+  }
+</script>
+
+</body>
+</html>

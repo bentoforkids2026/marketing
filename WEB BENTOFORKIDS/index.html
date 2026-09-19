@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bento for Kids Bandar Lampung | Bekal Anak Praktis &amp; Variatif</title>
+<meta name="description" content="Bento for Kids membantu orang tua di Bandar Lampung menyiapkan bekal anak dengan lebih praktis, variatif, dan terencana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== DESIGN TOKENS =====
+     Color: cream base #FBF6EC, moss #5E7F58 (primary/trust), marigold #E8A33D (energy/CTA),
+            coral #E8735C (accent/warmth), ink #263230 (text), line #E4DCC8 (hairline)
+     Type: Baloo 2 (headline, rounded/friendly) + Plus Jakarta Sans (body/UI)
+     Motif: bento-box compartments — rounded rectangle "trays" used as a structural device
+            throughout (hero grid, cards, CTA blocks) since it IS the product's shape.
+  */
+  :root{
+    --cream:#FBF6EC;
+    --cream-2:#F3ECD9;
+    --moss:#5E7F58;
+    --moss-dark:#41593C;
+    --marigold:#E8A33D;
+    --coral:#E8735C;
+    --ink:#263230;
+    --ink-soft:#5B6864;
+    --line:#E4DCC8;
+    --white:#FFFFFF;
+    --radius-tray:22px;
+    --radius-sm:12px;
+    --max:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Baloo 2',system-ui,sans-serif;
+    font-weight:700;
+    line-height:1.15;
+    margin:0 0 .5em;
+    color:var(--moss-dark);
+  }
+  p{margin:0 0 1em; color:var(--ink-soft);}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px;}
+  section{padding:64px 0;}
+  @media(min-width:768px){ section{padding:96px 0;} }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:3px solid var(--coral); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important;} }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:'Baloo 2',sans-serif; font-weight:600; font-size:16px;
+    padding:14px 26px; border-radius:999px; text-decoration:none;
+    border:2px solid transparent; cursor:pointer; transition:transform .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--coral); color:var(--white);}
+  .btn-primary:hover{background:#d9634c;}
+  .btn-secondary{background:transparent; border-color:var(--moss-dark); color:var(--moss-dark);}
+  .btn-secondary:hover{background:var(--moss-dark); color:var(--white);}
+  .btn-wa{background:var(--moss); color:var(--white);}
+  .btn-wa:hover{background:var(--moss-dark);}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,246,236,.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:20px; color:var(--moss-dark); text-decoration:none;}
+  .brand .mark{width:34px;height:34px;border-radius:10px;background:var(--marigold); display:grid; place-items:center; font-size:18px;}
+  .nav-links{display:none; gap:28px; font-weight:600; font-size:15px;}
+  .nav-links a{text-decoration:none; color:var(--ink);}
+  .nav-links a:hover{color:var(--coral);}
+  @media(min-width:860px){ .nav-links{display:flex;} }
+  .nav-cta{display:none;}
+  @media(min-width:640px){ .nav-cta{display:inline-flex;} }
+
+  /* ---------- Hero ---------- */
+  .hero{padding-top:48px;}
+  .hero-grid{display:grid; gap:36px; align-items:center;}
+  @media(min-width:960px){ .hero-grid{grid-template-columns:1.1fr .9fr;} }
+  .eyebrow-loc{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--white); border:1px solid var(--line); color:var(--moss-dark);
+    font-weight:600; font-size:13px; padding:7px 14px; border-radius:999px; margin-bottom:18px;
+  }
+  .hero h1{font-size:clamp(32px,5.2vw,52px); max-width:14ch;}
+  .hero .sub{font-size:18px; max-width:46ch; margin-bottom:28px;}
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:14px;}
+  .badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;}
+  .badge{
+    font-size:12px; font-weight:600; color:var(--moss-dark); background:var(--white);
+    border:1px solid var(--line); padding:6px 12px; border-radius:999px;
+  }
+
+  /* bento tray grid — literal compartments, doubles as visual anchor */
+  .bento-visual{
+    display:grid; grid-template-columns:1.3fr 1fr; grid-template-rows:1fr 1fr;
+    gap:12px; aspect-ratio:4/3.1; background:var(--moss-dark); padding:16px; border-radius:28px;
+  }
+  .tray{
+    border-radius:var(--radius-tray); display:flex; align-items:flex-end; padding:14px;
+    font-family:'Baloo 2',sans-serif; font-weight:600; font-size:14px; color:var(--white);
+  }
+  .tray.t1{grid-row:1/3; background:linear-gradient(160deg,var(--coral),#c85c46);}
+  .tray.t2{background:linear-gradient(160deg,var(--marigold),#cf8a2c);}
+  .tray.t3{background:linear-gradient(160deg,var(--moss),#4a6845);}
+
+  /* ---------- Problem ---------- */
+  .problem h2{font-size:clamp(26px,3.6vw,36px); max-width:16ch;}
+  .problem-list{list-style:none; margin:32px 0 0; padding:0; display:grid; gap:14px;}
+  @media(min-width:720px){ .problem-list{grid-template-columns:1fr 1fr;} }
+  .problem-list li{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--white); border:1.5px solid var(--line); border-radius:var(--radius-sm);
+    padding:16px 18px; font-weight:500; color:var(--ink); cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .problem-list li:hover{border-color:var(--coral);}
+  .problem-list li.checked{border-color:var(--coral); background:#FDF1EE;}
+  .problem-list li input[type=checkbox]{
+    width:20px; height:20px; flex:none; margin-top:1px; accent-color:var(--coral); cursor:pointer;
+  }
+  .problem-list li span.txt{flex:1;}
+  .problem-counter{
+    margin-top:20px; font-family:'Baloo 2',sans-serif; font-weight:600; color:var(--moss-dark);
+    font-size:15px; min-height:1.4em;
+  }
+  .problem-counter .n{color:var(--coral);}
+  .problem-bridge{
+    margin-top:12px; display:flex; align-items:center; gap:12px;
+    font-family:'Baloo 2',sans-serif; font-weight:600; color:var(--moss-dark); font-size:16px;
+  }
+  .problem-bridge .arrow{color:var(--coral); font-size:20px;}
+
+  /* ---------- Who is this for ---------- */
+  .persona-grid{display:grid; gap:18px;}
+  @media(min-width:720px){ .persona-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(min-width:1080px){ .persona-grid{grid-template-columns:repeat(4,1fr);} }
+  .persona{
+    position:relative; background:var(--white); border:1.5px solid var(--line); border-radius:var(--radius-tray);
+    padding:24px 20px; display:flex; flex-direction:column; gap:10px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .persona:hover{border-color:var(--moss);}
+  .persona.selected{border-color:var(--moss); background:var(--cream-2);}
+  .persona input[type=checkbox]{
+    position:absolute; top:18px; right:18px; width:20px; height:20px; accent-color:var(--moss); cursor:pointer;
+  }
+  .persona .icon{
+    width:46px; height:46px; border-radius:14px; background:var(--cream-2);
+    display:grid; place-items:center; font-size:22px; margin-bottom:4px;
+  }
+  .persona h3{font-size:17px; margin:0; padding-right:26px;}
+  .persona p{font-size:14px; margin:0;}
+  .persona .fit{
+    margin-top:auto; padding-top:10px; border-top:1px dashed var(--line);
+    font-size:12.5px; font-weight:600; color:var(--moss-dark);
+  }
+  .persona-result{
+    display:none; margin-top:24px; text-align:center; background:var(--cream-2);
+    border-radius:var(--radius-sm); padding:18px; font-weight:600; color:var(--moss-dark); font-size:14.5px;
+  }
+  .persona-result.show{display:block;}
+  .persona-result a{color:var(--coral); text-decoration:underline;}
+
+  /* ---------- Calculator CTA band ---------- */
+  .calc-band{
+    background:var(--moss-dark); color:var(--white); border-radius:28px;
+    padding:48px 28px; text-align:center; margin:0 20px;
+  }
+  @media(min-width:768px){ .calc-band{padding:64px 48px;} }
+  .calc-band h2{color:var(--white); font-size:clamp(24px,3.4vw,34px); max-width:20ch; margin:0 auto .4em;}
+  .calc-band p{color:#DCE7D8; max-width:44ch; margin:0 auto 26px;}
+
+  /* ---------- Products / Programs ---------- */
+  .section-head{display:flex; flex-direction:column; gap:8px; margin-bottom:32px;}
+  .section-head h2{font-size:clamp(26px,3.6vw,36px);}
+  .cards{display:grid; gap:20px;}
+  @media(min-width:720px){ .cards{grid-template-columns:repeat(3,1fr);} }
+  .card{
+    background:var(--white); border:1px solid var(--line); border-radius:var(--radius-tray);
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+  .card-img{aspect-ratio:4/3; background:var(--cream-2); display:grid; place-items:center; color:var(--ink-soft); font-size:13px;}
+  .card-body{padding:20px; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .card-body h3{font-size:19px; margin:0;}
+  .card-price{font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--coral); font-size:17px;}
+  .card-body p{font-size:14px; margin-bottom:6px;}
+  .card-cta{margin-top:auto; font-weight:600; font-size:14px; color:var(--moss-dark); text-decoration:none;}
+  .data-pending{font-size:11px; letter-spacing:.02em; color:var(--coral); font-weight:600; margin-top:2px;}
+
+  /* ---------- Filter chips (product catalog) ---------- */
+  .filter-row{
+    display:flex; gap:10px; overflow-x:auto; padding:4px 2px 14px; margin-bottom:8px;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .filter-row::-webkit-scrollbar{display:none;}
+  .filter-chip{
+    flex:none; font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:13.5px;
+    color:var(--moss-dark); background:var(--white); border:1.5px solid var(--line);
+    padding:9px 16px; border-radius:999px; cursor:pointer; white-space:nowrap; transition:all .15s ease;
+  }
+  .filter-chip:hover{border-color:var(--moss);}
+  .filter-chip.active{background:var(--moss-dark); border-color:var(--moss-dark); color:var(--white);}
+
+  /* ---------- Product grid (Shopee-style cards) ---------- */
+  .product-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  @media(min-width:640px){ .product-grid{grid-template-columns:repeat(3,1fr); gap:18px;} }
+  @media(min-width:960px){ .product-grid{grid-template-columns:repeat(4,1fr);} }
+  .p-card{
+    background:var(--white); border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    display:flex; flex-direction:column; cursor:pointer; transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .p-card:hover{box-shadow:0 8px 20px rgba(38,50,48,.08); transform:translateY(-2px);}
+  .p-card .p-img{
+    aspect-ratio:1/1; background:var(--cream-2); display:grid; place-items:center; font-size:34px; position:relative;
+  }
+  .p-card .p-cat-tag{
+    position:absolute; top:8px; left:8px; background:var(--white); font-size:10px; font-weight:700;
+    color:var(--moss-dark); padding:3px 8px; border-radius:999px; border:1px solid var(--line);
+  }
+  .p-card .p-body{padding:12px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .p-card h4{font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13.5px; margin:0; color:var(--ink); line-height:1.3; min-height:2.6em;}
+  .p-card .p-price{font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--coral); font-size:15px;}
+  .p-card .p-add{
+    margin-top:auto; display:flex; align-items:center; justify-content:center; gap:6px;
+    background:var(--moss); color:var(--white); border:none; border-radius:10px;
+    padding:9px; font-weight:700; font-size:12.5px; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif;
+  }
+  .p-card .p-add:active{transform:scale(.96);}
+  .p-card .p-add.in-cart{background:var(--marigold);}
+
+  /* ---------- Program cards ---------- */
+  .program-grid{display:grid; gap:18px;}
+  @media(min-width:720px){ .program-grid{grid-template-columns:repeat(3,1fr);} }
+  .program-card{
+    background:var(--white); border:1.5px solid var(--line); border-radius:var(--radius-tray);
+    padding:26px 22px; display:flex; flex-direction:column; gap:10px; position:relative; overflow:hidden;
+  }
+  .program-card.featured{border-color:var(--marigold);}
+  .program-card .tag{
+    position:absolute; top:16px; right:-30px; background:var(--marigold); color:var(--white);
+    font-size:11px; font-weight:700; padding:4px 34px; transform:rotate(35deg);
+  }
+  .program-card .dur{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:28px; color:var(--moss-dark);
+  }
+  .program-card .dur span{font-size:14px; font-weight:600; color:var(--ink-soft);}
+  .program-card h3{font-size:18px; margin:2px 0 0;}
+  .program-card p{font-size:13.5px; margin-bottom:4px;}
+  .program-card .incl{list-style:none; margin:4px 0 8px; padding:0; display:grid; gap:6px;}
+  .program-card .incl li{font-size:13px; color:var(--ink); display:flex; gap:8px;}
+  .program-card .incl li span{color:var(--moss); flex:none;}
+  .program-card .price-note{font-size:12.5px; color:var(--ink-soft); font-weight:600; margin-top:auto;}
+  .program-card .min-spend{
+    font-family:'Baloo 2',sans-serif; font-weight:800; color:var(--coral); font-size:20px; margin:2px 0 0;
+  }
+  .program-card .min-spend span{font-size:12px; font-weight:600; color:var(--ink-soft); display:block; margin-top:-2px;}
+  .program-badges{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px;}
+  .p-badge{
+    font-size:11px; font-weight:700; padding:4px 9px; border-radius:999px; white-space:nowrap;
+  }
+  .p-badge.pb-day{background:var(--cream-2); color:var(--moss-dark); border:1px solid var(--line);}
+  .p-badge.pb-count{background:var(--cream-2); color:var(--moss-dark); border:1px solid var(--line);}
+  .p-badge.pb-save{background:#FDF1EE; color:var(--coral); border:1px solid #F3C9BF;}
+  .program-note{font-size:11px; color:var(--ink-soft); margin:-2px 0 8px;}
+  .program-card .btn{margin-top:6px;}
+  .program-card .btn-ghost{
+    background:none; border:none; color:var(--moss-dark); font-weight:600; font-size:12.5px;
+    text-decoration:underline; padding:2px; text-align:center; cursor:pointer;
+  }
+
+  /* ---------- Inline "program active" banner above catalog filters ---------- */
+  .inline-program-banner{display:none; margin-bottom:14px;}
+  .inline-program-banner.show{display:block;}
+  .inline-program-banner .ipb-inner{
+    background:var(--cream-2); border:1.5px dashed var(--moss); border-radius:14px;
+    padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .inline-program-banner b{font-family:'Baloo 2',sans-serif; color:var(--moss-dark); font-size:14px;}
+  .inline-program-banner span{font-size:12.5px; color:var(--ink-soft);}
+  .inline-program-banner button{
+    background:none; border:none; color:var(--coral); font-weight:600; font-size:12.5px;
+    text-decoration:underline; cursor:pointer;
+  }
+
+  /* ---------- Program progress bar (inside cart drawer) ---------- */
+  .program-progress{display:none; padding:14px 22px; border-bottom:1px solid var(--line); background:var(--cream-2);}
+  .program-progress.show{display:block;}
+  .pp-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+  .pp-top span{font-weight:700; font-size:13.5px; color:var(--moss-dark);}
+  .pp-top button{background:none; border:none; color:var(--coral); font-size:12px; font-weight:600; cursor:pointer; text-decoration:underline;}
+  .pp-track{height:8px; background:var(--white); border-radius:999px; overflow:hidden;}
+  .pp-fill{height:100%; background:var(--moss); border-radius:999px; transition:width .25s ease; width:0%;}
+  .pp-fill.reached{background:var(--marigold);}
+  .pp-note{display:block; margin-top:8px; font-size:12.5px; color:var(--ink); font-weight:600;}
+
+  /* ---------- Cart top-up suggestions ---------- */
+  .cart-topup{display:none; padding:4px 22px 14px;}
+  .cart-topup.show{display:block;}
+  .cart-topup .tu-label{font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:8px; display:block;}
+  .cart-topup .tu-row{display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  .tu-chip{
+    flex:none; display:flex; flex-direction:column; gap:4px; align-items:flex-start;
+    background:var(--white); border:1px solid var(--line); border-radius:10px; padding:8px 10px;
+    cursor:pointer; min-width:112px;
+  }
+  .tu-chip .tu-name{font-size:11.5px; font-weight:700; color:var(--ink); line-height:1.2;}
+  .tu-chip .tu-price{font-size:11px; color:var(--coral); font-weight:700;}
+  .tu-chip .tu-add{font-size:10.5px; font-weight:700; color:var(--moss-dark);}
+
+  /* ---------- Product detail modal ---------- */
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(38,50,48,.55); z-index:100;
+    display:none; align-items:flex-end; justify-content:center;
+  }
+  .modal-backdrop.open{display:flex;}
+  @media(min-width:720px){ .modal-backdrop{align-items:center;} }
+  .modal-sheet{
+    background:var(--cream); width:100%; max-width:480px; max-height:88vh; overflow-y:auto;
+    border-radius:24px 24px 0 0; position:relative; animation:slideUp .2s ease;
+  }
+  @media(min-width:720px){ .modal-sheet{border-radius:24px; max-height:80vh;} }
+  @keyframes slideUp{ from{transform:translateY(24px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+  .modal-close{
+    position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%;
+    background:var(--white); border:1px solid var(--line); font-size:16px; cursor:pointer; z-index:2;
+  }
+  .modal-img{aspect-ratio:16/10; background:var(--cream-2); display:grid; place-items:center; font-size:64px;}
+  .modal-body{padding:22px 24px 26px;}
+  .modal-cat{font-size:12px; font-weight:700; color:var(--moss); text-transform:uppercase; letter-spacing:.03em;}
+  .modal-price{font-family:'Baloo 2',sans-serif; font-weight:800; color:var(--coral); font-size:24px; margin:6px 0 18px;}
+  .qty-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+  .qty-label{font-weight:600; font-size:14px;}
+  .qty-stepper{display:flex; align-items:center; gap:0; border:1.5px solid var(--line); border-radius:10px; overflow:hidden;}
+  .qty-stepper button{
+    width:38px; height:38px; border:none; background:var(--cream-2); font-size:18px; font-weight:700;
+    cursor:pointer; color:var(--moss-dark); transition:background .12s ease, transform .1s ease; touch-action:manipulation;
+  }
+  .qty-stepper button:active{transform:scale(.88); background:var(--moss); color:var(--white);}
+  .qty-stepper button:disabled{opacity:.4; cursor:not-allowed;}
+  .qty-stepper span{width:40px; text-align:center; font-weight:700; font-size:15px;}
+
+  /* ---------- Cart drawer ---------- */
+  .cart-sheet{
+    background:var(--cream); width:100%; max-width:440px; max-height:90vh; overflow:hidden;
+    border-radius:24px 24px 0 0; display:flex; flex-direction:column; animation:slideUp .2s ease;
+  }
+  @media(min-width:720px){ .cart-sheet{border-radius:24px; max-height:82vh;} }
+  .cart-head{
+    display:flex; align-items:center; justify-content:space-between; padding:20px 22px 14px;
+    border-bottom:1px solid var(--line); position:relative;
+  }
+  .cart-head h3{margin:0; font-size:19px;}
+  .cart-head .modal-close{position:static;}
+  .cart-items{overflow-y:auto; padding:8px 22px; flex:1;}
+  .cart-line{display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); align-items:center;}
+  .cart-line .ci-img{width:52px; height:52px; border-radius:10px; background:var(--cream-2); display:grid; place-items:center; font-size:22px; flex:none; overflow:hidden;}
+  .cart-line .ci-body{flex:1; min-width:0;}
+  .cart-line .ci-body h5{margin:0 0 3px; font-size:13.5px; font-weight:700; color:var(--ink);}
+  .cart-line .ci-price{font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+  .cart-line .ci-controls{display:flex; align-items:center; gap:6px; flex:none;}
+  .cart-line .qty-stepper{border-radius:9px;}
+  .cart-line .qty-stepper button{width:34px; height:34px; font-size:16px;}
+  .cart-line .qty-stepper span{width:26px; font-size:13.5px;}
+  .cart-line .ci-remove{
+    background:var(--cream-2); border:none; color:var(--coral); font-size:15px; cursor:pointer;
+    width:34px; height:34px; border-radius:9px; display:grid; place-items:center; flex:none;
+    transition:background .12s ease, transform .1s ease;
+  }
+  .cart-line .ci-remove:active{transform:scale(.88); background:#FDE3DD;}
+  .cart-line.qty-flash{animation:flashLine .35s ease;}
+  @keyframes flashLine{ 0%{background:var(--cream-2);} 100%{background:transparent;} }
+  .cart-empty{display:none; text-align:center; padding:40px 24px; color:var(--ink-soft); font-size:14px;}
+  .cart-footer{padding:16px 22px calc(18px + env(safe-area-inset-bottom)); border-top:1px solid var(--line);}
+  .cart-total-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; font-weight:600;}
+  .cart-total-row b{font-family:'Baloo 2',sans-serif; font-size:20px; color:var(--coral);}
+  .cart-discount-row{display:flex; justify-content:space-between; font-size:13px; color:var(--moss-dark); font-weight:600; margin-bottom:4px;}
+  .cart-subtotal-row{display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink-soft); margin-bottom:4px;}
+  .cart-subtotal-row s{color:var(--ink-soft);}
+
+  /* ---------- Savings highlight + next-tier nudge ---------- */
+  .save-highlight{
+    display:none; align-items:center; gap:10px; background:linear-gradient(120deg,#FDF1EE,#FBF6EC);
+    border:1.5px solid var(--coral); border-radius:14px; padding:12px 14px; margin:0 22px 14px;
+  }
+  .save-highlight.show{display:flex;}
+  .save-highlight .sh-emoji{font-size:22px; flex:none;}
+  .save-highlight .sh-text{font-size:13px; color:var(--ink); font-weight:600; line-height:1.35;}
+  .save-highlight .sh-text b{color:var(--coral); font-family:'Baloo 2',sans-serif; font-size:16px;}
+  .tier-nudge{display:none; margin:0 22px 14px; font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+  .tier-nudge.show{display:block;}
+  .tier-nudge b{color:var(--moss-dark);}
+  .tier-track{height:6px; background:var(--cream-2); border-radius:999px; overflow:hidden; margin-top:6px;}
+  .tier-track-fill{height:100%; background:var(--marigold); border-radius:999px; transition:width .25s ease;}
+
+  /* ---------- Cart abandonment reminder toast ---------- */
+  .cart-reminder{
+    position:fixed; left:14px; right:14px; bottom:82px; z-index:58; max-width:420px; margin:0 auto;
+    background:var(--white); border:1.5px solid var(--coral); border-radius:16px;
+    padding:14px 16px; box-shadow:0 10px 26px rgba(38,50,48,.18);
+    display:none; align-items:center; gap:12px;
+  }
+  body.has-cart-bar .cart-reminder{ bottom:96px; }
+  .cart-reminder.show{display:flex; animation:slideUp .25s ease;}
+  .cart-reminder .cr-emoji{font-size:24px; flex:none;}
+  .cart-reminder .cr-body{flex:1; min-width:0;}
+  .cart-reminder .cr-body b{display:block; font-size:13.5px; color:var(--ink); font-family:'Baloo 2',sans-serif;}
+  .cart-reminder .cr-body span{font-size:12px; color:var(--ink-soft);}
+  .cart-reminder .cr-actions{display:flex; flex-direction:column; gap:6px; flex:none;}
+  .cart-reminder .cr-actions button{
+    font-size:11.5px; font-weight:700; border-radius:8px; padding:6px 10px; cursor:pointer; border:none; white-space:nowrap;
+  }
+  .cart-reminder .cr-view{background:var(--moss); color:var(--white);}
+  .cart-reminder .cr-dismiss{background:none; color:var(--ink-soft); text-decoration:underline;}
+
+  /* ---------- Sticky cart bar (mobile-first) ---------- */
+  .cart-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:59;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    display:none;
+  }
+  .cart-bar.show{display:block;}
+  .cart-bar button{
+    width:100%; max-width:var(--max); margin:0 auto; display:flex; align-items:center; gap:12px;
+    background:var(--moss-dark); color:var(--white); border:none; border-radius:16px;
+    padding:10px 16px; cursor:pointer; box-shadow:0 8px 24px rgba(38,50,48,.3);
+  }
+  .cart-bar-icon{position:relative; font-size:22px; flex:none;}
+  .cart-bar-badge{
+    position:absolute; top:-8px; right:-10px; background:var(--coral); color:var(--white);
+    font-size:10px; font-weight:800; min-width:17px; height:17px; border-radius:999px;
+    display:grid; place-items:center; padding:0 3px;
+  }
+  .cart-bar-text{flex:1; text-align:left; display:flex; flex-direction:column; font-size:12px;}
+  .cart-bar-text b{font-family:'Baloo 2',sans-serif; font-size:14px;}
+  .cart-bar-save{color:var(--marigold); font-weight:700; font-size:11px;}
+  .cart-bar-arrow{font-weight:700; font-size:13px; flex:none;}
+  @media(max-width:480px){ .cart-bar-arrow{font-size:0;} .cart-bar-arrow::after{content:"→"; font-size:18px;} }
+
+  /* push WA float up when cart bar is visible so they don't overlap */
+  body.has-cart-bar .wa-float{ bottom:88px; }
+
+  /* ---------- How it works ---------- */
+  .steps{display:grid; gap:18px; counter-reset:step;}
+  @media(min-width:720px){ .steps{grid-template-columns:repeat(5,1fr);} }
+  .step{background:var(--white); border:1px solid var(--line); border-radius:var(--radius-sm); padding:20px 16px;}
+  .step .num{
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:20px; color:var(--white);
+    background:var(--marigold); width:34px; height:34px; border-radius:10px;
+    display:grid; place-items:center; margin-bottom:12px;
+  }
+  .step p{font-size:14px; margin:0; color:var(--ink); font-weight:500;}
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:760px; margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{
+    cursor:pointer; list-style:none; padding:20px 4px; font-family:'Baloo 2',sans-serif;
+    font-weight:600; font-size:17px; color:var(--moss-dark); display:flex; justify-content:space-between; gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:"+"; font-size:22px; color:var(--coral); flex:none;}
+  .faq-item[open] summary::after{content:"–";}
+  .faq-item .a{padding:0 4px 20px; color:var(--ink-soft); font-size:15px;}
+  .faq-note{font-size:13px; color:var(--ink-soft); text-align:center; margin-top:18px;}
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{background:var(--coral); border-radius:28px; margin:0 20px; padding:56px 28px; text-align:center;}
+  .final-cta h2{color:var(--white); font-size:clamp(26px,3.8vw,38px); margin:0 auto .5em; max-width:18ch;}
+  .final-ctas{display:flex; flex-wrap:wrap; gap:14px; justify-content:center;}
+  .final-cta .btn-primary{background:var(--white); color:var(--coral);}
+  .final-cta .btn-primary:hover{background:#fff2ee;}
+  .final-cta .btn-wa{background:var(--moss-dark);}
+
+  /* ---------- Lead Form ---------- */
+  .form-wrap{
+    display:grid; gap:0; background:var(--white); border:1px solid var(--line);
+    border-radius:28px; overflow:hidden;
+  }
+  @media(min-width:900px){ .form-wrap{grid-template-columns:.9fr 1.1fr;} }
+  .form-intro{background:var(--moss-dark); color:var(--white); padding:40px 32px;}
+  .form-intro h2{color:var(--white); font-size:clamp(24px,3.2vw,30px); max-width:16ch;}
+  .form-intro p{color:#DCE7D8;}
+  .form-intro .includes{list-style:none; margin:22px 0 0; padding:0; display:grid; gap:10px;}
+  .form-intro .includes li{display:flex; gap:10px; align-items:flex-start; font-size:14px; color:#EAF1E7;}
+  .form-intro .includes li span{color:var(--marigold); flex:none;}
+  .lead-form{padding:32px;}
+  @media(min-width:768px){ .lead-form{padding:40px;} }
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-weight:600; font-size:14px; margin-bottom:6px; color:var(--ink);}
+  .field .hint{font-size:12px; color:var(--ink-soft); margin-top:4px;}
+  .field input[type=text],
+  .field input[type=tel],
+  .field select{
+    width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:var(--radius-sm);
+    font-family:inherit; font-size:15px; color:var(--ink); background:var(--cream); outline:none;
+    transition:border-color .15s ease;
+  }
+  .field input:focus, .field select:focus{border-color:var(--moss);}
+  .field-row{display:grid; gap:18px;}
+  @media(min-width:560px){ .field-row{grid-template-columns:1fr 1fr;} }
+  .field.error input, .field.error select{border-color:var(--coral);}
+  .field .error-msg{display:none; font-size:12.5px; color:var(--coral); margin-top:5px; font-weight:600;}
+  .field.error .error-msg{display:block;}
+  .consent-row{display:flex; gap:10px; align-items:flex-start; margin:22px 0 24px;}
+  .consent-row input{margin-top:3px; flex:none; width:18px; height:18px; accent-color:var(--moss);}
+  .consent-row label{font-size:13px; color:var(--ink-soft); font-weight:500;}
+  .lead-form .btn{width:100%;}
+  .form-disclaimer{font-size:12px; color:var(--ink-soft); text-align:center; margin-top:14px;}
+
+  .lead-success{display:none; text-align:center; padding:12px 4px;}
+  .lead-success.show{display:block;}
+  .lead-form.hide{display:none;}
+  .lead-success .emoji{font-size:40px; margin-bottom:12px;}
+  .lead-success h3{font-size:22px;}
+  .lead-success .summary{
+    background:var(--cream-2); border-radius:var(--radius-sm); padding:16px 18px;
+    text-align:left; font-size:14px; margin:18px 0 22px; display:grid; gap:6px;
+  }
+  .lead-success .summary b{color:var(--moss-dark);}
+  footer{padding:40px 0; border-top:1px solid var(--line); font-size:13px; color:var(--ink-soft);}
+  .footer-row{display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center;}
+  .footer-links{display:flex; gap:18px;}
+  .footer-links a{text-decoration:none; color:var(--ink-soft);}
+  .footer-links a:hover{color:var(--coral);}
+
+  /* ---------- WhatsApp floating button ---------- */
+  .wa-float{
+    position:fixed; right:18px; bottom:18px; z-index:60;
+    background:var(--moss); color:var(--white); width:56px; height:56px; border-radius:50%;
+    display:grid; place-items:center; text-decoration:none; box-shadow:0 8px 20px rgba(38,50,48,.25);
+  }
+  .wa-float:hover{background:var(--moss-dark);}
+</style>
+
+<!-- =========================================================================
+     KONFIGURASI UTAMA — isi 3 nilai di bawah ini, cukup di SATU tempat ini.
+     1) APPS_SCRIPT_URL → URL Web App Google Apps Script (untuk simpan Leads & Order ke Spreadsheet)
+     2) GA4_ID          → GA4 Measurement ID, mis. 'G-XXXXXXXXXX'
+     3) META_PIXEL_ID   → Meta Pixel ID, mis. '1234567890123456'
+     Kosongkan ('') salah satu ID kalau belum ada — fitur terkait otomatis nonaktif,
+     tidak akan error. Lihat dokumen "Cara Setup" untuk langkah dapatkan tiap nilai ini.
+     ========================================================================= -->
+<script>
+  window.CONFIG = {
+    APPS_SCRIPT_URL: 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE',
+    GA4_ID: '',
+    META_PIXEL_ID: ''
+  };
+
+  (function () {
+    var GA4_ID = window.CONFIG.GA4_ID;
+    var META_PIXEL_ID = window.CONFIG.META_PIXEL_ID;
+
+    if (GA4_ID) {
+      var gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+      document.head.appendChild(gaScript);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', GA4_ID);
+    }
+
+    if (META_PIXEL_ID) {
+      !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return; n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+        n.queue = []; t = b.createElement(e); t.async = !0; t.src = v;
+        s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+      }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', META_PIXEL_ID);
+      fbq('track', 'PageView');
+    }
+  })();
+</script>
+</head>
+<body>
+<!-- Meta Pixel noscript fallback — otomatis tidak tampil apa-apa kalau META_PIXEL_ID di atas kosong -->
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=&ev=PageView&noscript=1" /></noscript>
+
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="mark">🍱</span> Bento for Kids
+    </a>
+    <nav class="nav-links">
+      <a href="#katalog">Katalog</a>
+      <a href="#program">Program</a>
+      <a href="#kalkulator">Kalkulator</a>
+      <a href="#dapatkan-katalog">Dapatkan Katalog</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-wa nav-cta" href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20bertanya%20tentang%20bekal%20anak." target="_blank" rel="noopener" data-event="whatsapp_click" data-source="header">
+      Tanya via WhatsApp
+    </a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow-loc">📍 Melayani Bandar Lampung &amp; sekitarnya</span>
+        <h1>Bekal Anak Lebih Praktis, Variatif, dan Terencana</h1>
+        <p class="sub">Realfood for Real Family — solusi harian bekal &amp; katering anak dari Bento for Kids, tanpa pengawet, penyedap, dan pewarna (Non 3P).</p>
+        <div class="hero-ctas">
+          <a href="#kalkulator" class="btn btn-primary" data-event="hero_cta_click" data-cta="calculator">Cek Kebutuhan Bekal Anak</a>
+          <a href="#katalog" class="btn btn-secondary" data-event="hero_cta_click" data-cta="catalog">Lihat Katalog</a>
+        </div>
+        <div class="badges">
+          <span class="badge">✅ Non MSG</span>
+          <span class="badge">✅ Non Pengawet</span>
+          <span class="badge">✅ Non UPF</span>
+          <span class="badge">✅ BPOM &amp; Halal Certified</span>
+        </div>
+      </div>
+      <div class="bento-visual" aria-hidden="true">
+        <div class="tray t1">Menu Harian</div>
+        <div class="tray t2">Buah &amp; Sayur</div>
+        <div class="tray t3">Sumber Protein</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="problem">
+    <div class="wrap">
+      <h2>Menyiapkan bekal anak setiap hari, bukan hal yang selalu mudah.</h2>
+      <p>Centang mana yang paling terasa buat Anda:</p>
+      <ul class="problem-list" id="problemList">
+        <li><input type="checkbox"><span class="txt">Bingung menentukan menu bekal yang tepat untuk anak.</span></li>
+        <li><input type="checkbox"><span class="txt">Waktu pagi terbatas untuk menyiapkan bekal dari nol.</span></li>
+        <li><input type="checkbox"><span class="txt">Anak mudah bosan dengan menu yang itu-itu saja.</span></li>
+        <li><input type="checkbox"><span class="txt">Sulit memperkirakan porsi yang sesuai kebutuhan anak.</span></li>
+        <li><input type="checkbox"><span class="txt">Khawatir kandungan MSG, pengawet, atau pewarna dalam bekal instan.</span></li>
+        <li><input type="checkbox"><span class="txt">Ingin bekal yang praktis tapi tetap terencana dengan baik.</span></li>
+      </ul>
+      <p class="problem-counter" id="problemCounter"></p>
+      <p class="problem-bridge"><span class="arrow">→</span> Bento for Kids menyiapkan stok bekal homemade Non 3P yang tinggal disajikan, jadi pagi Anda lebih ringan.</p>
+    </div>
+  </section>
+
+  <!-- ============ WHO IS THIS FOR ============ -->
+  <section id="untuk-siapa">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Untuk Siapa Bento for Kids?</h2>
+        <p>Klik profil yang paling sesuai dengan Anda — boleh pilih lebih dari satu.</p>
+      </div>
+      <div class="persona-grid" id="personaGrid">
+        <div class="persona" data-label="Orang Tua yang Bekerja">
+          <input type="checkbox" aria-label="Pilih: Orang Tua yang Bekerja">
+          <div class="icon">💼</div>
+          <h3>Orang Tua yang Bekerja</h3>
+          <p>Waktu pagi terbatas, tidak sempat masak dari nol setiap hari.</p>
+          <div class="fit">Cocok jika: butuh stok frozen food tinggal goreng/panggang.</div>
+        </div>
+        <div class="persona" data-label="Anak yang Susah Makan">
+          <input type="checkbox" aria-label="Pilih: Anak yang Susah Makan">
+          <div class="icon">🍽️</div>
+          <h3>Anak yang Susah Makan</h3>
+          <p>Butuh variasi menu supaya anak tidak bosan dan lebih semangat makan.</p>
+          <div class="fit">Cocok jika: ingin rotasi menu tanpa pusing mikir tiap hari.</div>
+        </div>
+        <div class="persona" data-label="Peduli Kandungan Bekal">
+          <input type="checkbox" aria-label="Pilih: Peduli Kandungan Bekal">
+          <div class="icon">🛡️</div>
+          <h3>Peduli Kandungan Bekal</h3>
+          <p>Ingin memastikan bekal anak bebas MSG, pengawet, dan pewarna buatan.</p>
+          <div class="fit">Cocok jika: mencari produk homemade Non 3P, BPOM &amp; Halal.</div>
+        </div>
+        <div class="persona" data-label="Butuh Stok Mingguan / Katering">
+          <input type="checkbox" aria-label="Pilih: Butuh Stok Mingguan / Katering">
+          <div class="icon">📦</div>
+          <h3>Butuh Stok Mingguan / Katering</h3>
+          <p>Ingin menyetok bekal untuk kebutuhan sekolah atau katering harian anak.</p>
+          <div class="fit">Cocok jika: memesan dalam jumlah lebih besar secara rutin.</div>
+        </div>
+      </div>
+      <p class="persona-result" id="personaResult"></p>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR CTA ============ -->
+  <section id="kalkulator">
+    <div class="calc-band">
+      <h2>Ingin tahu kebutuhan bekal anak Anda?</h2>
+      <p>Isi data singkat anak Anda untuk melihat estimasi kebutuhan energi dan nutrisi bekal hariannya.</p>
+      <a href="/kalkulator.html" class="btn btn-primary" data-event="calculator_start" data-source="calc_band">Hitung Sekarang</a>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCT CATALOG ============ -->
+  <section id="katalog">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Katalog Produk</h2>
+        <p>Frozen food homemade, Non 3P (pengawet, penyedap, pewarna) — tahan 2 hari di chiller, 6 bulan di freezer. Pilih produk, tambah ke keranjang.</p>
+      </div>
+
+      <div class="inline-program-banner" id="inlineProgramBanner"></div>
+
+      <div class="filter-row" id="filterRow">
+        <button class="filter-chip active" data-cat="all" type="button">Semua</button>
+        <button class="filter-chip" data-cat="nugget" type="button">Nugget</button>
+        <button class="filter-chip" data-cat="rolade-sosis" type="button">Rolade &amp; Sosis</button>
+        <button class="filter-chip" data-cat="katsu" type="button">Katsu, Furay &amp; Lolipop</button>
+        <button class="filter-chip" data-cat="kremesan" type="button">Kremesan &amp; Mix Vegie</button>
+        <button class="filter-chip" data-cat="teriyaki" type="button">Teriyaki &amp; Cordon Bleu</button>
+      </div>
+
+      <div class="product-grid" id="productGrid"><!-- rendered by JS from PRODUCTS --></div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAM BEKAL ============ -->
+  <section id="program">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Program Bekal Anak</h2>
+        <p>Paket bekal terjadwal untuk kebutuhan mingguan hingga bulanan — menu diatur bergantian dari katalog di atas.</p>
+      </div>
+      <div class="program-grid" id="programGrid"><!-- rendered by JS from PROGRAMS --></div>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCT DETAIL MODAL ============ -->
+  <div class="modal-backdrop" id="productModalBackdrop">
+    <div class="modal-sheet" id="productModal" role="dialog" aria-modal="true" aria-labelledby="pmName">
+      <button class="modal-close" id="productModalClose" aria-label="Tutup">✕</button>
+      <div class="modal-img" id="pmImg">🍱</div>
+      <div class="modal-body">
+        <span class="modal-cat" id="pmCat"></span>
+        <h3 id="pmName"></h3>
+        <p id="pmDesc"></p>
+        <div class="modal-price" id="pmPrice"></div>
+        <div class="qty-row">
+          <span class="qty-label">Jumlah</span>
+          <div class="qty-stepper">
+            <button type="button" id="pmMinus" aria-label="Kurangi">−</button>
+            <span id="pmQty">1</span>
+            <button type="button" id="pmPlus" aria-label="Tambah">+</button>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="pmAddBtn" style="width:100%;">Tambah ke Keranjang</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div class="modal-backdrop" id="cartBackdrop">
+    <div class="cart-sheet" id="cartSheet" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+      <div class="cart-head">
+        <h3 id="cartTitle">Keranjang Saya</h3>
+        <button class="modal-close" id="cartClose" aria-label="Tutup">✕</button>
+      </div>
+      <div class="program-progress" id="programProgress">
+        <div class="pp-top">
+          <span id="ppLabel"></span>
+          <button id="ppCancel" type="button">Batalkan</button>
+        </div>
+        <div class="pp-track"><div class="pp-fill" id="ppFill"></div></div>
+        <span class="pp-note" id="ppNote"></span>
+      </div>
+      <div class="save-highlight" id="saveHighlight">
+        <span class="sh-emoji">🎉</span>
+        <span class="sh-text" id="saveHighlightText"></span>
+      </div>
+      <div class="tier-nudge" id="tierNudge"></div>
+
+      <div class="cart-items" id="cartItems"><!-- rendered by JS --></div>
+      <div class="cart-topup" id="cartTopup"><!-- quick-add suggestions rendered by JS --></div>
+      <div class="cart-empty" id="cartEmpty">Keranjang masih kosong. Yuk pilih produk favorit anak Anda dulu 🍱</div>
+      <div class="cart-footer" id="cartFooter">
+        <div class="cart-subtotal-row" id="cartSubtotalRow" style="display:none;">
+          <span>Subtotal</span>
+          <s id="cartSubtotal">Rp0</s>
+        </div>
+        <div class="cart-discount-row" id="cartDiscountRow" style="display:none;">
+          <span>Diskon Program (5%)</span>
+          <span id="cartDiscount">-Rp0</span>
+        </div>
+        <div class="cart-total-row">
+          <span>Total</span>
+          <b id="cartTotal">Rp0</b>
+        </div>
+        <button class="btn btn-wa" id="cartCheckoutBtn" style="width:100%;">Checkout via WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STICKY CART BAR (mobile-first) ============ -->
+  <!-- ============ CART ABANDONMENT REMINDER (5 min idle) ============ -->
+  <div class="cart-reminder" id="cartReminder">
+    <span class="cr-emoji">🛒</span>
+    <div class="cr-body">
+      <b>Keranjang Anda menunggu!</b>
+      <span>Yuk selesaikan pesanan sebelum kehabisan stok.</span>
+    </div>
+    <div class="cr-actions">
+      <button class="cr-view" id="crViewBtn" type="button">Lihat Keranjang</button>
+      <button class="cr-dismiss" id="crDismissBtn" type="button">Nanti saja</button>
+    </div>
+  </div>
+
+  <div class="cart-bar" id="cartBar">
+    <button id="cartBarBtn" type="button">
+      <span class="cart-bar-icon">🛒<span class="cart-bar-badge" id="cartBarBadge">0</span></span>
+      <span class="cart-bar-text">
+        <b id="cartBarCount">0 produk</b>
+        <span id="cartBarTotal">Rp0</span>
+        <span id="cartBarSave" class="cart-bar-save"></span>
+      </span>
+      <span class="cart-bar-arrow">Lihat Keranjang →</span>
+    </button>
+  </div>
+
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="cara-kerja">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Cara Kerjanya</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><p>Pilih kebutuhan bekal anak Anda.</p></div>
+        <div class="step"><div class="num">2</div><p>Cek rekomendasi lewat kalkulator.</p></div>
+        <div class="step"><div class="num">3</div><p>Lihat pilihan di katalog.</p></div>
+        <div class="step"><div class="num">4</div><p>Konsultasikan lewat WhatsApp.</p></div>
+        <div class="step"><div class="num">5</div><p>Pesan bekal untuk anak Anda.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL PROOF (placeholder, no fabricated testimonials) ============ -->
+  <section id="testimoni">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Kata Orang Tua Lainnya</h2>
+        <p>Lihat cerita dan testimoni keluarga yang sudah mencoba Bento for Kids di highlight Instagram <a href="https://instagram.com/bento.forkids" target="_blank" rel="noopener" style="color:var(--coral); font-weight:600;">@bento.forkids</a>.</p>
+        <p class="data-pending">Testimoni tertulis di halaman ini akan ditambahkan setelah tersedia dari tabel TESTIMONIALS — bagian ini sengaja tidak diisi kutipan fiktif.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pertanyaan yang Sering Ditanyakan</h2>
+      </div>
+      <div class="faq">
+        <details class="faq-item" open>
+          <summary>Apakah Bento for Kids melayani area di luar Bandar Lampung?</summary>
+          <div class="a">Kami memprioritaskan layanan di Bandar Lampung dan sekitarnya, namun tetap dapat melayani area Lampung lainnya. Silakan tanyakan domisili Anda melalui WhatsApp untuk konfirmasi.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Bagaimana cara memesan bekal untuk anak saya?</summary>
+          <div class="a">Anda bisa melihat pilihan di halaman Katalog, lalu menghubungi kami melalui WhatsApp untuk konsultasi dan pemesanan.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Apakah hasil kalkulator merupakan diagnosis medis?</summary>
+          <div class="a">Tidak. Hasil kalkulator adalah estimasi edukasi dan bukan pengganti konsultasi dokter atau ahli gizi.</div>
+        </details>
+      </div>
+      <p class="faq-note">FAQ ini dapat ditambah/diedit melalui admin dashboard (tabel FAQ).</p>
+    </div>
+  </section>
+
+  <!-- ============ LEAD FORM ============ -->
+  <section id="dapatkan-katalog">
+    <div class="wrap">
+      <div class="form-wrap">
+        <div class="form-intro">
+          <h2>Dapatkan Katalog &amp; Rekomendasi Bekal</h2>
+          <p>Isi data singkat berikut, tim kami akan kirim katalog lengkap dan rekomendasi menu lewat WhatsApp.</p>
+          <ul class="includes">
+            <li><span>✓</span> Katalog lengkap &amp; harga terbaru</li>
+            <li><span>✓</span> Rekomendasi menu sesuai usia anak</li>
+            <li><span>✓</span> Konsultasi langsung dengan tim Bento for Kids</li>
+          </ul>
+        </div>
+
+        <div class="lead-form-container">
+          <form class="lead-form" id="leadForm" novalidate>
+            <div class="field" id="field-name">
+              <label for="lf-name">Nama Orang Tua</label>
+              <input type="text" id="lf-name" name="name" placeholder="Nama lengkap" autocomplete="name">
+              <div class="error-msg">Nama wajib diisi.</div>
+            </div>
+
+            <div class="field" id="field-whatsapp">
+              <label for="lf-whatsapp">Nomor WhatsApp</label>
+              <input type="tel" id="lf-whatsapp" name="whatsapp" placeholder="08xxxxxxxxxx" autocomplete="tel" inputmode="numeric">
+              <div class="error-msg">Masukkan nomor WhatsApp yang valid (min. 9 digit).</div>
+            </div>
+
+            <div class="field-row">
+              <div class="field" id="field-child-age">
+                <label for="lf-child-age">Usia Anak</label>
+                <select id="lf-child-age" name="child_age">
+                  <option value="" selected disabled>Pilih usia anak</option>
+                  <option value="0-1 tahun">0–1 tahun</option>
+                  <option value="1-3 tahun">1–3 tahun</option>
+                  <option value="4-6 tahun">4–6 tahun</option>
+                  <option value="7-9 tahun">7–9 tahun</option>
+                  <option value="10-12 tahun">10–12 tahun</option>
+                  <option value="13+ tahun">13+ tahun</option>
+                </select>
+                <div class="error-msg">Pilih usia anak.</div>
+              </div>
+
+              <div class="field" id="field-city">
+                <label for="lf-city">Domisili</label>
+                <input type="text" id="lf-city" name="city" list="domisili-options" placeholder="Ketik atau pilih domisili" autocomplete="address-level2">
+                <datalist id="domisili-options">
+                  <option value="Kedaton">
+                  <option value="Rajabasa">
+                  <option value="Sukarame">
+                  <option value="Way Halim">
+                  <option value="Tanjung Karang">
+                  <option value="Teluk Betung">
+                  <option value="Kemiling">
+                  <option value="Panjang">
+                  <option value="Langkapura">
+                  <option value="Labuhan Ratu">
+                </datalist>
+                <div class="hint">Bisa ketik area lain di luar daftar.</div>
+                <div class="error-msg">Isi domisili Anda.</div>
+              </div>
+            </div>
+
+            <div class="consent-row" id="field-consent">
+              <input type="checkbox" id="lf-consent" name="consent">
+              <label for="lf-consent">Saya bersedia menerima informasi mengenai Bento for Kids melalui WhatsApp.</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" data-event="lead_form_start">Dapatkan Katalog &amp; Rekomendasi Bekal</button>
+            <p class="form-disclaimer">Data Anda hanya digunakan untuk mengirim katalog &amp; konsultasi bekal anak.</p>
+          </form>
+
+          <div class="lead-success" id="leadSuccess">
+            <div class="emoji">🎉</div>
+            <h3>Hasil Anda sudah siap!</h3>
+            <p>Terima kasih! Berikut ringkasan data yang Anda kirim:</p>
+            <div class="summary" id="leadSummary"></div>
+            <a href="#" id="leadWhatsappBtn" class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="lead_form">Lanjut ke WhatsApp →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section>
+    <div class="final-cta">
+      <h2>Siap membuat bekal anak lebih praktis?</h2>
+      <div class="final-ctas">
+        <a href="#dapatkan-katalog" class="btn btn-primary" data-event="hero_cta_click" data-cta="final_form">Dapatkan Katalog &amp; Rekomendasi</a>
+        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20tertarik%20dengan%20produk%20bekal%20anak." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="final_cta">Tanya via WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>&copy; <span id="year"></span> Bento for Kids — Bandar Lampung · Realfood for Real Family</span>
+    <div class="footer-links">
+      <a href="/tentang.html">Tentang</a>
+      <a href="/kontak.html">Kontak</a>
+      <a href="/reseller.html">Reseller</a>
+      <a href="/privacy-policy.html">Kebijakan Privasi</a>
+      <a href="https://instagram.com/bento.forkids" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://shopee.co.id/bento.forkids" target="_blank" rel="noopener">Shopee</a>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids" target="_blank" rel="noopener" aria-label="Chat via WhatsApp" data-event="whatsapp_click" data-source="float_button">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.14-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.1 8.1 0 0 1-1.24-4.32c0-4.48 3.65-8.13 8.15-8.13 2.18 0 4.22.85 5.76 2.39a8.09 8.09 0 0 1 2.38 5.76c0 4.48-3.65 8.14-8.12 8.14zm4.47-6.1c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.22-1.44-1.36-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.42-.55-.42-.14 0-.3-.02-.47-.02-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.73 2.65 4.2 3.71.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
+</a>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* CONFIG (APPS_SCRIPT_URL, GA4_ID, META_PIXEL_ID) is defined once, in <head> — see window.CONFIG. */
+  var CONFIG = window.CONFIG;
+
+  /* ---- kirim data ke Google Sheets lewat Apps Script (best-effort, tidak memblokir alur WA) ---- */
+  function sendToSheet(type, payload) {
+    if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.indexOf('PASTE_') === 0) {
+      console.log('[sheets] APPS_SCRIPT_URL belum diisi — lewati simpan ke spreadsheet.', type, payload);
+      return;
+    }
+    var body = Object.assign({ type: type }, payload);
+    fetch(CONFIG.APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // hindari CORS preflight ke Apps Script
+      body: JSON.stringify(body)
+    }).catch(function (err) {
+      console.warn('[sheets] gagal kirim ke spreadsheet:', err);
+    });
+  }
+
+  /* ---- satu pintu tracking: console log + GA4 + Meta Pixel (kalau CONFIG sudah diisi) ---- */
+  var META_EVENT_MAP = {
+    lead_submit: 'Lead',
+    whatsapp_click: 'Contact',
+    product_view: 'ViewContent',
+    catalog_view: 'ViewContent',
+    add_to_cart: 'AddToCart',
+    lead_form_view: 'InitiateCheckout'
+  };
+  function bfkTrack(eventName, params) {
+    params = params || {};
+    console.log('[track]', eventName, params);
+    if (window.gtag) window.gtag('event', eventName, params);
+    if (window.fbq && META_EVENT_MAP[eventName]) window.fbq('track', META_EVENT_MAP[eventName], params);
+  }
+
+  /* =================================================================
+     SESSION TRACKING — analitik pengunjung (funnel, UTM, isi keranjang,
+     dan data form walau belum submit). session_id persisten per browser,
+     dipakai admin.html untuk isi tab "Analitik".
+     ================================================================= */
+  var BFK_SESSION_ID = (function () {
+    var id = localStorage.getItem('bfk_session_id');
+    if (!id) {
+      id = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+      localStorage.setItem('bfk_session_id', id);
+    }
+    return id;
+  })();
+
+  function trackSession(patch) {
+    var body = Object.assign({
+      type: 'session_event',
+      session_id: BFK_SESSION_ID,
+      source: sessionStorage.getItem('utm_source') || '',
+      medium: sessionStorage.getItem('utm_medium') || '',
+      campaign: sessionStorage.getItem('utm_campaign') || '',
+      reseller_code: sessionStorage.getItem('last_reseller_code') || '',
+      landing_page: window.location.pathname
+    }, patch || {});
+    sendToSheet('session_event', body);
+  }
+
+  function trackPartialLead(patch) {
+    var body = Object.assign({
+      type: 'partial_lead',
+      session_id: BFK_SESSION_ID,
+      source: sessionStorage.getItem('utm_source') || '',
+      medium: sessionStorage.getItem('utm_medium') || '',
+      campaign: sessionStorage.getItem('utm_campaign') || '',
+      last_reseller_code: sessionStorage.getItem('last_reseller_code') || ''
+    }, patch || {});
+    sendToSheet('partial_lead', body);
+  }
+
+  /* ---- UTM + reseller capture (persist to sessionStorage per PRD Section 25/26) ---- */
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    utmKeys.forEach(function (k) {
+      var v = params.get(k);
+      if (v) sessionStorage.setItem(k, v);
+    });
+    var reseller = params.get('reseller') || params.get('ref');
+    if (reseller) {
+      sessionStorage.setItem('last_reseller_code', reseller);
+      if (!localStorage.getItem('first_reseller_code')) {
+        localStorage.setItem('first_reseller_code', reseller);
+      }
+    }
+  })();
+
+  // Kirim page_view + info UTM/reseller ke SESSIONS begitu halaman dibuka.
+  trackSession({});
+
+  /* ---- lightweight event tracking hook (klik apa pun ber-atribut data-event) ---- */
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-event]');
+    if (!el) return;
+    var payload = {
+      event_name: el.getAttribute('data-event'),
+      page: window.location.pathname,
+      source: sessionStorage.getItem('utm_source') || null,
+      medium: sessionStorage.getItem('utm_medium') || null,
+      campaign: sessionStorage.getItem('utm_campaign') || null,
+      reseller_code: sessionStorage.getItem('last_reseller_code') || null,
+      product_id: el.getAttribute('data-product-id') || null
+    };
+    bfkTrack(payload.event_name, payload);
+  });
+
+  /* ---- Lead form: validate → build WhatsApp message → (TODO) POST /api/leads → success ---- */
+  (function () {
+    var BUSINESS_WA = '628117919119';
+    var form = document.getElementById('leadForm');
+    if (!form) return;
+
+    var successEl = document.getElementById('leadSuccess');
+    var summaryEl = document.getElementById('leadSummary');
+    var waBtn = document.getElementById('leadWhatsappBtn');
+    var fieldsSeen = false;
+
+    form.addEventListener('focusin', function () {
+      if (fieldsSeen) return;
+      fieldsSeen = true;
+      logEvent('lead_form_view');
+      trackSession({ reached_form: true });
+    });
+
+    /* ---- tangkap data yang sudah diisi walau belum klik submit (debounced on blur) ---- */
+    var partialTimer = null;
+    ['lf-name', 'lf-whatsapp', 'lf-child-age', 'lf-city'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var fire = function () {
+        clearTimeout(partialTimer);
+        partialTimer = setTimeout(function () {
+          var name = form.name.value.trim();
+          var whatsapp = form.whatsapp.value.trim();
+          // Kirim hanya kalau minimal ada nama ATAU nomor WA — hindari kirim baris kosong.
+          if (!name && !whatsapp) return;
+          trackPartialLead({
+            name: name, whatsapp: whatsapp,
+            child_age: form.child_age.value || '', city: form.city.value.trim() || ''
+          });
+        }, 600);
+      };
+      el.addEventListener('blur', fire);
+      el.addEventListener('change', fire);
+    });
+
+    function logEvent(name) {
+      var payload = {
+        event_name: name,
+        page: window.location.pathname,
+        source: sessionStorage.getItem('utm_source') || null,
+        medium: sessionStorage.getItem('utm_medium') || null,
+        campaign: sessionStorage.getItem('utm_campaign') || null,
+        reseller_code: sessionStorage.getItem('last_reseller_code') || null
+      };
+      bfkTrack(name, payload);
+    }
+
+    function setError(fieldId, isError) {
+      var field = document.getElementById(fieldId);
+      field.classList.toggle('error', isError);
+    }
+
+    function validate(data) {
+      var valid = true;
+      if (!data.name.trim()) { setError('field-name', true); valid = false; } else setError('field-name', false);
+
+      var waDigits = data.whatsapp.replace(/\D/g, '');
+      if (waDigits.length < 9) { setError('field-whatsapp', true); valid = false; } else setError('field-whatsapp', false);
+
+      if (!data.child_age) { setError('field-child-age', true); valid = false; } else setError('field-child-age', false);
+      if (!data.city) { setError('field-city', true); valid = false; } else setError('field-city', false);
+
+      var consentBox = document.getElementById('lf-consent');
+      if (!consentBox.checked) {
+        document.getElementById('field-consent').style.outline = '2px solid var(--coral)';
+        document.getElementById('field-consent').style.borderRadius = '8px';
+        valid = false;
+      } else {
+        document.getElementById('field-consent').style.outline = 'none';
+      }
+      return valid;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = {
+        name: form.name.value,
+        whatsapp: form.whatsapp.value,
+        child_age: form.child_age.value,
+        city: form.city.value,
+        consent: document.getElementById('lf-consent').checked
+      };
+
+      if (!validate(data)) return;
+
+      var lead = {
+        lead_id: 'lead_' + Date.now(),
+        created_at: new Date().toISOString(),
+        name: data.name.trim(),
+        whatsapp: data.whatsapp.replace(/\D/g, ''),
+        child_age: data.child_age,
+        city: data.city,
+        consent: data.consent,
+        source: sessionStorage.getItem('utm_source') || 'direct',
+        medium: sessionStorage.getItem('utm_medium') || null,
+        campaign: sessionStorage.getItem('utm_campaign') || null,
+        first_reseller_code: localStorage.getItem('first_reseller_code') || null,
+        last_reseller_code: sessionStorage.getItem('last_reseller_code') || null,
+        landing_page: window.location.pathname,
+        calculator_used: false,
+        session_id: BFK_SESSION_ID // dipakai backend untuk tandai partial lead sesi ini jadi CONVERTED
+      };
+
+      // Simpan ke Google Sheets (tab LEADS) lewat Apps Script — best-effort, tidak memblokir WA.
+      sendToSheet('lead', lead);
+      logEvent('lead_submit');
+      trackSession({ reached_submit: true });
+
+      var waMessage =
+        'Halo Bento for Kids,\n\n' +
+        'Saya ' + lead.name + '.\n\n' +
+        'Saya ingin mendapatkan katalog & rekomendasi bekal untuk anak usia ' + lead.child_age + ', domisili ' + lead.city + '.\n\n' +
+        'Mohon info lebih lanjut. Terima kasih!';
+
+      var waUrl = 'https://wa.me/' + BUSINESS_WA + '?text=' + encodeURIComponent(waMessage);
+      waBtn.href = waUrl;
+
+      summaryEl.innerHTML =
+        '<div><b>Nama:</b> ' + lead.name + '</div>' +
+        '<div><b>WhatsApp:</b> ' + lead.whatsapp + '</div>' +
+        '<div><b>Usia Anak:</b> ' + lead.child_age + '</div>' +
+        '<div><b>Domisili:</b> ' + lead.city + '</div>';
+
+      form.classList.add('hide');
+      successEl.classList.add('show');
+
+      // Open WhatsApp automatically; button remains as fallback if popup is blocked.
+      window.open(waUrl, '_blank', 'noopener');
+    });
+  })();
+
+  /* ---- Interactive problem checklist ---- */
+  (function () {
+    var list = document.getElementById('problemList');
+    var counter = document.getElementById('problemCounter');
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll('li'));
+    var total = items.length;
+
+    function update() {
+      var checked = items.filter(function (li) { return li.querySelector('input').checked; });
+      items.forEach(function (li) {
+        li.classList.toggle('checked', li.querySelector('input').checked);
+      });
+      if (checked.length === 0) {
+        counter.textContent = '';
+      } else {
+        counter.innerHTML = '<span class="n">' + checked.length + '</span> dari ' + total + ' hal ini kedengaran familiar buat Anda.';
+      }
+    }
+
+    items.forEach(function (li) {
+      var cb = li.querySelector('input');
+      li.addEventListener('click', function (e) {
+        if (e.target !== cb) cb.checked = !cb.checked;
+        update();
+      });
+    });
+  })();
+
+  /* ---- Interactive "who is this for" persona picker ---- */
+  (function () {
+    var grid = document.getElementById('personaGrid');
+    var result = document.getElementById('personaResult');
+    if (!grid) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.persona'));
+
+    function update() {
+      var selected = cards.filter(function (c) { return c.querySelector('input').checked; });
+      cards.forEach(function (c) {
+        c.classList.toggle('selected', c.querySelector('input').checked);
+      });
+      if (selected.length === 0) {
+        result.classList.remove('show');
+        return;
+      }
+      var labels = selected.map(function (c) { return c.getAttribute('data-label'); }).join(', ');
+      result.innerHTML = 'Cocok untuk Anda: ' + labels + ' — <a href="#dapatkan-katalog">lihat rekomendasi bekal →</a>';
+      result.classList.add('show');
+    }
+
+    cards.forEach(function (card) {
+      var cb = card.querySelector('input');
+      card.addEventListener('click', function (e) {
+        if (e.target !== cb) cb.checked = !cb.checked;
+        update();
+      });
+    });
+  })();
+
+  /* =================================================================
+     PRODUCT CATALOG + CART (Shopee-style, popup-based, no page nav)
+     ================================================================= */
+  (function () {
+    var CAT_LABEL = {
+      'nugget': 'Nugget',
+      'rolade-sosis': 'Rolade & Sosis',
+      'katsu': 'Katsu, Furay & Lolipop',
+      'kremesan': 'Kremesan & Mix Vegie',
+      'teriyaki': 'Teriyaki & Cordon Bleu'
+    };
+    var CAT_EMOJI = {
+      'nugget': '🐔', 'rolade-sosis': '🌭', 'katsu': '🍗', 'kremesan': '🥣', 'teriyaki': '🍱'
+    };
+
+    // Fallback bawaan (dipakai kalau APPS_SCRIPT_URL belum diisi atau sheet PRODUCTS masih kosong).
+    // Begitu admin isi produk lewat admin.html, data dari Google Sheets akan menimpa daftar ini.
+    var DEFAULT_PRODUCTS = [
+      { id: 'nugget-ayam', name: 'Nugget Ayam', category: 'nugget', price: 30000, desc: 'Nugget ayam homemade, Non 3P (non pengawet, non penyedap, non pewarna).' },
+      { id: 'nugget-sapi', name: 'Nugget Sapi', category: 'nugget', price: 37000, desc: 'Nugget sapi homemade, Non 3P.' },
+      { id: 'nugget-dori', name: 'Nugget Dori', category: 'nugget', price: 32000, desc: 'Nugget ikan dori homemade, Non 3P.' },
+      { id: 'nugget-ayam-kampung', name: 'Nugget Ayam Kampung', category: 'nugget', price: 40000, desc: 'Nugget dari ayam kampung, Non 3P.' },
+      { id: 'rolade-ayam', name: 'Rolade Ayam', category: 'rolade-sosis', price: 27000, desc: 'Rolade ayam homemade, Non 3P.' },
+      { id: 'rolade-sapi', name: 'Rolade Sapi', category: 'rolade-sosis', price: 40000, desc: 'Rolade sapi homemade, Non 3P.' },
+      { id: 'sosis-ayam', name: 'Sosis Ayam', category: 'rolade-sosis', price: 40000, desc: 'Sosis ayam homemade, Non 3P.' },
+      { id: 'sosis-sapi', name: 'Sosis Sapi', category: 'rolade-sosis', price: 55000, desc: 'Sosis sapi homemade, Non 3P.' },
+      { id: 'chicken-katsu', name: 'Chicken Katsu', category: 'katsu', price: 32000, desc: 'Chicken katsu homemade, Non 3P.' },
+      { id: 'eby-furay', name: 'Eby Furay', category: 'katsu', price: 35000, desc: 'Eby furay (udang) homemade, Non 3P.' },
+      { id: 'chicken-lolipop', name: 'Chicken Lolipop', category: 'katsu', price: 35000, desc: 'Chicken lolipop homemade, Non 3P.' },
+      { id: 'chicken-popcorn', name: 'Chicken Popcorn', category: 'katsu', price: 35000, desc: 'Chicken popcorn homemade, Non 3P.' },
+      { id: 'kremes-hati-ayam', name: 'Kremes Hati Ayam', category: 'kremesan', price: 15000, desc: 'Kremes hati ayam homemade, Non 3P.' },
+      { id: 'kremes-hati-sapi', name: 'Kremes Hati Sapi', category: 'kremesan', price: 30000, desc: 'Kremes hati sapi homemade, Non 3P.' },
+      { id: 'kremes-teri-nasi', name: 'Kremes Teri Nasi', category: 'kremesan', price: 30000, desc: 'Kremes teri nasi homemade, Non 3P.' },
+      { id: 'mix-vegie', name: 'Mix Vegie', category: 'kremesan', price: 25000, desc: 'Campuran sayur beku siap masak.' },
+      { id: 'chicken-teriyaki', name: 'Chicken Teriyaki', category: 'teriyaki', price: 35000, desc: 'Chicken teriyaki homemade, Non 3P.' },
+      { id: 'chicken-cordon-bleu', name: 'Chicken Cordon Bleu', category: 'teriyaki', price: 35000, desc: 'Chicken cordon bleu homemade, Non 3P.' }
+    ];
+    var PRODUCTS = DEFAULT_PRODUCTS.slice();
+
+    // Program pricing model = minimum spend (bukan harga paket tetap): customer pilih sendiri
+    // produk dari katalog di atas sampai total belanja mencapai angka minimal di bawah ini.
+    // Angka minSpend di bawah adalah fallback — kalau admin ubah lewat admin.html, nilai dari
+    // Google Sheets (tab PROMOS) yang dipakai.
+    var PROGRAMS = [
+      { id: 'program-7-hari', name: 'Program Bekal 7 Hari', days: 7, minSpend: 350000, desc: 'Menu bekal terencana selama satu minggu, dirotasi dari katalog di atas.', featured: false },
+      { id: 'program-14-hari', name: 'Program Bekal 14 Hari', days: 14, minSpend: 650000, desc: 'Perencanaan bekal dua minggu penuh dengan variasi menu lebih luas.', featured: true },
+      { id: 'program-30-hari', name: 'Program Bekal 30 Hari', days: 30, minSpend: 1350000, desc: 'Langganan bekal sebulan penuh, cocok untuk kebutuhan rutin/katering anak.', featured: false }
+    ];
+
+    var fmt = function (n) { return 'Rp' + n.toLocaleString('id-ID'); };
+    var BUSINESS_WA = '628117919119';
+    // Diskon bertingkat berdasarkan subtotal keranjang — tidak tergantung program yang dipilih,
+    // jadi begitu belanja tembus salah satu ambang batas ini, diskon otomatis naik.
+    // Fallback default — ditimpa oleh tab PROMOS di Google Sheets kalau admin sudah mengubahnya.
+    var DISCOUNT_TIERS = [
+      { min: 1350000, rate: 0.10 },
+      { min: 650000, rate: 0.08 },
+      { min: 350000, rate: 0.05 }
+    ];
+    function currentTier(subtotal) {
+      for (var i = 0; i < DISCOUNT_TIERS.length; i++) {
+        if (subtotal >= DISCOUNT_TIERS[i].min) return DISCOUNT_TIERS[i];
+      }
+      return null;
+    }
+    function nextTier(subtotal) {
+      var sorted = DISCOUNT_TIERS.slice().sort(function (a, b) { return a.min - b.min; });
+      for (var i = 0; i < sorted.length; i++) {
+        if (subtotal < sorted[i].min) return sorted[i];
+      }
+      return null;
+    }
+    var AVG_PRICE = Math.round(PRODUCTS.reduce(function (s, p) { return s + p.price; }, 0) / PRODUCTS.length);
+
+    /* ---------- ambil produk & promo terbaru dari Google Sheets (lewat admin.html) ---------- */
+    function fetchCatalogFromSheet() {
+      if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.indexOf('PASTE_') === 0) return;
+      fetch(CONFIG.APPS_SCRIPT_URL + '?action=catalog')
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (!res.ok) return;
+          if (res.products && res.products.length) {
+            PRODUCTS = res.products.filter(function (p) { return p.active !== false; });
+            AVG_PRICE = Math.round(PRODUCTS.reduce(function (s, p) { return s + p.price; }, 0) / PRODUCTS.length);
+          }
+          if (res.promos) {
+            var pr = res.promos;
+            if (pr.tier1_min) DISCOUNT_TIERS = [
+              { min: Number(pr.tier3_min), rate: Number(pr.tier3_rate) },
+              { min: Number(pr.tier2_min), rate: Number(pr.tier2_rate) },
+              { min: Number(pr.tier1_min), rate: Number(pr.tier1_rate) }
+            ];
+            PROGRAMS[0].minSpend = Number(pr.program_7_min) || PROGRAMS[0].minSpend;
+            PROGRAMS[1].minSpend = Number(pr.program_14_min) || PROGRAMS[1].minSpend;
+            PROGRAMS[2].minSpend = Number(pr.program_30_min) || PROGRAMS[2].minSpend;
+          }
+          // render ulang semuanya dengan data terbaru
+          var activeCat = document.querySelector('.filter-chip.active');
+          renderGrid(activeCat ? activeCat.getAttribute('data-cat') : 'all');
+          renderPrograms();
+          updateCartUI();
+        })
+        .catch(function (err) { console.warn('[catalog] gagal ambil data dari Sheets, pakai data bawaan.', err); });
+    }
+
+    /* ---------- helper tampilkan gambar produk (foto asli kalau ada, else emoji kategori) ---------- */
+    function productImageHtml(p, sizeClass) {
+      if (p.image) return '<img src="' + p.image + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;">';
+      return CAT_EMOJI[p.category] || '🍱';
+    }
+
+    /* ---------- render product grid ---------- */
+    var grid = document.getElementById('productGrid');
+    function renderGrid(filter) {
+      var list = filter === 'all' ? PRODUCTS : PRODUCTS.filter(function (p) { return p.category === filter; });
+      grid.innerHTML = list.map(function (p) {
+        var inCart = cart[p.id] ? ' in-cart' : '';
+        var label = cart[p.id] ? '✓ ' + cart[p.id] + 'x' : '+ Keranjang';
+        return '' +
+          '<div class="p-card" data-id="' + p.id + '">' +
+            '<div class="p-img"><span class="p-cat-tag">' + CAT_LABEL[p.category] + '</span>' + productImageHtml(p) + '</div>' +
+            '<div class="p-body">' +
+              '<h4>' + p.name + '</h4>' +
+              '<span class="p-price">' + fmt(p.price) + '</span>' +
+              '<button class="p-add' + inCart + '" data-quick-add="' + p.id + '" type="button">' + label + '</button>' +
+            '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    document.getElementById('filterRow').addEventListener('click', function (e) {
+      var btn = e.target.closest('.filter-chip');
+      if (!btn) return;
+      document.querySelectorAll('.filter-chip').forEach(function (c) { c.classList.remove('active'); });
+      btn.classList.add('active');
+      renderGrid(btn.getAttribute('data-cat'));
+    });
+
+    grid.addEventListener('click', function (e) {
+      var quickAdd = e.target.closest('[data-quick-add]');
+      if (quickAdd) {
+        addToCart(quickAdd.getAttribute('data-quick-add'), 1);
+        renderGrid(document.querySelector('.filter-chip.active').getAttribute('data-cat'));
+        return;
+      }
+      var card = e.target.closest('.p-card');
+      if (card) openModal(card.getAttribute('data-id'));
+    });
+
+    /* ---------- product detail modal ---------- */
+    var modalBackdrop = document.getElementById('productModalBackdrop');
+    var pmQtyEl = document.getElementById('pmQty');
+    var activeProduct = null, activeQty = 1;
+
+    function openModal(id) {
+      activeProduct = PRODUCTS.find(function (p) { return p.id === id; });
+      if (!activeProduct) return;
+      activeQty = 1;
+      pmQtyEl.textContent = activeQty;
+      document.getElementById('pmImg').innerHTML = productImageHtml(activeProduct);
+      document.getElementById('pmCat').textContent = CAT_LABEL[activeProduct.category];
+      document.getElementById('pmName').textContent = activeProduct.name;
+      document.getElementById('pmDesc').textContent = activeProduct.desc;
+      document.getElementById('pmPrice').textContent = fmt(activeProduct.price);
+      modalBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      logEvent('product_view', activeProduct.id);
+    }
+    function closeModal() {
+      modalBackdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('productModalClose').addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', function (e) { if (e.target === modalBackdrop) closeModal(); });
+
+    document.getElementById('pmMinus').addEventListener('click', function () {
+      activeQty = Math.max(1, activeQty - 1);
+      pmQtyEl.textContent = activeQty;
+    });
+    document.getElementById('pmPlus').addEventListener('click', function () {
+      activeQty = Math.min(99, activeQty + 1);
+      pmQtyEl.textContent = activeQty;
+    });
+    document.getElementById('pmAddBtn').addEventListener('click', function () {
+      if (!activeProduct) return;
+      addToCart(activeProduct.id, activeQty);
+      closeModal();
+      renderGrid(document.querySelector('.filter-chip.active').getAttribute('data-cat'));
+      flashCartBar();
+    });
+
+    /* ---------- cart + active program state (persisted in localStorage) ---------- */
+    var cart = {};
+    try { cart = JSON.parse(localStorage.getItem('bfk_cart') || '{}'); } catch (e) { cart = {}; }
+    var activeProgram = null;
+    try { activeProgram = JSON.parse(localStorage.getItem('bfk_program') || 'null'); } catch (e) { activeProgram = null; }
+
+    function saveCart() { localStorage.setItem('bfk_cart', JSON.stringify(cart)); }
+    function saveProgram() { localStorage.setItem('bfk_program', JSON.stringify(activeProgram)); }
+
+    function addToCart(id, qty) {
+      cart[id] = (cart[id] || 0) + qty;
+      saveCart();
+      updateCartUI();
+      logEvent('add_to_cart', id);
+      scheduleCartReminder();
+    }
+    function setQty(id, qty) {
+      if (qty <= 0) { delete cart[id]; } else { cart[id] = qty; }
+      saveCart();
+      updateCartUI();
+      renderCartItems();
+      scheduleCartReminder();
+    }
+    function cartSubtotal() {
+      return Object.keys(cart).reduce(function (sum, id) {
+        var p = PRODUCTS.find(function (pr) { return pr.id === id; });
+        return sum + (p ? p.price * cart[id] : 0);
+      }, 0);
+    }
+    function cartDiscount(subtotal) {
+      var tier = currentTier(subtotal);
+      return tier ? Math.round(subtotal * tier.rate) : 0;
+    }
+    function cartTotal() {
+      var subtotal = cartSubtotal();
+      return subtotal - cartDiscount(subtotal);
+    }
+
+    var cartBar = document.getElementById('cartBar');
+    var inlineBanner = document.getElementById('inlineProgramBanner');
+    function updateCartUI() {
+      var ids = Object.keys(cart);
+      var count = ids.reduce(function (sum, id) { return sum + cart[id]; }, 0);
+      var subtotal = cartSubtotal();
+      var tier = currentTier(subtotal);
+      var discount = cartDiscount(subtotal);
+      var total = subtotal - discount;
+
+      document.getElementById('cartBarBadge').textContent = count;
+      document.getElementById('cartBarCount').textContent = count + ' produk';
+      document.getElementById('cartBarTotal').textContent = fmt(total);
+      document.getElementById('cartTotal').textContent = fmt(total);
+      document.getElementById('cartBarSave').textContent = discount > 0 ? '🎉 Hemat ' + fmt(discount) : '';
+
+      var subRow = document.getElementById('cartSubtotalRow');
+      var discRow = document.getElementById('cartDiscountRow');
+      if (discount > 0) {
+        subRow.style.display = 'flex';
+        discRow.style.display = 'flex';
+        document.getElementById('cartSubtotal').textContent = fmt(subtotal);
+        document.getElementById('cartDiscount').textContent = '-' + fmt(discount) + ' (' + (tier.rate * 100) + '%)';
+      } else {
+        subRow.style.display = 'none';
+        discRow.style.display = 'none';
+      }
+
+      renderSaveHighlight(subtotal, tier, discount);
+      renderTierNudge(subtotal);
+
+      var show = count > 0;
+      cartBar.classList.toggle('show', show);
+      document.body.classList.toggle('has-cart-bar', show);
+      renderProgramProgress();
+
+      // Analitik: catat isi keranjang per sesi (termasuk yang belum checkout).
+      if (count > 0) {
+        var snapshot = ids.map(function (id) {
+          var p = PRODUCTS.find(function (pr) { return pr.id === id; });
+          return p ? p.name + ' x' + cart[id] : id + ' x' + cart[id];
+        }).join(', ');
+        trackSession({ reached_cart: true, cart_snapshot: snapshot, cart_total: total });
+      }
+    }
+    function flashCartBar() { cartBar.classList.add('show'); }
+
+    /* ---------- prominent "hemat" highlight + next-tier nudge ---------- */
+    var saveHighlightEl = document.getElementById('saveHighlight');
+    var saveHighlightText = document.getElementById('saveHighlightText');
+    function renderSaveHighlight(subtotal, tier, discount) {
+      if (!tier || discount <= 0) { saveHighlightEl.classList.remove('show'); return; }
+      saveHighlightEl.classList.add('show');
+      saveHighlightText.innerHTML = 'Kamu hemat <b>' + fmt(discount) + '</b> (diskon ' + (tier.rate * 100) + '%) dari pilihan sekarang!';
+    }
+    var tierNudgeEl = document.getElementById('tierNudge');
+    function renderTierNudge(subtotal) {
+      var next = nextTier(subtotal);
+      if (!next) { tierNudgeEl.classList.remove('show'); return; }
+      var remaining = next.min - subtotal;
+      var pct = Math.min(100, Math.round((subtotal / next.min) * 100));
+      tierNudgeEl.classList.add('show');
+      tierNudgeEl.innerHTML =
+        'Tambah <b>' + fmt(remaining) + '</b> lagi untuk naik ke diskon <b>' + (next.rate * 100) + '%</b>' +
+        '<div class="tier-track"><div class="tier-track-fill" style="width:' + pct + '%;"></div></div>';
+    }
+
+    /* ---------- cart abandonment reminder (5 minutes idle with items in cart) ---------- */
+    var CART_REMINDER_MS = 5 * 60 * 1000;
+    var reminderTimer = null;
+    var reminderEl = document.getElementById('cartReminder');
+    function scheduleCartReminder() {
+      clearTimeout(reminderTimer);
+      reminderEl.classList.remove('show');
+      if (Object.keys(cart).length === 0) return;
+      reminderTimer = setTimeout(function () {
+        reminderEl.classList.add('show');
+        logEvent('cart_reminder_shown');
+      }, CART_REMINDER_MS);
+    }
+    document.getElementById('crViewBtn').addEventListener('click', function () {
+      reminderEl.classList.remove('show');
+      clearTimeout(reminderTimer);
+      openCart();
+    });
+    document.getElementById('crDismissBtn').addEventListener('click', function () {
+      reminderEl.classList.remove('show');
+      scheduleCartReminder(); // give it another idle window later
+    });
+
+    function selectProgram(prog) {
+      activeProgram = prog;
+      saveProgram();
+      renderProgramProgress();
+      document.getElementById('katalog').scrollIntoView({ behavior: 'smooth' });
+      logEvent('calculator_start', prog.id); // reuse funnel-relevant event name for "program selected"
+    }
+    function cancelProgram() {
+      activeProgram = null;
+      saveProgram();
+      renderProgramProgress();
+    }
+
+    function renderProgramProgress() {
+      var ppEl = document.getElementById('programProgress');
+      if (!activeProgram) {
+        ppEl.classList.remove('show');
+        inlineBanner.classList.remove('show');
+        return;
+      }
+      var total = cartSubtotal();
+      var pct = Math.min(100, Math.round((total / activeProgram.minSpend) * 100));
+      var reached = total >= activeProgram.minSpend;
+      var tierNow = currentTier(total);
+      var reachedText = tierNow ? '🎉 Diskon ' + (tierNow.rate * 100) + '% aktif — minimal tercapai!' : '🎉 Minimal belanja tercapai!';
+
+      ppEl.classList.add('show');
+      document.getElementById('ppLabel').textContent = activeProgram.name;
+      var fill = document.getElementById('ppFill');
+      fill.style.width = pct + '%';
+      fill.classList.toggle('reached', reached);
+      document.getElementById('ppNote').textContent = reached
+        ? reachedText
+        : fmt(total) + ' dari ' + fmt(activeProgram.minSpend) + ' — tambah ' + fmt(activeProgram.minSpend - total) + ' lagi.';
+      document.getElementById('ppCancel').onclick = cancelProgram;
+
+      inlineBanner.classList.add('show');
+      inlineBanner.innerHTML =
+        '<div class="ipb-inner"><div><b>' + activeProgram.name + ' dipilih</b><br>' +
+        '<span>' + (reached ? reachedText : fmt(total) + ' / ' + fmt(activeProgram.minSpend)) + '</span></div>' +
+        '<button type="button" id="ipbCancel">Batalkan</button></div>';
+      document.getElementById('ipbCancel').onclick = cancelProgram;
+    }
+
+    /* ---------- cart top-up suggestions (AOV booster) ---------- */
+    var topupEl = document.getElementById('cartTopup');
+    function renderTopup() {
+      if (!activeProgram) { topupEl.classList.remove('show'); return; }
+      var total = cartSubtotal();
+      var remaining = activeProgram.minSpend - total;
+      if (remaining <= 0) { topupEl.classList.remove('show'); return; }
+      var cheap = PRODUCTS.slice().sort(function (a, b) { return a.price - b.price; }).slice(0, 6);
+      topupEl.classList.add('show');
+      topupEl.innerHTML =
+        '<span class="tu-label">Tambahkan produk ini untuk lebih cepat capai minimal:</span>' +
+        '<div class="tu-row">' + cheap.map(function (p) {
+          return '<div class="tu-chip" data-quick-add-tu="' + p.id + '">' +
+            '<span class="tu-name">' + (p.image ? '' : CAT_EMOJI[p.category] + ' ') + p.name + '</span>' +
+            '<span class="tu-price">' + fmt(p.price) + '</span>' +
+            '<span class="tu-add">+ Tambah</span>' +
+          '</div>';
+        }).join('') + '</div>';
+    }
+    topupEl.addEventListener('click', function (e) {
+      var chip = e.target.closest('[data-quick-add-tu]');
+      if (!chip) return;
+      addToCart(chip.getAttribute('data-quick-add-tu'), 1);
+      renderCartItems();
+    });
+
+    /* ---------- cart drawer ---------- */
+    var cartBackdrop = document.getElementById('cartBackdrop');
+    var cartItemsEl = document.getElementById('cartItems');
+    var cartEmptyEl = document.getElementById('cartEmpty');
+    var cartFooterEl = document.getElementById('cartFooter');
+
+    function renderCartItems() {
+      var ids = Object.keys(cart);
+      renderProgramProgress();
+      renderTopup();
+      if (ids.length === 0) {
+        cartItemsEl.innerHTML = '';
+        cartEmptyEl.style.display = 'block';
+        cartFooterEl.style.display = 'none';
+        return;
+      }
+      cartEmptyEl.style.display = 'none';
+      cartFooterEl.style.display = 'block';
+      cartItemsEl.innerHTML = ids.map(function (id) {
+        var p = PRODUCTS.find(function (pr) { return pr.id === id; });
+        if (!p) return '';
+        var qty = cart[id];
+        var minusIcon = qty === 1 ? '🗑' : '−';
+        var minusLabel = qty === 1 ? 'Hapus' : 'Kurangi';
+        return '' +
+          '<div class="cart-line" data-id="' + id + '">' +
+            '<div class="ci-img">' + productImageHtml(p) + '</div>' +
+            '<div class="ci-body"><h5>' + p.name + '</h5><span class="ci-price">' + fmt(p.price) + ' / pack · ' + fmt(p.price * qty) + '</span></div>' +
+            '<div class="ci-controls">' +
+              '<div class="qty-stepper">' +
+                '<button type="button" data-act="minus" aria-label="' + minusLabel + '">' + minusIcon + '</button>' +
+                '<span>' + qty + '</span>' +
+                '<button type="button" data-act="plus" aria-label="Tambah" ' + (qty >= 99 ? 'disabled' : '') + '>+</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    cartItemsEl.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-act]');
+      if (!btn) return;
+      var line = e.target.closest('.cart-line');
+      var id = line.getAttribute('data-id');
+      var act = btn.getAttribute('data-act');
+      if (act === 'plus') setQty(id, cart[id] + 1);
+      if (act === 'minus') setQty(id, cart[id] - 1); // qty 1 → 0 removes the line (trash icon shown at qty 1)
+    });
+
+    function openCart() {
+      renderCartItems();
+      cartBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      cartBackdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('cartBarBtn').addEventListener('click', openCart);
+    document.getElementById('cartClose').addEventListener('click', closeCart);
+    cartBackdrop.addEventListener('click', function (e) { if (e.target === cartBackdrop) closeCart(); });
+
+    document.getElementById('cartCheckoutBtn').addEventListener('click', function () {
+      var ids = Object.keys(cart);
+      if (ids.length === 0) return;
+      var lines = ids.map(function (id) {
+        var p = PRODUCTS.find(function (pr) { return pr.id === id; });
+        return '- ' + p.name + ' x' + cart[id] + ' (' + fmt(p.price * cart[id]) + ')';
+      });
+      var subtotal = cartSubtotal();
+      var tier = currentTier(subtotal);
+      var discount = cartDiscount(subtotal);
+      var total = subtotal - discount;
+      var programLine = '';
+      if (activeProgram) {
+        var reached = subtotal >= activeProgram.minSpend;
+        programLine = '\n\nProgram: ' + activeProgram.name + (reached
+          ? ' (minimal belanja ' + fmt(activeProgram.minSpend) + ' tercapai)'
+          : ' (baru ' + fmt(subtotal) + ' dari minimal ' + fmt(activeProgram.minSpend) + ', mohon info kekurangannya)');
+      }
+      var totalBlock = discount > 0
+        ? '\n\nSubtotal: ' + fmt(subtotal) + '\nDiskon (' + (tier.rate * 100) + '%): -' + fmt(discount) + '\nTotal: ' + fmt(total)
+        : '\n\nTotal: ' + fmt(total);
+      var msg = 'Halo Bento for Kids, saya ingin memesan:\n\n' + lines.join('\n') +
+        totalBlock + programLine +
+        '\n\nMohon info langkah selanjutnya. Terima kasih!';
+
+      // Simpan nota/riwayat pesanan ke Google Sheets (tab ORDERS) lewat Apps Script —
+      // best-effort, tidak memblokir tombol WA kalau gagal/offline.
+      sendToSheet('order', {
+        order_id: 'order_' + Date.now(),
+        created_at: new Date().toISOString(),
+        items_summary: lines.join(' | '),
+        subtotal: subtotal,
+        discount_pct: tier ? tier.rate * 100 : 0,
+        discount_amount: discount,
+        total: total,
+        program: activeProgram ? activeProgram.name : '',
+        program_reached: activeProgram ? subtotal >= activeProgram.minSpend : false,
+        whatsapp_message: msg, // riwayat chat/nota persis yang dikirim ke WhatsApp
+        source: sessionStorage.getItem('utm_source') || 'direct',
+        medium: sessionStorage.getItem('utm_medium') || null,
+        campaign: sessionStorage.getItem('utm_campaign') || null,
+        first_reseller_code: localStorage.getItem('first_reseller_code') || null,
+        last_reseller_code: sessionStorage.getItem('last_reseller_code') || null
+      });
+
+      logEvent('whatsapp_click', 'cart_checkout');
+      reminderEl.classList.remove('show');
+      clearTimeout(reminderTimer);
+      window.open('https://wa.me/' + BUSINESS_WA + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    });
+
+    /* ---------- program cards (minimum-spend model + computed badges) ---------- */
+    var programGrid = document.getElementById('programGrid');
+    function renderPrograms() {
+      programGrid.innerHTML = PROGRAMS.map(function (prog) {
+        var estItems = Math.round(prog.minSpend / AVG_PRICE);
+        var itemsPerDay = Math.max(1, Math.round((estItems / prog.days) * 10) / 10);
+        var tier = currentTier(prog.minSpend);
+        var rate = tier ? tier.rate : 0;
+        var save = Math.round(prog.minSpend * rate);
+        return '' +
+          '<div class="program-card' + (prog.featured ? ' featured' : '') + '">' +
+            (prog.featured ? '<div class="tag">Populer</div>' : '') +
+            '<div class="dur">' + prog.days + ' <span>hari</span></div>' +
+            '<h3>' + prog.name + '</h3>' +
+            '<p>' + prog.desc + '</p>' +
+            '<div class="min-spend">' + fmt(prog.minSpend) + '<span>Minimal belanja</span></div>' +
+            '<div class="program-badges">' +
+              '<span class="p-badge pb-day">≈' + itemsPerDay + ' bekal/hari</span>' +
+              '<span class="p-badge pb-count">Isi ≈' + estItems + ' produk/paket</span>' +
+              '<span class="p-badge pb-save">Hemat ' + fmt(save) + ' (' + (rate * 100) + '%)</span>' +
+            '</div>' +
+            '<p class="program-note">Estimasi isi paket &amp; hemat dihitung dari rata-rata harga katalog — jumlah aktual tergantung menu yang dipilih.</p>' +
+            '<ul class="incl">' +
+              '<li><span>✓</span> Pilih sendiri menu dari katalog di atas</li>' +
+              '<li><span>✓</span> Diskon bertingkat: 5% / 8% / 10% otomatis sesuai total belanja</li>' +
+            '</ul>' +
+            '<button class="btn btn-primary" type="button" data-select-program="' + prog.id + '">Pilih Program Ini</button>' +
+          '</div>';
+      }).join('');
+    }
+    renderPrograms();
+
+    programGrid.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-select-program]');
+      if (!btn) return;
+      var prog = PROGRAMS.find(function (p) { return p.id === btn.getAttribute('data-select-program'); });
+      if (prog) selectProgram(prog);
+    });
+
+    /* ---------- shared event logger (console + GA4/Meta lewat bfkTrack) ---------- */
+    function logEvent(name, productId) {
+      var payload = {
+        event_name: name,
+        page: window.location.pathname,
+        source: sessionStorage.getItem('utm_source') || null,
+        medium: sessionStorage.getItem('utm_medium') || null,
+        campaign: sessionStorage.getItem('utm_campaign') || null,
+        reseller_code: sessionStorage.getItem('last_reseller_code') || null,
+        product_id: productId || null
+      };
+      bfkTrack(name, payload);
+      if (name === 'product_view' || name === 'add_to_cart') trackSession({ reached_catalog: true });
+    }
+
+    // ESC closes whichever overlay is open
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (modalBackdrop.classList.contains('open')) closeModal();
+      if (cartBackdrop.classList.contains('open')) closeCart();
+    });
+
+    renderGrid('all');
+    updateCartUI();
+    scheduleCartReminder();
+    fetchCatalogFromSheet(); // timpa data bawaan dengan produk/promo terbaru dari Sheets (kalau ada)
+  })();
+</script>
+
+</body>
+</html>
