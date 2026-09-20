@@ -487,7 +487,8 @@
   .final-ctas{display:flex; flex-wrap:wrap; gap:14px; justify-content:center;}
   .final-cta .btn-primary{background:var(--white); color:var(--coral);}
   .final-cta .btn-primary:hover{background:#fff2ee;}
-  .final-cta .btn-wa{background:var(--moss-dark);}
+  .final-cta .btn-wa{background:var(--wa); color:#fff;}
+  .final-cta .btn-wa:hover{background:var(--wa-dark);}
 
   /* ---------- Lead Form ---------- */
   .form-wrap{
@@ -707,6 +708,53 @@
   .rot-day{flex:none; width:52px; font-weight:800; color:var(--moss-dark); font-family:'Baloo 2',sans-serif;}
   .rot-main b{display:block;}
   .rot-main small{color:var(--ink-soft); font-size:12px;}
+
+  /* ---------- Sistem tombol yang jelas (hasil uji pengguna awam) ----------
+     Coral      = aksi utama di bagian itu (hanya SATU per bagian)
+     Hijau + ikon WhatsApp = pergi chat WhatsApp (selalu tampil dengan ikon)
+     Garis tepi = pilihan lain; teks bergaris bawah = tautan tambahan            */
+  :root{ --wa:#15803D; --wa-dark:#166534; --coral-btn:#C8492F; --coral-btn-dark:#B03D26; }
+  .btn-primary{background:var(--coral-btn);}
+  .btn-primary:hover{background:var(--coral-btn-dark);}
+  .btn-wa{background:var(--wa);}
+  .btn-wa:hover{background:var(--wa-dark);}
+  .btn-wa::before{content:''; flex:none; width:20px; height:20px; background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='white'%3E%3Cpath%20d='M12.04%202C6.58%202%202.13%206.45%202.13%2011.91c0%201.75.46%203.46%201.32%204.96L2%2022l5.25-1.38a9.9%209.9%200%200%200%204.79%201.22h.01c5.46%200%209.91-4.45%209.91-9.91C21.96%206.45%2017.5%202%2012.04%202zm0%2018.02h-.01a8.1%208.1%200%200%201-4.14-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.1%208.1%200%200%201-1.24-4.32c0-4.48%203.65-8.13%208.15-8.13%202.18%200%204.22.85%205.76%202.39a8.09%208.09%200%200%201%202.38%205.76c0%204.48-3.65%208.14-8.12%208.14zm4.47-6.1c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.22-1.44-1.36-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.42-.55-.42-.14%200-.3-.02-.47-.02-.16%200-.43.06-.65.31-.22.24-.86.84-.86%202.04%200%201.2.88%202.36%201%202.52.12.16%201.73%202.65%204.2%203.71.59.25%201.05.4%201.41.52.59.19%201.13.16%201.56.1.48-.07%201.45-.59%201.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z'/%3E%3C/svg%3E") center/contain no-repeat;}
+  .btn-light{background:transparent; border-color:#fff; color:#fff;}
+  .btn-light:hover{background:#fff; color:var(--coral-btn);}
+  .p-card .p-add{background:var(--coral-btn);}
+  .p-card .p-add.in-cart{background:var(--marigold);}
+  .wa-float{background:var(--wa); width:auto; min-width:56px; height:56px; padding:0 18px 0 15px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;}
+  .wa-float:hover{background:var(--wa-dark);}
+  .wa-float span{font-family:'Baloo 2',sans-serif; font-weight:600; font-size:15px; color:#fff; white-space:nowrap;}
+  .wa-float .wf-long{display:none;}
+  @media(min-width:720px){ .wa-float .wf-short{display:none;} .wa-float .wf-long{display:inline;} }
+  .btn-hint{font-size:13px; color:var(--ink-soft); margin:8px 0 0; line-height:1.4;}
+  .program-card .btn-hint{text-align:center;}
+  .calc-band .btn-hint{color:#DCE7D8; margin-top:12px;}
+  .link-quiet{display:inline-block; font-weight:700; font-size:14.5px; color:var(--moss-dark); text-decoration:underline; text-underline-offset:3px;}
+  .link-quiet:hover{color:var(--coral-btn);}
+  .path-title{font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px; color:var(--moss-dark); margin:22px 0 10px;}
+  .path-list{display:grid; gap:10px; max-width:520px;}
+  a.path{display:flex; align-items:center; gap:14px; padding:13px 16px; border-radius:18px; text-decoration:none; color:var(--ink); background:var(--white); border:2px solid var(--moss-dark); min-height:64px; transition:transform .12s ease, box-shadow .12s ease;}
+  a.path:hover{box-shadow:0 8px 20px rgba(38,50,48,.12); transform:translateY(-1px);}
+  a.path:active{transform:scale(.985);}
+  a.path:focus-visible{outline:3px solid var(--coral); outline-offset:2px;}
+  a.path.main{background:var(--coral-btn); border-color:var(--coral-btn); color:#fff;}
+  a.path.wa{border-color:var(--wa);}
+  a.path .pi{font-size:26px; line-height:1; flex:none;}
+  a.path .pt{display:block; flex:1; min-width:0;}
+  a.path .pt b{display:block; font-family:'Baloo 2',sans-serif; font-size:17px; line-height:1.15;}
+  a.path .pt small{display:block; font-size:13px; margin-top:2px; opacity:.85; line-height:1.35;}
+  a.path .arr{flex:none; font-size:20px; font-weight:700;}
+  .hero .link-quiet{margin:14px 0 6px;}
+  .how-order{display:grid; gap:8px; list-style:none; margin:0 0 22px; padding:0;}
+  @media(min-width:720px){ .how-order{grid-template-columns:repeat(3,1fr);} }
+  .how-order li{display:flex; gap:10px; align-items:center; background:var(--white); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:13.5px; font-weight:600;}
+  .how-order b{flex:none; width:26px; height:26px; border-radius:50%; background:var(--coral-btn); color:#fff; display:grid; place-items:center; font-size:13px;}
+  .persona{cursor:default;} .persona:hover{border-color:var(--line);}
+  /* di HP, ikon "Chat" baru muncul setelah bagian hero (di hero sudah ada jalur "Tanya lewat WhatsApp") */
+  .wa-float{transition:opacity .2s ease;}
+  @media(max-width:719px){ body:not(.scrolled) .wa-float{opacity:0; pointer-events:none;} }
 </style>
 
 <script>
@@ -763,10 +811,10 @@
       <a href="#edukasi">Edukasi</a>
       <a href="#komunitas">Komunitas</a>
       <a href="#katalog">Menu</a>
-      <a href="#kalkulator">Kalkulator</a>
+      <a href="#kalkulator">Hitung Gizi</a>
     </nav>
     <a class="btn btn-wa nav-cta" href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20bertanya%20tentang%20bekal%20anak." target="_blank" rel="noopener" data-event="whatsapp_click" data-source="header">
-      Ngobrol via WhatsApp
+      Chat WhatsApp
     </a>
   </div>
 </header>
@@ -780,10 +828,19 @@
         <span class="eyebrow-loc">❤️ Healthy food · Healthy habits · Happy kids</span>
         <h1>Kebiasaan sehat dimulai sejak mereka kecil</h1>
         <p class="sub">Bento for Kids lahir dari seorang ibu yang menyiapkan bekal untuk anaknya. Kini kami menemani keluarga Indonesia membangun hidup sehat, dari meja makan sampai tumbuh kembang si kecil.</p>
-        <div class="hero-ctas">
-          <a href="#cerita" class="btn btn-primary" data-event="hero_cta_click" data-cta="story">Baca Cerita Kami</a>
-          <a href="#kalkulator" class="btn btn-secondary" data-open-calc data-event="hero_cta_click" data-cta="calculator">Hitung Kebutuhan Gizi Anak</a>
+        <p class="path-title">Anda ke sini untuk apa?</p>
+        <div class="path-list" role="list">
+          <a class="path main" role="listitem" href="#katalog" data-event="hero_cta_click" data-cta="menu">
+            <span class="pi" aria-hidden="true">🍱</span><span class="pt"><b>Lihat menu &amp; harga</b><small>Pilih frozen food favorit si kecil</small></span><span class="arr" aria-hidden="true">↓</span>
+          </a>
+          <a class="path" role="listitem" href="#kalkulator" data-open-calc data-event="hero_cta_click" data-cta="calculator">
+            <span class="pi" aria-hidden="true">🧮</span><span class="pt"><b>Hitung gizi si kecil</b><small>Cuma ±20 detik, hasil langsung muncul</small></span><span class="arr" aria-hidden="true">→</span>
+          </a>
+          <a class="path wa" role="listitem" href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="hero_path">
+            <span class="pi" aria-hidden="true">💬</span><span class="pt"><b>Tanya lewat WhatsApp</b><small>Isi 5 kolom singkat (±30 detik), lalu chat</small></span><span class="arr" aria-hidden="true">→</span>
+          </a>
         </div>
+        <a href="#cerita" class="link-quiet" data-event="hero_cta_click" data-cta="story">Baca cerita kami ↓</a>
         <div class="badges">
           <span class="badge">🌱 Tanpa MSG &amp; pengawet</span>
           <span class="badge">🍱 Homemade Non 3P</span>
@@ -854,40 +911,35 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Siapa yang kami temani?</h2>
-        <p>Klik yang paling sesuai dengan Anda, boleh pilih lebih dari satu.</p>
+        <p>Bento for Kids hadir untuk keluarga dan komunitas berikut.</p>
       </div>
       <div class="persona-grid" id="personaGrid">
         <div class="persona" data-label="Orang Tua dengan Anak 3–12 Tahun">
-          <input type="checkbox" aria-label="Pilih: Orang Tua dengan Anak 3–12 Tahun">
           <div class="icon">👨‍👩‍👧</div>
           <h3>Orang Tua dengan Anak 3–12 Tahun</h3>
           <p>Sedang membangun kebiasaan makan sehat di rumah dan ingin ditemani.</p>
           <div class="fit">Mulai dari: kalkulator gizi &amp; ide bekal.</div>
         </div>
         <div class="persona" data-label="Komunitas Parenting">
-          <input type="checkbox" aria-label="Pilih: Komunitas Parenting">
           <div class="icon">🤝</div>
           <h3>Komunitas Parenting</h3>
           <p>Ingin belajar bersama dan berbagi pengalaman dengan sesama orang tua.</p>
           <div class="fit">Mulai dari: bergabung di komunitas.</div>
         </div>
         <div class="persona" data-label="Kelas Bermain &amp; Sekolah">
-          <input type="checkbox" aria-label="Pilih: Kelas Bermain dan Sekolah">
           <div class="icon">🧸</div>
           <h3>Kelas Bermain &amp; Sekolah</h3>
           <p>Mencari kegiatan food education, cooking class, atau catering acara anak.</p>
           <div class="fit">Mulai dari: ngobrol soal acara Anda.</div>
         </div>
         <div class="persona" data-label="Dapur SPPG">
-          <input type="checkbox" aria-label="Pilih: Dapur SPPG">
           <div class="icon">🍲</div>
           <h3>Dapur SPPG</h3>
           <p>Mencari mitra menu anak yang bergizi, menarik, dan sesuai usia.</p>
           <div class="fit">Mulai dari: ngobrol soal kemitraan.</div>
         </div>
       </div>
-      <p class="persona-result" id="personaResult"></p>
-    </div>
+          </div>
   </section>
 
   <!-- ============ CALCULATOR CTA ============ -->
@@ -896,6 +948,7 @@
       <h2>Ingin tahu apa yang dibutuhkan si kecil untuk tumbuh?</h2>
       <p>Isi usia, berat, dan tinggi anak. Kami hitungkan kebutuhan energi dan zat gizinya dengan tenang, berdasarkan AKG Kemenkes RI.</p>
       <button type="button" class="btn btn-primary" data-open-calc data-event="calculator_start" data-source="calc_band">Hitung Kebutuhan Gizi Anak</button>
+      <p class="btn-hint">Tanpa daftar akun · hasil langsung muncul</p>
     </div>
   </section>
 
@@ -907,6 +960,11 @@
         <h2>Healthy Food Made For Little Ones</h2>
         <p>Frozen food kami dibuat untuk membantu orang tua menyediakan pilihan makanan yang praktis dan bernutrisi, tanpa MSG dan pengawet. Praktis untuk orang tua, menyenangkan untuk anak. Tahan 2 hari di chiller dan 6 bulan di freezer.</p>
       </div>
+      <ol class="how-order" aria-label="Cara memesan">
+        <li><b>1</b> Pilih menu, tap “+ Keranjang”</li>
+        <li><b>2</b> Buka keranjang, tekan “Pesan via WhatsApp”</li>
+        <li><b>3</b> Isi data singkat, lalu konfirmasi lewat chat</li>
+      </ol>
 
       <div class="inline-program-banner" id="inlineProgramBanner"></div>
 
@@ -949,6 +1007,7 @@
       </div>
       <div class="section-cta">
         <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20berdiskusi%20tentang%20catering%20acara%20anak." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="catering">Ceritakan acara Anda</a>
+        <span class="note">Isi form singkat ±30 detik, lalu chat WhatsApp</span>
       </div>
     </div>
   </section>
@@ -967,7 +1026,8 @@
         <div class="mini-card"><div class="icon">🖍️</div><h3>Creative Activities</h3><p>Aktivitas kreatif lewat mewarnai bertema makanan dan kesehatan.</p></div>
       </div>
       <div class="section-cta">
-        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20tahu%20info%20kegiatan%20cooking%20class%20dan%20food%20education." class="btn btn-secondary" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="activity">Tanya info kegiatan</a>
+        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20tahu%20info%20kegiatan%20cooking%20class%20dan%20food%20education." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="activity">Tanya info kegiatan</a>
+        <span class="note">Isi form singkat ±30 detik, lalu chat WhatsApp</span>
       </div>
     </div>
   </section>
@@ -989,8 +1049,8 @@
         <div class="edu-item"><span>🌱</span> Healthy habits</div>
       </div>
       <div class="section-cta">
-        <a href="https://instagram.com/bento.forkids" class="btn btn-secondary" target="_blank" rel="noopener" data-event="hero_cta_click" data-cta="edu_instagram">Ikuti tips di @bento.forkids</a>
         <a href="#kalkulator" class="btn btn-primary" data-open-calc data-event="calculator_start" data-source="edu_section">Mulai dari kalkulator gizi</a>
+        <a href="https://instagram.com/bento.forkids" class="link-quiet" target="_blank" rel="noopener" data-event="hero_cta_click" data-cta="edu_instagram">Atau ikuti tips di Instagram @bento.forkids →</a>
       </div>
     </div>
   </section>
@@ -1005,7 +1065,8 @@
         <div class="community-tags"><span>Food education</span><span>Cooking class</span><span>Affiliate</span></div>
         <div class="final-ctas">
           <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20bergabung%20di%20komunitas%20orang%20tua%20Bento%20for%20Kids." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="community_join">Gabung komunitas</a>
-          <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20tertarik%20menjadi%20affiliate%20atau%20reseller." class="btn btn-secondary" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="community_affiliate">Tertarik jadi affiliate</a>
+          <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20tertarik%20menjadi%20affiliate%20atau%20reseller." class="link-quiet" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="community_affiliate">Atau: tertarik jadi affiliate / reseller →</a>
+          <p class="btn-hint" style="flex-basis:100%;text-align:center;">Isi form singkat ±30 detik, lalu chat WhatsApp</p>
         </div>
       </div>
     </div>
@@ -1071,7 +1132,8 @@
           <span>Total</span>
           <b id="cartTotal">Rp0</b>
         </div>
-        <button class="btn btn-wa" id="cartCheckoutBtn" style="width:100%;">Checkout via WhatsApp</button>
+        <button class="btn btn-wa" id="cartCheckoutBtn" style="width:100%;">Pesan via WhatsApp</button>
+        <p class="btn-hint" style="text-align:center;">Isi data singkat, lalu chat WhatsApp untuk konfirmasi &amp; pembayaran.</p>
         <p class="cart-customer" id="cartCustomer"></p>
       </div>
     </div>
@@ -1238,7 +1300,7 @@
               <label for="lf-consent">Saya bersedia menerima informasi mengenai Bento for Kids melalui WhatsApp.</label>
             </div>
 
-            <button type="submit" class="btn btn-primary" data-event="lead_form_start">Gabung &amp; Dapatkan Katalog</button>
+            <button type="submit" class="btn btn-wa" data-event="lead_form_start">Kirim &amp; Lanjut ke WhatsApp</button>
             <p class="form-disclaimer">Data hanya dipakai untuk melayani Anda dan tersimpan di perangkat ini, jadi lain kali tidak perlu mengisi lagi.</p>
           </form>
 
@@ -1260,8 +1322,8 @@
       <h2>Let’s Raise Healthy &amp; Happy Kids Together</h2>
       <ul class="final-lines"><li>Mulai dari hal sederhana</li><li>Mulai dari rumah</li><li>Mulai hari ini</li></ul>
       <div class="final-ctas">
-        <a href="#dapatkan-katalog" class="btn btn-primary" data-event="hero_cta_click" data-cta="final_form">Mari mulai bersama</a>
-        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20ngobrol%20tentang%20kebiasaan%20makan%20sehat%20untuk%20anak%20saya." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="final_cta">Ngobrol dengan kami</a>
+        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20ngobrol%20tentang%20kebiasaan%20makan%20sehat%20untuk%20anak%20saya." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="final_cta">Chat via WhatsApp</a>
+        <a href="#katalog" class="btn btn-light" data-event="hero_cta_click" data-cta="final_menu">Lihat menu &amp; harga</a>
       </div>
     </div>
   </section>
@@ -1284,6 +1346,7 @@
 
 <a class="wa-float" href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids" target="_blank" rel="noopener" aria-label="Chat via WhatsApp" data-event="whatsapp_click" data-source="float_button">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.14-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.1 8.1 0 0 1-1.24-4.32c0-4.48 3.65-8.13 8.15-8.13 2.18 0 4.22.85 5.76 2.39a8.09 8.09 0 0 1 2.38 5.76c0 4.48-3.65 8.14-8.12 8.14zm4.47-6.1c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.22-1.44-1.36-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.42-.55-.42-.14 0-.3-.02-.47-.02-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.73 2.65 4.2 3.71.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
+  <span class="wf-short">Chat</span><span class="wf-long">Chat WhatsApp</span>
 </a>
 
   <!-- ============ KALKULATOR GIZI ANAK (POPUP) ============ -->
@@ -2045,6 +2108,11 @@
     });
   })();
 
+  (function () {
+    function u() { document.body.classList.toggle('scrolled', window.scrollY > 480); }
+    window.addEventListener('scroll', u, { passive: true }); u();
+  })();
+
   /* =================================================================
      COACH — bubble panduan kecil yang muncul saat pengunjung sampai di
      section tertentu: menegaskan bahwa mengisi itu cepat & mudah.
@@ -2582,36 +2650,6 @@
     });
   })();
 
-  /* ---- Interactive "who is this for" persona picker ---- */
-  (function () {
-    var grid = document.getElementById('personaGrid');
-    var result = document.getElementById('personaResult');
-    if (!grid) return;
-    var cards = Array.prototype.slice.call(grid.querySelectorAll('.persona'));
-
-    function update() {
-      var selected = cards.filter(function (c) { return c.querySelector('input').checked; });
-      cards.forEach(function (c) {
-        c.classList.toggle('selected', c.querySelector('input').checked);
-      });
-      if (selected.length === 0) {
-        result.classList.remove('show');
-        return;
-      }
-      var labels = selected.map(function (c) { return c.getAttribute('data-label'); }).join(', ');
-      result.innerHTML = 'Cocok untuk Anda: ' + labels + ' — <a href="#dapatkan-katalog">ngobrol dengan kami →</a>';
-      result.classList.add('show');
-    }
-
-    cards.forEach(function (card) {
-      var cb = card.querySelector('input');
-      card.addEventListener('click', function (e) {
-        if (e.target !== cb) cb.checked = !cb.checked;
-        update();
-      });
-    });
-  })();
-
   /* =================================================================
      PRODUCT CATALOG + CART (Shopee-style, popup-based, no page nav)
      ================================================================= */
@@ -2936,7 +2974,7 @@
       saveProgram();
       renderProgramProgress();
       document.getElementById('katalog').scrollIntoView({ behavior: 'smooth' });
-      logEvent('calculator_start', prog.id); // reuse funnel-relevant event name for "program selected"
+      logEvent('program_select', prog.id);
     }
     function cancelProgram() {
       activeProgram = null;
@@ -3062,10 +3100,10 @@
         cartCustomerEl.appendChild(document.createTextNode(' · '));
         var ed = document.createElement('button'); ed.type = 'button'; ed.id = 'cartEditCustomer'; ed.textContent = 'ubah data';
         cartCustomerEl.appendChild(ed);
-        checkoutBtnEl.textContent = 'Checkout via WhatsApp';
+        checkoutBtnEl.textContent = 'Pesan via WhatsApp';
       } else {
         cartCustomerEl.textContent = 'Anda akan diminta mengisi data pemesan sebelum ke WhatsApp.';
-        checkoutBtnEl.textContent = 'Isi Data & Checkout via WhatsApp';
+        checkoutBtnEl.textContent = 'Pesan via WhatsApp';
       }
     }
     cartCustomerEl.addEventListener('click', function (e) {
@@ -3181,7 +3219,8 @@
               '<li><span>✓</span> Pilih sendiri menu dari katalog di atas</li>' +
               '<li><span>✓</span> Diskon bertingkat: 5% / 8% / 10% otomatis sesuai total belanja</li>' +
             '</ul>' +
-            '<button class="btn btn-primary" type="button" data-select-program="' + prog.id + '">Pilih Program Ini</button>' +
+            '<button class="btn ' + (prog.featured ? 'btn-primary' : 'btn-secondary') + '" type="button" data-select-program="' + prog.id + '">Pilih Program ' + prog.days + ' Hari</button>' +
+            '<p class="btn-hint">Berikutnya: pilih menu di katalog.</p>' +
           '</div>';
       }).join('');
     }
