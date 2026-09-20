@@ -118,6 +118,43 @@
   .lk-ctrl .eos-del{background:none;}
   @media(max-width:760px){ .link-row{grid-template-columns:58px 1fr;} .link-row .r2{grid-template-columns:1fr 1fr;} }
   .lk-act{display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--ink-soft); white-space:nowrap;}
+
+  /* ---- Foto produk (unggah ke Drive, 1:1) ---- */
+  .p-row{grid-template-columns:1.3fr .95fr .7fr 1.75fr 1.4fr .6fr auto;}
+  .ph{display:flex; gap:8px; align-items:flex-start;}
+  .ph-box{flex:none; width:64px; height:64px; border-radius:10px; background:var(--cream-2); border:1.5px dashed var(--line); display:grid; place-items:center; overflow:hidden; cursor:pointer; font-size:10.5px; color:var(--ink-soft); text-align:center; line-height:1.25; padding:0;}
+  .ph-box img{width:100%; height:100%; object-fit:cover; display:block;}
+  .ph-box.drag{border-color:var(--coral); background:#FFF4E0;}
+  .ph-box .bad{color:#B03A2E; font-weight:700;}
+  .ph-side{flex:1; min-width:0; display:grid; gap:4px;}
+  .ph-btns{display:flex; gap:4px; flex-wrap:wrap;}
+  .ph-btns button{padding:4px 8px; font-size:11.5px;}
+  .ph-side input[type=text]{font-size:11.5px; padding:4px 6px;}
+  .ph-msg{font-size:11px; color:var(--ink-soft); min-height:14px; line-height:1.3;}
+  .ph-msg.err{color:#B03A2E; font-weight:600;} .ph-msg.ok{color:#2E7D32; font-weight:600;}
+  .crop-backdrop{position:fixed; inset:0; background:rgba(38,50,48,.55); display:none; align-items:center; justify-content:center; z-index:200; padding:14px;}
+  .crop-backdrop.open{display:flex;}
+  .crop-sheet{background:var(--white); border-radius:18px; padding:20px; width:100%; max-width:440px; max-height:94vh; overflow:auto;}
+  .crop-sheet.wide{max-width:720px;}
+  .crop-sheet h3{margin:0 0 4px;}
+  .crop-stage{margin:10px auto; width:100%; max-width:360px; aspect-ratio:1/1; border-radius:12px; overflow:hidden; border:2px solid var(--moss); touch-action:none; background:#F3ECD9;}
+  .crop-stage canvas{width:100%; height:100%; display:block; cursor:grab;}
+  .crop-stage canvas:active{cursor:grabbing;}
+  .crop-tools{display:grid; gap:10px; margin:6px 0;}
+  .crop-tools label{font-size:12.5px; font-weight:700; color:var(--ink-soft); display:flex; align-items:center; gap:10px;}
+  .crop-tools input[type=range]{flex:1;}
+  .seg2{display:grid; grid-template-columns:1fr 1fr; gap:6px;}
+  .seg2 button{background:var(--cream-2); color:var(--moss-dark); padding:8px; font-size:13px;}
+  .seg2 button.on{background:var(--moss); color:#fff;}
+  .crop-info{font-size:12px; color:var(--ink-soft); margin:6px 0; line-height:1.45;}
+  .crop-actions{display:flex; gap:8px; justify-content:flex-end; margin-top:10px;}
+  .pick-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; margin:10px 0;}
+  .pick-tile{background:var(--cream-2); border:1.5px solid var(--line); border-radius:12px; padding:6px; text-align:left; cursor:pointer; color:var(--ink);}
+  .pick-tile:hover{border-color:var(--moss);}
+  .pick-tile .th{aspect-ratio:1/1; background:#fff; border-radius:8px; overflow:hidden; display:grid; place-items:center; font-size:10px; color:var(--ink-soft);}
+  .pick-tile img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pick-tile span{display:block; font-size:11px; font-weight:600; margin-top:4px; word-break:break-all; line-height:1.25;}
+  .pick-tile small{font-size:10.5px; color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -213,12 +250,12 @@
       <div class="card">
         <h3>Kelola Produk</h3>
         <p style="font-size:12.5px; color:var(--ink-soft);">
-          Ubah harga, deskripsi, atau nonaktifkan produk. Untuk gambar, tempel alamat gambar langsung
-          (mis. <code>/images/nugget-ayam.jpg</code> setelah file diunggah ke folder web, atau link gambar
-          berakhiran .jpg/.png). Link berbagi Google Drive biasa sering tidak bisa tampil sebagai gambar.
+          Ubah harga, deskripsi, atau nonaktifkan produk. <b>Foto:</b> klik kotak foto (atau seret file ke sana),
+          atur posisinya dalam kotak 1:1, lalu klik <i>Optimalkan &amp; Unggah</i>. Foto otomatis dikecilkan
+          (WebP, ±30–120 KB) dan disimpan di folder Google Drive bisnis Anda.
         </p>
         <div class="p-row head">
-          <span>Nama</span><span>Kategori</span><span>Harga</span><span>URL Gambar</span><span>Deskripsi</span><span>Aktif</span><span></span>
+          <span>Nama</span><span>Kategori</span><span>Harga</span><span>Foto (1:1)</span><span>Deskripsi</span><span>Aktif</span><span></span>
         </div>
         <div id="productList"></div>
         <button class="btn-ghost" id="addProductBtn" type="button" style="margin-top:12px;">+ Tambah Produk Baru</button>
@@ -327,6 +364,39 @@
   </div>
 </div>
 
+  <!-- ===== Modal atur & optimalkan foto (1:1) ===== -->
+  <div class="crop-backdrop" id="cropBackdrop">
+    <div class="crop-sheet" role="dialog" aria-modal="true" aria-labelledby="cropTitle">
+      <h3 id="cropTitle">Atur foto produk (kotak 1:1)</h3>
+      <p class="crop-info" id="cropInfo">Geser foto untuk mengatur posisi, geser slider untuk memperbesar.</p>
+      <div class="crop-stage"><canvas id="cropCanvas" width="720" height="720"></canvas></div>
+      <div class="crop-tools">
+        <label>Perbesar <input type="range" id="cropZoom" min="1" max="4" step="0.01" value="1"></label>
+        <div class="seg2">
+          <button type="button" id="cropModeCover" class="on">Isi penuh (dipotong kotak)</button>
+          <button type="button" id="cropModeContain">Muat semua (beri latar krem)</button>
+        </div>
+      </div>
+      <p class="crop-info" id="cropEst"></p>
+      <div class="crop-actions">
+        <button type="button" class="btn-ghost" id="cropCancel">Batal</button>
+        <button type="button" class="btn-primary" id="cropUse">Optimalkan &amp; Unggah</button>
+      </div>
+      <p class="ph-msg" id="cropMsg"></p>
+    </div>
+  </div>
+
+  <!-- ===== Modal pilih foto dari folder Drive ===== -->
+  <div class="crop-backdrop" id="pickBackdrop">
+    <div class="crop-sheet wide" role="dialog" aria-modal="true" aria-labelledby="pickTitle">
+      <h3 id="pickTitle">Pilih foto dari folder Drive</h3>
+      <p class="crop-info">Foto yang dipilih otomatis dibagikan sebagai "siapa saja dengan link" dan dipotong 1:1 di tengah. Untuk hasil terbaik dan ukuran paling ringan, lebih baik unggah lewat tombol "Unggah".</p>
+      <div class="pick-grid" id="pickGrid"></div>
+      <div class="crop-actions"><button type="button" class="btn-ghost" id="pickClose">Tutup</button></div>
+      <p class="ph-msg" id="pickMsg"></p>
+    </div>
+  </div>
+
 <script>
   // Samakan dengan CONFIG.APPS_SCRIPT_URL di index.html
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz94KoVYS7YGz2DxN9pVyGRaeq6BtsZm3OzVuR7p_K5DQvlETZ9rcOuMmQecmYLkSrW/exec';
@@ -392,6 +462,7 @@
   function renderProducts() {
     var list = document.getElementById('productList');
     list.innerHTML = DATA.products.map(function (p, i) { return productRowHtml(p, i); }).join('');
+    [].forEach.call(list.querySelectorAll('.p-wrap'), phRefresh);
   }
   // Kategori harus sama dengan filter di katalog web (index.html). Kategori baru perlu ditambahkan juga di index.html.
   var PRODUCT_CATEGORIES = [
@@ -425,7 +496,10 @@
           return '<option value="' + c[0] + '"' + (p.category === c[0] ? ' selected' : '') + '>' + c[1] + '</option>';
         }).join('') + (p.category && !PRODUCT_CATEGORIES.some(function (c) { return c[0] === p.category; }) ? '<option value="' + esc(p.category) + '" selected>' + esc(p.category) + ' (tidak dikenal)</option>' : '') + '</select>' +
         '<input type="number" data-f="price" value="' + (p.price || 0) + '">' +
-        '<input type="text" data-f="image" value="' + esc(p.image) + '" placeholder="https://...">' +
+        '<div class="ph"><div class="ph-box" title="Klik untuk unggah, atau seret foto ke sini">Klik untuk<br>unggah foto</div>' +
+          '<div class="ph-side"><div class="ph-btns"><button type="button" class="btn-ghost" data-ph-open>Unggah</button><button type="button" class="btn-ghost" data-ph-pick>Dari Drive</button><button type="button" class="btn-ghost" data-ph-clear title="Lepas foto">✕</button></div>' +
+          '<input type="text" data-f="image" value="' + esc(p.image) + '" placeholder="atau tempel alamat gambar">' +
+          '<input type="file" accept="image/*" hidden data-ph-file><span class="ph-msg" data-ph-msg></span></div></div>' +
         '<input type="text" data-f="desc" value="' + esc(p.desc) + '" placeholder="Deskripsi singkat">' +
         '<select data-f="active"><option value="yes"' + (p.active !== false ? ' selected' : '') + '>Aktif</option><option value="no"' + (p.active === false ? ' selected' : '') + '>Nonaktif</option></select>' +
         '<button class="btn-primary" data-save="' + i + '" type="button">Simpan</button>' +
@@ -435,9 +509,7 @@
     DATA.products.push({ id: 'produk-' + Date.now(), name: '', category: 'nugget', price: 0, image: '', desc: '', active: true });
     renderProducts();
   });
-  document.getElementById('productList').addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-save]');
-    if (!btn) return;
+  function saveProductRow(btn) {
     var idx = Number(btn.getAttribute('data-save'));
     var row = btn.closest('.p-wrap');
     var p = DATA.products[idx];
@@ -457,14 +529,237 @@
     p.nutrition = hasKcal ? nut : null;
     if (!p.id) p.id = (p.name || 'produk').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
     btn.textContent = 'Menyimpan...';
-    fetch(APPS_SCRIPT_URL, {
+    return fetch(APPS_SCRIPT_URL, {
       method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ type: 'product_update', password: password, product: p })
     }).then(function (r) { return r.json(); }).then(function (res) {
       btn.textContent = res.ok ? 'Tersimpan ✓' : 'Gagal';
       setTimeout(function () { btn.textContent = 'Simpan'; }, 1500);
-    });
+      return res;
+    }).catch(function () { btn.textContent = 'Gagal'; setTimeout(function () { btn.textContent = 'Simpan'; }, 1500); });
+  }
+  document.getElementById('productList').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-save]');
+    if (btn) saveProductRow(btn);
   });
+
+  /* ---------- FOTO PRODUK: unggah ke Google Drive (dipotong 1:1, WebP ringan) ---------- */
+  var OUT_SIZES = [800, 640];        // ukuran sisi foto (px); 640 dipakai bila 800 masih > batas
+  var MAX_KB = 130;                  // target ukuran akhir
+  var PREV = 720;                    // resolusi kanvas pratinjau
+  var PH_LH3 = /^https:\/\/lh3\.googleusercontent\.com\/d\/([A-Za-z0-9_-]+)/;
+  var crop = null;
+
+  function phThumb(url) {
+    var m = PH_LH3.exec(url || ''); if (!m) return url;
+    return 'https://lh3.googleusercontent.com/d/' + m[1] + (/=w\d+-h\d+-c/.test(url) ? '=w160-h160-c' : '=s160');
+  }
+  function phMsg(row, text, cls) { var m = row.querySelector('[data-ph-msg]'); if (m) { m.textContent = text || ''; m.className = 'ph-msg ' + (cls || ''); } }
+  function phRefresh(row) {
+    var url = row.querySelector('input[data-f="image"]').value.trim(), box = row.querySelector('.ph-box');
+    if (!url) { box.innerHTML = 'Klik untuk<br>unggah foto'; return; }
+    box.innerHTML = '';
+    var img = document.createElement('img'); img.alt = ''; img.referrerPolicy = 'no-referrer';
+    img.onerror = function () { box.innerHTML = '<span class="bad">Tidak bisa<br>tampil</span>'; };
+    img.src = phThumb(url); box.appendChild(img);
+  }
+  function fmtKB(n) { return n >= 1048576 ? (n / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.round(n / 1024) + ' KB'; }
+
+  function loadImage(file) {
+    if (window.createImageBitmap) {
+      return createImageBitmap(file, { imageOrientation: 'from-image' }).then(function (b) { return { img: b, w: b.width, h: b.height }; })
+        .catch(function () { return loadImageEl(file); });
+    }
+    return loadImageEl(file);
+  }
+  function loadImageEl(file) {
+    return new Promise(function (res, rej) {
+      var u = URL.createObjectURL(file), im = new Image();
+      im.onload = function () { res({ img: im, w: im.naturalWidth, h: im.naturalHeight }); };
+      im.onerror = function () { rej(new Error('Berkas ini tidak bisa dibaca sebagai gambar.')); };
+      im.src = u;
+    });
+  }
+
+  function cropBase(S) { return crop.mode === 'cover' ? Math.max(S / crop.iw, S / crop.ih) : Math.min(S / crop.iw, S / crop.ih); }
+  function clampCrop() {
+    var sc = cropBase(PREV) * crop.z, w = crop.iw * sc, h = crop.ih * sc;
+    var mx = Math.max(0, (w - PREV) / 2), my = Math.max(0, (h - PREV) / 2);
+    crop.ox = Math.max(-mx, Math.min(mx, crop.ox)); crop.oy = Math.max(-my, Math.min(my, crop.oy));
+  }
+  function drawCrop(ctx, S, guides) {
+    var k = S / PREV, sc = cropBase(S) * crop.z, w = crop.iw * sc, h = crop.ih * sc;
+    ctx.fillStyle = '#F3ECD9'; ctx.fillRect(0, 0, S, S);
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(crop.img, (S - w) / 2 + crop.ox * k, (S - h) / 2 + crop.oy * k, w, h);
+    if (guides) {
+      ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = 1.5; ctx.beginPath();
+      [1, 2].forEach(function (i) { ctx.moveTo(S * i / 3, 0); ctx.lineTo(S * i / 3, S); ctx.moveTo(0, S * i / 3); ctx.lineTo(S, S * i / 3); });
+      ctx.stroke();
+    }
+  }
+  function renderCrop() {
+    clampCrop(); drawCrop(document.getElementById('cropCanvas').getContext('2d'), PREV, true);
+  }
+  function openCrop(file, row) {
+    var msg = document.getElementById('cropMsg'); msg.textContent = ''; msg.className = 'ph-msg';
+    if (!file || !/^image\//.test(file.type || '')) { phMsg(row, 'Pilih berkas gambar (JPG, PNG, atau WebP).', 'err'); return; }
+    if (file.size > 25 * 1048576) { phMsg(row, 'Berkas terlalu besar (maks 25 MB).', 'err'); return; }
+    phMsg(row, 'Membuka foto...', '');
+    loadImage(file).then(function (im) {
+      crop = { img: im.img, iw: im.w, ih: im.h, mode: 'cover', z: 1, ox: 0, oy: 0, row: row, size: file.size };
+      document.getElementById('cropZoom').value = 1;
+      document.getElementById('cropModeCover').className = 'on'; document.getElementById('cropModeContain').className = '';
+      document.getElementById('cropInfo').textContent = 'Foto asli ' + im.w + '×' + im.h + ' px (' + fmtKB(file.size) + '). Geser foto untuk mengatur posisi, geser slider untuk memperbesar.';
+      document.getElementById('cropEst').textContent = 'Hasil akhir: kotak ' + OUT_SIZES[0] + '×' + OUT_SIZES[0] + ' px, format WebP, target ≤ ' + MAX_KB + ' KB.';
+      document.getElementById('cropUse').disabled = false;
+      document.getElementById('cropBackdrop').classList.add('open');
+      renderCrop(); phMsg(row, '', '');
+    }).catch(function (e) { phMsg(row, e.message, 'err'); });
+  }
+  function closeCrop() { document.getElementById('cropBackdrop').classList.remove('open'); crop = null; }
+
+  (function bindCrop() {
+    var cv = document.getElementById('cropCanvas'), drag = null;
+    cv.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, ox: crop.ox, oy: crop.oy }; cv.setPointerCapture(e.pointerId); });
+    cv.addEventListener('pointermove', function (e) {
+      if (!drag || !crop) return;
+      var f = PREV / cv.clientWidth; crop.ox = drag.ox + (e.clientX - drag.x) * f; crop.oy = drag.oy + (e.clientY - drag.y) * f; renderCrop();
+    });
+    ['pointerup', 'pointercancel'].forEach(function (t) { cv.addEventListener(t, function () { drag = null; }); });
+    cv.addEventListener('wheel', function (e) {
+      if (!crop) return; e.preventDefault();
+      var z = Math.max(1, Math.min(4, crop.z * (e.deltaY < 0 ? 1.06 : 0.94))); crop.z = z; document.getElementById('cropZoom').value = z; renderCrop();
+    }, { passive: false });
+    document.getElementById('cropZoom').addEventListener('input', function () { if (!crop) return; crop.z = Number(this.value); renderCrop(); });
+    function setMode(m) {
+      if (!crop) return; crop.mode = m; crop.z = 1; crop.ox = 0; crop.oy = 0; document.getElementById('cropZoom').value = 1;
+      document.getElementById('cropModeCover').className = m === 'cover' ? 'on' : ''; document.getElementById('cropModeContain').className = m === 'contain' ? 'on' : '';
+      renderCrop();
+    }
+    document.getElementById('cropModeCover').addEventListener('click', function () { setMode('cover'); });
+    document.getElementById('cropModeContain').addEventListener('click', function () { setMode('contain'); });
+    document.getElementById('cropCancel').addEventListener('click', closeCrop);
+    document.getElementById('cropBackdrop').addEventListener('click', function (e) { if (e.target === this) closeCrop(); });
+    document.getElementById('cropUse').addEventListener('click', optimizeAndUpload);
+  })();
+
+  function toBlob(canvas, type, q) { return new Promise(function (res) { canvas.toBlob(res, type, q); }); }
+  // Coba WebP dulu, turunkan kualitas/ukuran sampai ≤ MAX_KB. Safari lama tak bisa WebP → otomatis JPEG.
+  function encodeBest(canvas0) {
+    var best = null, steps = [['image/webp', 0.82], ['image/webp', 0.72], ['image/webp', 0.62], ['image/jpeg', 0.82], ['image/jpeg', 0.7]];
+    var chain = Promise.resolve(null);
+    OUT_SIZES.forEach(function (S) {
+      chain = chain.then(function (done) {
+        if (done) return done;
+        var c = document.createElement('canvas'); c.width = S; c.height = S; drawCrop(c.getContext('2d'), S, false);
+        var p = Promise.resolve(null);
+        steps.forEach(function (st) {
+          p = p.then(function (ok) {
+            if (ok) return ok;
+            return toBlob(c, st[0], st[1]).then(function (b) {
+              if (!b || b.type !== st[0]) return null;             // format tidak didukung browser
+              if (!best || b.size < best.blob.size) best = { blob: b, size: S };
+              return b.size <= MAX_KB * 1024 ? { blob: b, size: S } : null;
+            });
+          });
+        });
+        return p;
+      });
+    });
+    return chain.then(function (done) { return done || best; });
+  }
+  function blobToB64(blob) {
+    return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(String(r.result).split(',')[1]); }; r.onerror = rej; r.readAsDataURL(blob); });
+  }
+  function post(obj) {
+    return fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(obj) }).then(function (r) { return r.json(); });
+  }
+  function applyPhoto(row, url) {
+    row.querySelector('input[data-f="image"]').value = url;
+    phRefresh(row);
+    var btn = row.querySelector('[data-save]'); if (btn) saveProductRow(btn);   // simpan produk otomatis agar tidak lupa
+  }
+
+  function optimizeAndUpload() {
+    if (!crop) return;
+    var c = crop, row = c.row, msg = document.getElementById('cropMsg'), useBtn = document.getElementById('cropUse');
+    var idx = Number(row.getAttribute('data-idx')), p = DATA.products[idx] || {};
+    useBtn.disabled = true; msg.className = 'ph-msg'; msg.textContent = 'Mengoptimalkan foto...';
+    encodeBest().then(function (r) {
+      if (!r) throw new Error('Browser tidak bisa mengompres foto ini. Coba foto lain.');
+      msg.textContent = 'Mengunggah ' + fmtKB(r.blob.size) + ' ke Google Drive...';
+      return blobToB64(r.blob).then(function (b64) {
+        return post({ type: 'image_upload', password: password, product_id: p.id || 'produk', mime: r.blob.type, data: b64, replace_url: row.querySelector('input[data-f="image"]').value.trim() })
+          .then(function (res) { return { res: res, r: r }; });
+      });
+    }).then(function (o) {
+      if (!o.res.ok) throw new Error(o.res.error || 'Gagal mengunggah.');
+      closeCrop();
+      applyPhoto(row, o.res.url);
+      phMsg(row, o.res.warning ? o.res.warning : 'Terunggah: ' + o.r.size + '×' + o.r.size + ' px, ' + fmtKB(o.r.blob.size) + ' (' + o.r.blob.type.replace('image/', '').toUpperCase() + ').', o.res.warning ? 'err' : 'ok');
+    }).catch(function (e) {
+      useBtn.disabled = false; msg.className = 'ph-msg err'; msg.textContent = e.message || 'Gagal terhubung ke Apps Script.';
+    });
+  }
+
+  /* ---- pilih dari folder Drive ---- */
+  function fmtBytes(n) { return n ? fmtKB(n) : ''; }
+  function openPicker(row) {
+    var back = document.getElementById('pickBackdrop'), grid = document.getElementById('pickGrid'), msg = document.getElementById('pickMsg');
+    back.classList.add('open'); grid.innerHTML = ''; msg.className = 'ph-msg'; msg.textContent = 'Memuat daftar foto...';
+    back._row = row;
+    post({ type: 'images_list', password: password }).then(function (res) {
+      if (!res.ok) { msg.className = 'ph-msg err'; msg.textContent = res.error || 'Gagal memuat.'; return; }
+      msg.textContent = res.files.length ? 'Menampilkan ' + res.files.length + ' foto terbaru dari ' + res.total + '. Klik untuk memilih.' : 'Folder belum berisi foto. Gunakan tombol "Unggah".';
+      res.files.forEach(function (f) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'pick-tile'; b.setAttribute('data-fid', f.id);
+        var th = document.createElement('div'); th.className = 'th';
+        var im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.referrerPolicy = 'no-referrer';
+        im.onerror = function () { th.textContent = 'pratinjau belum tersedia'; };
+        im.src = 'https://lh3.googleusercontent.com/d/' + f.id + '=w160-h160-c'; th.appendChild(im);
+        var nm = document.createElement('span'); nm.textContent = f.name;
+        var sz = document.createElement('small'); sz.textContent = fmtBytes(f.size);
+        b.appendChild(th); b.appendChild(nm); b.appendChild(sz); grid.appendChild(b);
+      });
+    }).catch(function () { msg.className = 'ph-msg err'; msg.textContent = 'Gagal terhubung ke Apps Script.'; });
+  }
+  document.getElementById('pickClose').addEventListener('click', function () { document.getElementById('pickBackdrop').classList.remove('open'); });
+  document.getElementById('pickBackdrop').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
+  document.getElementById('pickGrid').addEventListener('click', function (e) {
+    var t = e.target.closest('.pick-tile'); if (!t) return;
+    var back = document.getElementById('pickBackdrop'), row = back._row, msg = document.getElementById('pickMsg');
+    msg.className = 'ph-msg'; msg.textContent = 'Memilih foto...';
+    post({ type: 'image_pick', password: password, file_id: t.getAttribute('data-fid') }).then(function (res) {
+      if (!res.ok) { msg.className = 'ph-msg err'; msg.textContent = res.error || 'Gagal memilih.'; return; }
+      back.classList.remove('open'); applyPhoto(row, res.url);
+      phMsg(row, res.warning || 'Foto dipilih dan dipotong 1:1 di tengah.', res.warning ? 'err' : 'ok');
+    }).catch(function () { msg.className = 'ph-msg err'; msg.textContent = 'Gagal terhubung ke Apps Script.'; });
+  });
+
+  /* ---- interaksi di baris produk ---- */
+  (function bindPhotoRow() {
+    var list = document.getElementById('productList');
+    list.addEventListener('click', function (e) {
+      var row = e.target.closest('.p-wrap'); if (!row) return;
+      if (e.target.closest('[data-ph-open]') || e.target.closest('.ph-box')) { row.querySelector('[data-ph-file]').click(); return; }
+      if (e.target.closest('[data-ph-pick]')) { openPicker(row); return; }
+      if (e.target.closest('[data-ph-clear]')) { row.querySelector('input[data-f="image"]').value = ''; phRefresh(row); phMsg(row, 'Foto dilepas. Klik Simpan untuk menerapkan.', ''); }
+    });
+    list.addEventListener('change', function (e) {
+      var row = e.target.closest('.p-wrap'); if (!row) return;
+      if (e.target.matches('[data-ph-file]')) { var f = e.target.files[0]; e.target.value = ''; openCrop(f, row); }
+      else if (e.target.matches('input[data-f="image"]')) phRefresh(row);
+    });
+    ['dragover', 'dragleave', 'drop'].forEach(function (t) {
+      list.addEventListener(t, function (e) {
+        var box = e.target.closest('.ph-box'); if (!box) return;
+        e.preventDefault();
+        if (t === 'dragover') box.classList.add('drag'); else box.classList.remove('drag');
+        if (t === 'drop' && e.dataTransfer.files[0]) openCrop(e.dataTransfer.files[0], box.closest('.p-wrap'));
+      });
+    });
+  })();
 
   /* ---------- PROMO ---------- */
   function renderPromos() {
