@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bento for Kids — Semua Link</title>
+<meta name="description" content="Semua link penting Bento for Kids: katalog frozen food, kalkulator gizi anak, catering acara, komunitas, dan media sosial.">
+<meta property="og:title" content="Bento for Kids — Semua Link">
+<meta property="og:description" content="Healthy food, healthy habits, happy kids.">
+<meta name="theme-color" content="#FBF6EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EC; --cream-2:#F3ECD9; --moss:#5E7F58; --moss-dark:#41593C;
+    --marigold:#E8A33D; --coral:#E8735C; --coral-dark:#D25F48; --ink:#263230; --ink-soft:#5B6864;
+    --line:#E4DCC8; --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; min-height:100vh; font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(1200px 500px at 50% -120px,#FFF1D6 0%,var(--cream) 60%);
+    padding:max(24px,env(safe-area-inset-top)) 18px max(28px,env(safe-area-inset-bottom));
+  }
+  .page{max-width:480px; margin:0 auto;}
+  .profile{text-align:center; margin-bottom:22px;}
+  .avatar{
+    width:92px; height:92px; border-radius:50%; margin:0 auto 12px; display:grid; place-items:center;
+    background:var(--white); border:3px solid var(--white); box-shadow:0 8px 22px rgba(38,50,48,.14);
+    font-size:42px; overflow:hidden;
+  }
+  .avatar img{width:100%; height:100%; object-fit:cover; display:block;}
+  h1{font-family:'Baloo 2',sans-serif; font-size:27px; line-height:1.15; margin:0 0 4px; color:var(--moss-dark);}
+  .tagline{font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--coral); font-size:16px; margin:0 0 8px;}
+  .bio{font-size:14px; line-height:1.55; color:var(--ink-soft); margin:0 auto; max-width:38ch;}
+  .group-title{
+    font-size:11.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--moss);
+    margin:22px 4px 8px;
+  }
+  .links{display:grid; gap:10px;}
+  a.link{
+    display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--ink);
+    background:var(--white); border:1.5px solid var(--line); border-radius:18px; padding:14px 16px;
+    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; position:relative;
+  }
+  a.link:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(38,50,48,.10); border-color:var(--moss);}
+  a.link:active{transform:scale(.985);}
+  a.link:focus-visible{outline:3px solid var(--coral); outline-offset:2px;}
+  .l-icon{
+    flex:none; width:44px; height:44px; border-radius:13px; display:grid; place-items:center; font-size:23px;
+    background:var(--cream-2); overflow:hidden;
+  }
+  .l-icon img{width:100%; height:100%; object-fit:cover; display:block;}
+  .l-text{flex:1; min-width:0;}
+  .l-title{font-weight:700; font-size:15.5px; line-height:1.25; display:block;}
+  .l-desc{font-size:12.5px; color:var(--ink-soft); line-height:1.4; display:block; margin-top:2px;}
+  .l-arrow{flex:none; color:var(--ink-soft); font-size:18px;}
+  .badge{
+    position:absolute; top:-8px; right:14px; background:var(--marigold); color:#fff; font-size:10.5px; font-weight:800;
+    padding:3px 9px; border-radius:999px; letter-spacing:.03em; text-transform:uppercase;
+  }
+  a.link.featured{background:var(--coral); border-color:var(--coral); color:#fff; box-shadow:0 8px 20px rgba(232,115,92,.30);}
+  a.link.featured:hover{background:var(--coral-dark); border-color:var(--coral-dark);}
+  a.link.featured .l-desc, a.link.featured .l-arrow{color:#FFEDE8;}
+  a.link.featured .l-icon{background:rgba(255,255,255,.22);}
+  .skeleton{height:72px; border-radius:18px; background:linear-gradient(90deg,var(--cream-2),#FBF6EC,var(--cream-2)); background-size:200% 100%; animation:sk 1.2s linear infinite;}
+  @keyframes sk{to{background-position:-200% 0}}
+  footer{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:30px;}
+  @media (prefers-reduced-motion: reduce){ a.link{transition:none;} .skeleton{animation:none;} }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="profile">
+    <div class="avatar" id="avatar" aria-hidden="true">🍱</div>
+    <h1 id="pTitle">Bento for Kids</h1>
+    <p class="tagline" id="pTagline">Healthy food, healthy habits, happy kids</p>
+    <p class="bio" id="pBio">Frozen food tanpa MSG &amp; pengawet, aktivitas, dan edukasi untuk keluarga Indonesia. It starts when they are little ❤️</p>
+  </header>
+
+  <div id="linkList" aria-live="polite"><div class="links"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></div>
+
+  <footer id="pFooter">Healthy Lifestyle Brand for Kids · Bandar Lampung</footer>
+</main>
+
+<script>
+/* =====================================================================
+   HALAMAN LINK (mirip Linktree) — isinya diambil dari Google Sheets (tab LINKS
+   dan LINKS_PROFILE) lewat Apps Script. Bisa diedit langsung di Sheet atau di
+   admin.html → tab "Link Bio". Data bawaan di bawah dipakai kalau Sheets
+   belum terisi / sedang tidak bisa dihubungi.
+
+   Tulis alamat tujuan seperti ini:
+   - https://...   : link luar (dibuka di tab baru)
+   - /#katalog     : bagian di web Bento for Kids
+   - wa:catering   : tombol WhatsApp → membuka FORM LEADS dulu di web utama, lalu ke WhatsApp.
+                     Pilihan: tanya, frozen, catering, kelas, gizi, komunitas, affiliate, mitra
+   Link wa.me biasa otomatis diarahkan lewat form leads juga.
+   ===================================================================== */
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz94KoVYS7YGz2DxN9pVyGRaeq6BtsZm3OzVuR7p_K5DQvlETZ9rcOuMmQecmYLkSrW/exec';
+var SERVICES = ['tanya', 'frozen', 'catering', 'kelas', 'gizi', 'komunitas', 'affiliate', 'mitra'];
+var CACHE_KEY = 'bfk_links_cache_v1';
+
+var DEFAULT_PROFILE = {
+  title: 'Bento for Kids',
+  tagline: 'Healthy food, healthy habits, happy kids',
+  bio: 'Frozen food tanpa MSG & pengawet, aktivitas, dan edukasi untuk keluarga Indonesia. It starts when they are little ❤️',
+  avatar_url: '',
+  footer: 'Healthy Lifestyle Brand for Kids · Bandar Lampung'
+};
+var DEFAULT_LINKS = [
+  { id: 'katalog', group: 'Belanja & Layanan', title: 'Lihat Menu & Katalog Frozen Food', desc: 'Nugget, sosis, rolade, dan lainnya, tanpa MSG & pengawet', url: '/#katalog', icon: '🍱', style: 'featured', badge: '' },
+  { id: 'pesan-wa', group: 'Belanja & Layanan', title: 'Pesan / Tanya via WhatsApp', desc: 'Isi form singkat ±30 detik, lalu langsung ke WhatsApp', url: 'wa:tanya', icon: '💬', style: 'normal', badge: '' },
+  { id: 'catering', group: 'Belanja & Layanan', title: 'Catering Acara Anak', desc: 'Ulang tahun, acara sekolah, seminar anak', url: 'wa:catering', icon: '🎂', style: 'normal', badge: '' },
+  { id: 'kalkulator', group: 'Belajar & Komunitas', title: 'Hitung Kebutuhan Gizi Anak', desc: 'Cuma ±20 detik, sesuai AKG Kemenkes RI', url: '/?calc=1', icon: '🧮', style: 'normal', badge: 'Baru' },
+  { id: 'kelas', group: 'Belajar & Komunitas', title: 'Cooking Class & Food Education', desc: 'Anak belajar sehat lewat bermain', url: 'wa:kelas', icon: '👩‍🍳', style: 'normal', badge: '' },
+  { id: 'komunitas', group: 'Belajar & Komunitas', title: 'Gabung Komunitas Orang Tua', desc: 'Tumbuh bersama, berbagi pengalaman', url: 'wa:komunitas', icon: '🤝', style: 'normal', badge: '' },
+  { id: 'affiliate', group: 'Belajar & Komunitas', title: 'Jadi Affiliate / Reseller', desc: 'Bergabung sebagai mitra Bento for Kids', url: 'wa:affiliate', icon: '💼', style: 'normal', badge: '' },
+  { id: 'instagram', group: 'Ikuti Kami', title: 'Instagram @bento.forkids', desc: 'Tips bekal, ide menu, dan kegiatan', url: 'https://instagram.com/bento.forkids', icon: '📸', style: 'normal', badge: '' }
+];
+
+/* ---------- utilitas ---------- */
+var SAFE_URL = /^(https?:\/\/|\/|#|mailto:|tel:|wa:)/i;
+var qs = new URLSearchParams(window.location.search);
+
+/* Mengubah alamat tujuan menjadi href final. Link WhatsApp → /?lead=<layanan> (form leads di web utama). */
+function resolveHref(link) {
+  var url = String(link.url || '').trim();
+  if (!SAFE_URL.test(url)) return null;
+  var m = /^wa:([a-z]+)/i.exec(url);
+  if (m) url = '/?lead=' + (SERVICES.indexOf(m[1].toLowerCase()) > -1 ? m[1].toLowerCase() : 'tanya');
+  else if (/^https?:\/\/(wa\.me|api\.whatsapp\.com|wa\.link)/i.test(url)) url = '/?lead=tanya';
+  if (url.charAt(0) === '/' || url.charAt(0) === '#') {
+    // link internal: bawa UTM supaya sumber kunjungan (mis. Instagram bio) tetap tercatat
+    try {
+      var u = new URL(url, window.location.origin);
+      ['utm_source', 'utm_medium', 'utm_campaign', 'ref'].forEach(function (k) { if (qs.get(k) && !u.searchParams.get(k)) u.searchParams.set(k, qs.get(k)); });
+      if (!u.searchParams.get('utm_source')) { u.searchParams.set('utm_source', 'linkpage'); if (!u.searchParams.get('utm_medium')) u.searchParams.set('utm_medium', 'link'); }
+      return u.pathname + u.search + u.hash;
+    } catch (e) { return url; }
+  }
+  return url;
+}
+function isExternal(href) { return /^https?:\/\//i.test(href); }
+
+function track(linkId, title, url) {
+  try {
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'link_click', link_id: linkId, title: title || '', url: url || '',
+        source: qs.get('utm_source') || 'direct', medium: qs.get('utm_medium') || '', campaign: qs.get('utm_campaign') || '' })
+    }).catch(function () {});
+  } catch (e) {}
+}
+
+function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+
+function renderProfile(p) {
+  p = Object.assign({}, DEFAULT_PROFILE, p || {});
+  document.getElementById('pTitle').textContent = p.title;
+  document.getElementById('pTagline').textContent = p.tagline;
+  document.getElementById('pBio').textContent = p.bio;
+  document.getElementById('pFooter').textContent = p.footer;
+  document.title = p.title + ' — Semua Link';
+  var av = document.getElementById('avatar');
+  if (/^https?:\/\//i.test(p.avatar_url || '')) {
+    av.textContent = '';
+    var img = document.createElement('img'); img.src = p.avatar_url; img.alt = ''; img.referrerPolicy = 'no-referrer';
+    img.onerror = function () { av.textContent = '🍱'; };
+    av.appendChild(img);
+  }
+}
+
+function renderLinks(links) {
+  var root = document.getElementById('linkList');
+  root.textContent = '';
+  var groups = [], byName = {};
+  links.forEach(function (l) {
+    var href = resolveHref(l);
+    if (!l.title || !href) return;
+    var g = String(l.group || '');
+    if (!byName[g]) { byName[g] = { name: g, items: [] }; groups.push(byName[g]); }
+    byName[g].items.push({ l: l, href: href });
+  });
+  if (!groups.length) { root.appendChild(el('p', 'bio', 'Link belum tersedia.')); return; }
+  groups.forEach(function (g) {
+    if (g.name) root.appendChild(el('div', 'group-title', g.name));
+    var wrap = el('div', 'links');
+    g.items.forEach(function (it) {
+      var l = it.l;
+      var a = el('a', 'link' + (l.style === 'featured' ? ' featured' : ''));
+      a.href = it.href;
+      if (isExternal(it.href)) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      var ic = el('span', 'l-icon');
+      if (/^https?:\/\//i.test(l.icon || '')) { var im = document.createElement('img'); im.src = l.icon; im.alt = ''; im.referrerPolicy = 'no-referrer'; ic.appendChild(im); }
+      else ic.textContent = l.icon || '🔗';
+      var tx = el('span', 'l-text');
+      tx.appendChild(el('span', 'l-title', l.title));
+      if (l.desc) tx.appendChild(el('span', 'l-desc', l.desc));
+      a.appendChild(ic); a.appendChild(tx); a.appendChild(el('span', 'l-arrow', '›'));
+      if (l.badge) a.appendChild(el('span', 'badge', l.badge));
+      a.addEventListener('click', function () { track(l.id || l.title, l.title, l.url); });
+      wrap.appendChild(a);
+    });
+    root.appendChild(wrap);
+  });
+}
+
+/* ---------- muat data: cache/bawaan dulu (instan), lalu Sheets ---------- */
+var cached = null;
+try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch (e) {}
+var current = { links: (cached && cached.links && cached.links.length) ? cached.links : DEFAULT_LINKS, profile: cached ? cached.profile : null };
+renderProfile(current.profile); renderLinks(current.links);
+track('__view__', 'Kunjungan halaman link', location.pathname);
+
+(function fetchFromSheet() {
+  if (!APPS_SCRIPT_URL) return;
+  var ctl = ('AbortController' in window) ? new AbortController() : null;
+  var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 7000);
+  fetch(APPS_SCRIPT_URL + '?action=links', ctl ? { signal: ctl.signal } : {})
+    .then(function (r) { return r.json(); })
+    .then(function (res) {
+      clearTimeout(timer);
+      if (!res || !res.ok || !Array.isArray(res.links)) return;
+      var next = { links: res.links.length ? res.links : DEFAULT_LINKS, profile: res.profile || null };
+      if (JSON.stringify(next) !== JSON.stringify(current)) { current = next; renderProfile(next.profile); renderLinks(next.links); }
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify(next)); } catch (e) {}
+    })
+    .catch(function () { clearTimeout(timer); /* tetap pakai data bawaan/cache */ });
+})();
+</script>
+</body>
+</html>

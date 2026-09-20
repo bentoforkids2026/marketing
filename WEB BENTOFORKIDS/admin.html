@@ -63,10 +63,61 @@
   .p-row{display:grid; grid-template-columns:1.4fr 1fr .8fr 1.3fr 1.6fr .6fr auto; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid var(--line);}
   .p-row.head{font-size:11px; font-weight:700; color:var(--ink-soft); text-transform:uppercase;}
   @media(max-width:900px){ .p-row{grid-template-columns:1fr; gap:4px;} .p-row.head{display:none;} .p-row:not(.head){border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px;} }
+  .nutri-box{border-bottom:1px solid var(--line); padding:0 0 8px;}
+  .nutri-box summary{cursor:pointer; font-size:12.5px; font-weight:700; color:var(--moss-dark); padding:2px 0 6px;}
+  .nutri-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin-top:6px;}
+  .nutri-grid label{font-size:11.5px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:2px;}
+  .nutri-grid .wide{grid-column:1 / -1;}
   .p-row img, .p-row .noimg{width:36px; height:36px; border-radius:8px; object-fit:cover; background:var(--cream-2);}
 
   .promo-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;}
   .promo-field label{font-size:12.5px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:4px;}
+
+  /* ---- Ringkasan Mingguan (EOS) ---- */
+  .eos-nav{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+  .eos-nav h3{margin:0; flex:1; min-width:200px;}
+  .eos-nav button{padding:7px 12px;}
+  .kpi{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:14px 16px;}
+  .kpi span{font-size:12px; color:var(--ink-soft); font-weight:700;}
+  .kpi b{display:block; font-family:'Baloo 2',sans-serif; font-size:24px; color:var(--moss-dark); line-height:1.2;}
+  .kpi small{font-size:12px; font-weight:700;}
+  .kpi small.good{color:#2E7D32;} .kpi small.bad{color:#C0392B;} .kpi small.flat{color:var(--ink-soft);}
+  .sc-table th, .sc-table td{white-space:nowrap; padding:6px 8px; text-align:right;}
+  .sc-table th:first-child, .sc-table td:first-child{text-align:left; position:sticky; left:0; background:var(--white); z-index:1; min-width:190px;}
+  .sc-table td.on{background:#E4EFDF; color:#2E5D2A; font-weight:700;}
+  .sc-table td.off{background:#FBE3DE; color:#B03A2E; font-weight:700;}
+  .sc-table th.sel, .sc-table td.sel{box-shadow:inset 2px 0 0 var(--coral), inset -2px 0 0 var(--coral);}
+  .sc-table input{width:78px; padding:4px 6px; font-size:12.5px;}
+  .sc-table input.own{width:96px; text-align:left;}
+  .eos-row{display:grid; grid-template-columns:2fr 1fr 1fr 1fr auto; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid var(--line);}
+  .eos-row.todo{grid-template-columns:auto 2fr 1fr 1fr auto;}
+  .eos-row.issue{grid-template-columns:2fr .7fr .8fr auto;}
+  .eos-row.done input[type=text]{text-decoration:line-through; color:var(--ink-soft);}
+  .eos-row input[type=checkbox]{width:18px; height:18px;}
+  @media(max-width:760px){ .eos-row, .eos-row.todo, .eos-row.issue{grid-template-columns:1fr 1fr;} }
+  .eos-del{background:none; color:var(--coral); padding:4px 8px; font-size:16px;}
+  .eos-hint{font-size:12.5px; color:var(--ink-soft); margin:0 0 10px;}
+  .headline-list{margin:0; padding-left:18px; font-size:14px;} .headline-list li{margin-bottom:6px;}
+  .suggest{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 12px;}
+  .suggest button{background:#FFF4E0; color:#7A5A16; border:1px solid #F1D9A8; padding:6px 10px; font-size:12.5px;}
+  .l10-timer{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:12px;}
+  .l10-clock{font-family:'Baloo 2',sans-serif; font-size:34px; font-weight:800; color:var(--coral); min-width:96px;}
+  .l10-list{list-style:none; margin:0; padding:0;}
+  .l10-list li{display:flex; justify-content:space-between; gap:10px; padding:8px 10px; border-bottom:1px solid var(--line); font-size:14px;}
+  .l10-list li.cur{background:#FFF4E0; font-weight:700; border-radius:8px;}
+  .l10-list li.past{color:var(--ink-soft); text-decoration:line-through;}
+
+  /* ---- Link Bio ---- */
+  .link-row{display:grid; grid-template-columns:58px 1.3fr 1.6fr; gap:8px; padding:12px 0; border-bottom:1px solid var(--line);}
+  .link-row .r2{grid-column:1 / -1; display:grid; grid-template-columns:1.6fr 1fr .9fr .8fr auto auto; gap:8px; align-items:center;}
+  .link-row input[type=checkbox]{width:18px; height:18px;}
+  .link-row.off{opacity:.55;}
+  .link-row .ic{text-align:center; font-size:20px; padding:6px;}
+  .lk-ctrl{display:flex; gap:4px; align-items:center;}
+  .lk-ctrl button{background:var(--cream-2); color:var(--moss-dark); padding:6px 9px; font-size:13px;}
+  .lk-ctrl .eos-del{background:none;}
+  @media(max-width:760px){ .link-row{grid-template-columns:58px 1fr;} .link-row .r2{grid-template-columns:1fr 1fr;} }
+  .lk-act{display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--ink-soft); white-space:nowrap;}
 </style>
 </head>
 <body>
@@ -78,9 +129,6 @@
     <input type="password" id="loginPassword" placeholder="Password admin">
     <div id="loginError"></div>
     <button class="btn-primary" id="loginBtn" style="width:100%;">Masuk</button>
-    <p style="font-size:11.5px; color:var(--ink-soft); margin-top:14px;">
-      Butuh <code>APPS_SCRIPT_URL</code> yang sama dengan di <code>index.html</code>, sudah diisi otomatis di bawah.
-    </p>
   </div>
 </div>
 
@@ -94,19 +142,80 @@
 
   <div class="wrap">
     <div class="tabs">
-      <button class="tab-btn active" data-tab="produk">Produk</button>
+      <button class="tab-btn active" data-tab="eos">Ringkasan Mingguan</button>
+      <button class="tab-btn" data-tab="produk">Produk</button>
       <button class="tab-btn" data-tab="promo">Promo &amp; Diskon</button>
       <button class="tab-btn" data-tab="analitik">Analitik</button>
+      <button class="tab-btn" data-tab="links">Link Bio</button>
     </div>
 
     <!-- ===== TAB PRODUK ===== -->
-    <div class="tab-panel active" id="tab-produk">
+    <div class="tab-panel active" id="tab-eos">
+      <div class="eos-nav">
+        <button type="button" class="btn-ghost" id="eosPrev">← Minggu lalu</button>
+        <h3 id="eosWeekLabel"></h3>
+        <button type="button" class="btn-ghost" id="eosNext">Minggu depan →</button>
+        <button type="button" class="btn-ghost" id="eosToday">Minggu ini</button>
+        <button type="button" class="btn-primary" id="eosCopy">Salin ringkasan</button>
+      </div>
+      <div class="stat-grid" id="eosKpis"></div>
+
+      <div class="card">
+        <h3>📰 Headlines minggu ini</h3>
+        <ul class="headline-list" id="eosHeadlines"></ul>
+      </div>
+
+      <div class="card">
+        <h3>📊 Scorecard mingguan (13 minggu)</h3>
+        <p class="eos-hint">Isi Pemilik dan Target per minggu; sel otomatis hijau (sesuai target) atau merah (di bawah target). Kolom bertepi oranye adalah minggu yang sedang dilihat.</p>
+        <div class="table-wrap"><table class="sc-table" id="eosScorecard"></table></div>
+        <span class="save-msg" id="eosGoalsMsg"></span>
+      </div>
+
+      <div class="card">
+        <h3>🪨 Rocks kuartal ini</h3>
+        <p class="eos-hint">Prioritas 90 hari (idealnya 3–7). Perbarui status tiap minggu.</p>
+        <div id="eosRocks"></div>
+        <button type="button" class="btn-ghost" id="eosAddRock">+ Tambah Rock</button>
+        <span class="save-msg" id="eosRocksMsg"></span>
+      </div>
+
+      <div class="card">
+        <h3>✅ To-Do 7 hari</h3>
+        <p class="eos-hint" id="eosTodoStat"></p>
+        <div id="eosTodos"></div>
+        <button type="button" class="btn-ghost" id="eosAddTodo">+ Tambah To-Do</button>
+        <span class="save-msg" id="eosTodosMsg"></span>
+      </div>
+
+      <div class="card">
+        <h3>⚠️ Issues (IDS: Identify, Discuss, Solve)</h3>
+        <p class="eos-hint">Urutkan menurut prioritas, bahas dari yang paling penting. Saran otomatis muncul dari scorecard.</p>
+        <div class="suggest" id="eosSuggest"></div>
+        <div id="eosIssues"></div>
+        <button type="button" class="btn-ghost" id="eosAddIssue">+ Tambah Issue</button>
+        <span class="save-msg" id="eosIssuesMsg"></span>
+      </div>
+
+      <div class="card">
+        <h3>🗓️ Rapat Level 10 (90 menit)</h3>
+        <div class="l10-timer">
+          <div class="l10-clock" id="l10Clock">05:00</div>
+          <button type="button" class="btn-primary" id="l10Start">Mulai</button>
+          <button type="button" class="btn-ghost" id="l10Next">Segmen berikutnya</button>
+          <button type="button" class="btn-ghost" id="l10Reset">Reset</button>
+        </div>
+        <ul class="l10-list" id="l10List"></ul>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-produk">
       <div class="card">
         <h3>Kelola Produk</h3>
         <p style="font-size:12.5px; color:var(--ink-soft);">
-          Ubah harga, deskripsi, atau nonaktifkan produk. Untuk gambar, tempel URL foto
-          (mis. link Google Drive/Imgur yang sudah "anyone with link can view") — belum ada upload
-          langsung dari sini.
+          Ubah harga, deskripsi, atau nonaktifkan produk. Untuk gambar, tempel alamat gambar langsung
+          (mis. <code>/images/nugget-ayam.jpg</code> setelah file diunggah ke folder web, atau link gambar
+          berakhiran .jpg/.png). Link berbagi Google Drive biasa sering tidak bisa tampil sebagai gambar.
         </p>
         <div class="p-row head">
           <span>Nama</span><span>Kategori</span><span>Harga</span><span>URL Gambar</span><span>Deskripsi</span><span>Aktif</span><span></span>
@@ -143,6 +252,37 @@
     </div>
 
     <!-- ===== TAB ANALITIK ===== -->
+    <div class="tab-panel" id="tab-links">
+      <div class="card">
+        <h3>🔗 Halaman Link (mirip Linktree)</h3>
+        <p class="eos-hint">Halaman publik: <a href="links.html" target="_blank" rel="noopener">links.html</a>. Isinya bisa diedit di sini atau langsung di tab <b>LINKS</b> pada Google Sheets. Cara menulis kolom alamat: <code>https://…</code> (link luar), <code>/#katalog</code> (bagian di web), atau <code>wa:catering</code> (tombol WhatsApp yang membuka <b>form leads</b> dulu). Pilihan layanan: tanya, frozen, catering, kelas, gizi, komunitas, affiliate, mitra.</p>
+        <div class="promo-grid">
+          <div class="promo-field"><label>Judul</label><input type="text" id="lp-title"></div>
+          <div class="promo-field"><label>Tagline</label><input type="text" id="lp-tagline"></div>
+          <div class="promo-field"><label>Foto profil (URL gambar https, opsional)</label><input type="text" id="lp-avatar" placeholder="https://..."></div>
+          <div class="promo-field"><label>Teks footer</label><input type="text" id="lp-footer"></div>
+        </div>
+        <div class="promo-field" style="margin-top:12px;"><label>Bio singkat</label><textarea id="lp-bio" rows="2"></textarea></div>
+      </div>
+
+      <div class="card">
+        <h3>Daftar Link</h3>
+        <p class="eos-hint">Urutan di sini = urutan di halaman. Judul grup yang sama akan dikelompokkan. Link tanpa alamat atau yang dinonaktifkan tidak tampil.</p>
+        <div id="linkRows"></div>
+        <div style="margin-top:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <button type="button" class="btn-ghost" id="linkAdd">+ Tambah link</button>
+          <button type="button" class="btn-primary" id="linkSave">Simpan semua</button>
+          <span class="save-msg" id="linkSaveMsg"></span>
+        </div>
+        <p class="eos-hint" style="margin-top:8px;">Menyimpan akan mengganti seluruh isi tab LINKS. Perubahan tampil di halaman link dalam beberapa detik.</p>
+      </div>
+
+      <div class="card">
+        <h3>📈 Performa Link</h3>
+        <div class="table-wrap"><table id="linkStats"></table></div>
+      </div>
+    </div>
+
     <div class="tab-panel" id="tab-analitik">
       <div class="stat-grid" id="statGrid"></div>
 
@@ -174,6 +314,12 @@
       </div>
 
       <div class="card">
+        <h3>Riwayat Minat Layanan (pelanggan lama klik WhatsApp lagi)</h3>
+        <p style="font-size:12.5px; color:var(--ink-soft);">Setiap kali pelanggan yang datanya sudah tersimpan memilih layanan dan lanjut ke WhatsApp.</p>
+        <div class="table-wrap"><table id="intentsTable"></table></div>
+      </div>
+
+      <div class="card">
         <h3>Order / Checkout WhatsApp</h3>
         <div class="table-wrap"><table id="ordersTable"></table></div>
       </div>
@@ -184,8 +330,8 @@
 <script>
   // Samakan dengan CONFIG.APPS_SCRIPT_URL di index.html
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz94KoVYS7YGz2DxN9pVyGRaeq6BtsZm3OzVuR7p_K5DQvlETZ9rcOuMmQecmYLkSrW/exec';
-  var password = 'bentoforkids2026';
-  var DATA = { products: [], promos: {}, sessions: [], partial_leads: [], leads: [], orders: [] };
+  var password = '';   // diisi dari kolom login; JANGAN menulis password di sini (file ini bisa dilihat publik)
+  var DATA = { products: [], promos: {}, sessions: [], partial_leads: [], leads: [], lead_events: [], orders: [], eos: {}, links: [], links_profile: {}, link_clicks: [] };
 
   function fmt(n) { n = Number(n) || 0; return 'Rp' + n.toLocaleString('id-ID'); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -201,7 +347,7 @@
       return;
     }
     document.getElementById('loginError').textContent = 'Memuat...';
-    fetch(APPS_SCRIPT_URL + '?action=admin&password=' + encodeURIComponent(pw))
+    fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ type: 'admin_login', password: pw }) })
       .then(function (r) { return r.json(); })
       .then(function (res) {
         if (!res.ok) { document.getElementById('loginError').textContent = res.error || 'Gagal masuk.'; return; }
@@ -235,6 +381,8 @@
   });
 
   function renderAll() {
+    linksLoad();
+    renderEos();
     renderProducts();
     renderPromos();
     renderAnalytics();
@@ -245,11 +393,37 @@
     var list = document.getElementById('productList');
     list.innerHTML = DATA.products.map(function (p, i) { return productRowHtml(p, i); }).join('');
   }
+  // Kategori harus sama dengan filter di katalog web (index.html). Kategori baru perlu ditambahkan juga di index.html.
+  var PRODUCT_CATEGORIES = [
+    ['nugget', 'Nugget'], ['rolade-sosis', 'Rolade & Sosis'], ['katsu', 'Katsu, Furay & Lolipop'],
+    ['kremesan', 'Kremesan & Mix Vegie'], ['teriyaki', 'Teriyaki & Cordon Bleu']
+  ];
+  var NUTRI_FIELDS = [
+    ['kcal', 'Energi (kkal)'], ['protein_g', 'Protein (g)'], ['fat_g', 'Lemak (g)'], ['carb_g', 'Karbohidrat (g)'],
+    ['fiber_g', 'Serat (g)'], ['ca_mg', 'Kalsium (mg)'], ['fe_mg', 'Zat besi (mg)'], ['zn_mg', 'Seng (mg)'],
+    ['vita_re', 'Vitamin A (mcg RE)'], ['vitc_mg', 'Vitamin C (mg)']
+  ];
+  function nutriBoxHtml(p) {
+    var n = p.nutrition || {};
+    return '<details class="nutri-box"><summary>Data gizi per kemasan ' + (p.nutrition ? '✓ terisi' : '(belum diisi)') + '</summary>' +
+      '<div class="nutri-grid">' +
+        '<div class="wide"><label>Takaran per kemasan (mis. 1 pack ±100 g)</label><input type="text" data-n="serving" value="' + esc(n.serving || '') + '"></div>' +
+        NUTRI_FIELDS.map(function (f) {
+          return '<div><label>' + f[1] + '</label><input type="number" step="any" min="0" data-n="' + f[0] + '" value="' + (n[f[0]] != null ? n[f[0]] : '') + '"></div>';
+        }).join('') +
+        '<div class="wide"><label>Sumber data (mis. TKPI / hasil lab / hitung dari resep)</label><input type="text" data-n="source" value="' + esc(n.source || '') + '"></div>' +
+      '</div></details>';
+  }
   function productRowHtml(p, i) {
+    return '<div class="p-wrap" data-idx="' + i + '">' + productMainRowHtml(p, i) + nutriBoxHtml(p) + '</div>';
+  }
+  function productMainRowHtml(p, i) {
     return '' +
       '<div class="p-row" data-idx="' + i + '">' +
         '<input type="text" data-f="name" value="' + esc(p.name) + '" placeholder="Nama produk">' +
-        '<input type="text" data-f="category" value="' + esc(p.category) + '" placeholder="kategori-slug">' +
+        '<select data-f="category">' + PRODUCT_CATEGORIES.map(function (c) {
+          return '<option value="' + c[0] + '"' + (p.category === c[0] ? ' selected' : '') + '>' + c[1] + '</option>';
+        }).join('') + (p.category && !PRODUCT_CATEGORIES.some(function (c) { return c[0] === p.category; }) ? '<option value="' + esc(p.category) + '" selected>' + esc(p.category) + ' (tidak dikenal)</option>' : '') + '</select>' +
         '<input type="number" data-f="price" value="' + (p.price || 0) + '">' +
         '<input type="text" data-f="image" value="' + esc(p.image) + '" placeholder="https://...">' +
         '<input type="text" data-f="desc" value="' + esc(p.desc) + '" placeholder="Deskripsi singkat">' +
@@ -258,19 +432,29 @@
       '</div>';
   }
   document.getElementById('addProductBtn').addEventListener('click', function () {
-    DATA.products.push({ id: 'produk-' + Date.now(), name: '', category: '', price: 0, image: '', desc: '', active: true });
+    DATA.products.push({ id: 'produk-' + Date.now(), name: '', category: 'nugget', price: 0, image: '', desc: '', active: true });
     renderProducts();
   });
   document.getElementById('productList').addEventListener('click', function (e) {
     var btn = e.target.closest('[data-save]');
     if (!btn) return;
     var idx = Number(btn.getAttribute('data-save'));
-    var row = btn.closest('.p-row');
+    var row = btn.closest('.p-wrap');
     var p = DATA.products[idx];
     row.querySelectorAll('[data-f]').forEach(function (input) {
       var f = input.getAttribute('data-f');
       p[f] = f === 'active' ? input.value === 'yes' : (f === 'price' ? Number(input.value) : input.value);
     });
+    // data gizi: hanya disimpan kalau minimal energi (kkal) terisi
+    var nut = {}, hasKcal = false;
+    row.querySelectorAll('[data-n]').forEach(function (input) {
+      var k = input.getAttribute('data-n'), v = input.value.trim();
+      if (v === '') return;
+      if (k === 'serving' || k === 'source') { nut[k] = v; return; }
+      var num = Number(v.replace(',', '.'));
+      if (!isNaN(num)) { nut[k] = num; if (k === 'kcal' && num > 0) hasKcal = true; }
+    });
+    p.nutrition = hasKcal ? nut : null;
     if (!p.id) p.id = (p.name || 'produk').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
     btn.textContent = 'Menyimpan...';
     fetch(APPS_SCRIPT_URL, {
@@ -371,17 +555,427 @@
 
     // Leads table
     document.getElementById('leadsTable').innerHTML =
-      '<tr><th>Waktu</th><th>Nama</th><th>WhatsApp</th><th>Usia Anak</th><th>Domisili</th><th>Sumber</th></tr>' +
+      '<tr><th>Waktu</th><th>Nama</th><th>WhatsApp</th><th>Usia Anak</th><th>Domisili</th><th>Layanan</th><th>Sumber</th></tr>' +
       (leads.length ? leads.slice().reverse().map(function (l) {
-        return '<tr><td>' + fmtDate(l.created_at) + '</td><td>' + esc(l.name) + '</td><td>' + esc(l.whatsapp) + '</td><td>' + esc(l.child_age) + '</td><td>' + esc(l.city) + '</td><td>' + esc(l.source) + '</td></tr>';
+        return '<tr><td>' + fmtDate(l.created_at) + '</td><td>' + esc(l.name) + '</td><td>' + esc(l.whatsapp) + '</td><td>' + esc(l.child_age) + '</td><td>' + esc(l.city) + '</td><td>' + esc(l.service_interest || '-') + '</td><td>' + esc(l.source) + '</td></tr>';
+      }).join('') : '<tr><td colspan="7">Belum ada data.</td></tr>');
+
+    // Riwayat minat (LEAD_EVENTS)
+    var intents = DATA.lead_events || [];
+    document.getElementById('intentsTable').innerHTML =
+      '<tr><th>Waktu</th><th>Nama</th><th>WhatsApp</th><th>Layanan</th><th>Dari Tombol</th><th>Sumber</th></tr>' +
+      (intents.length ? intents.slice().reverse().slice(0, 100).map(function (ev) {
+        return '<tr><td>' + fmtDate(ev.created_at) + '</td><td>' + esc(ev.name) + '</td><td>' + esc(ev.whatsapp) + '</td><td>' + esc(ev.service_interest) + '</td><td>' + esc(ev.trigger) + '</td><td>' + esc(ev.source) + '</td></tr>';
       }).join('') : '<tr><td colspan="6">Belum ada data.</td></tr>');
 
     // Orders table
     document.getElementById('ordersTable').innerHTML =
-      '<tr><th>Waktu</th><th>Item</th><th>Total</th><th>Diskon</th><th>Program</th></tr>' +
+      '<tr><th>Waktu</th><th>Pemesan</th><th>WhatsApp</th><th>Item</th><th>Total</th><th>Diskon</th><th>Program</th></tr>' +
       (orders.length ? orders.slice().reverse().map(function (o) {
-        return '<tr><td>' + fmtDate(o.created_at) + '</td><td>' + esc(o.items_summary) + '</td><td>' + fmt(o.total) + '</td><td>' + esc(o.discount_pct) + '%</td><td>' + esc(o.program) + '</td></tr>';
-      }).join('') : '<tr><td colspan="5">Belum ada data.</td></tr>');
+        return '<tr><td>' + fmtDate(o.created_at) + '</td><td>' + esc(o.customer_name || '-') + '<br><small>' + esc(o.customer_city || '') + '</small></td><td>' + esc(o.customer_whatsapp || '-') + '</td><td>' + esc(o.items_summary) + '</td><td>' + fmt(o.total) + '</td><td>' + esc(o.discount_pct) + '%</td><td>' + esc(o.program) + '</td></tr>';
+      }).join('') : '<tr><td colspan="7">Belum ada data.</td></tr>');
+  }
+
+  /* ---------- LINK BIO ---------- */
+  var linksEdit = [];
+  function linksLoad() {
+    linksEdit = (DATA.links || []).map(function (l) {
+      return { id: l.id, title: l.title, desc: l.desc, url: l.url, icon: l.icon, style: l.style, badge: l.badge, group: l.group, active: l.active !== false };
+    });
+    var p = DATA.links_profile || {};
+    document.getElementById('lp-title').value = p.title || '';
+    document.getElementById('lp-tagline').value = p.tagline || '';
+    document.getElementById('lp-avatar').value = p.avatar_url || '';
+    document.getElementById('lp-footer').value = p.footer || '';
+    document.getElementById('lp-bio').value = p.bio || '';
+    renderLinkRows(); renderLinkStats();
+  }
+  function renderLinkRows() {
+    document.getElementById('linkRows').innerHTML = linksEdit.length ? linksEdit.map(function (l, i) {
+      return '<div class="link-row' + (l.active ? '' : ' off') + '" data-i="' + i + '">' +
+        '<input class="ic" type="text" data-f="icon" value="' + esc(l.icon) + '" placeholder="🔗" title="Emoji atau URL gambar">' +
+        '<input type="text" data-f="title" value="' + esc(l.title) + '" placeholder="Judul tombol">' +
+        '<input type="text" data-f="url" value="' + esc(l.url) + '" placeholder="https://… atau wa:catering">' +
+        '<div class="r2">' +
+          '<input type="text" data-f="desc" value="' + esc(l.desc) + '" placeholder="Keterangan singkat (opsional)">' +
+          '<input type="text" data-f="group" value="' + esc(l.group) + '" placeholder="Grup">' +
+          '<select data-f="style"><option value="normal"' + (l.style !== 'featured' ? ' selected' : '') + '>Biasa</option><option value="featured"' + (l.style === 'featured' ? ' selected' : '') + '>Sorot</option></select>' +
+          '<input type="text" data-f="badge" value="' + esc(l.badge) + '" placeholder="Label (Baru)">' +
+          '<label class="lk-act"><input type="checkbox" data-f="active"' + (l.active ? ' checked' : '') + '> Tampil</label>' +
+          '<span class="lk-ctrl"><button type="button" data-mv="-1" aria-label="Naik">▲</button><button type="button" data-mv="1" aria-label="Turun">▼</button><button type="button" class="eos-del" data-del="1" aria-label="Hapus">✕</button></span>' +
+        '</div></div>';
+    }).join('') : '<p class="eos-hint">Belum ada link. Klik "+ Tambah link".</p>';
+  }
+  function renderLinkStats() {
+    var clicks = DATA.link_clicks || [], now = Date.now(), wk = now - 7 * 864e5;
+    var st = {}, views7 = 0, viewsAll = 0;
+    clicks.forEach(function (c) {
+      var t = new Date(c.created_at).getTime();
+      if (c.link_id === '__view__') { viewsAll++; if (t >= wk) views7++; return; }
+      var s = st[c.link_id] = st[c.link_id] || { c7: 0, all: 0 };
+      s.all++; if (t >= wk) s.c7++;
+    });
+    var rows = linksEdit.map(function (l) {
+      var s = st[l.id] || { c7: 0, all: 0 };
+      var ctr = views7 ? (s.c7 / views7 * 100).toFixed(1).replace('.', ',') + '%' : '-';
+      return '<tr><td>' + esc(l.icon) + ' ' + esc(l.title || '(tanpa judul)') + '</td><td>' + s.c7 + '</td><td>' + ctr + '</td><td>' + s.all + '</td></tr>';
+    });
+    document.getElementById('linkStats').innerHTML =
+      '<tr><th>Link</th><th>Klik 7 hari</th><th>CTR 7 hari</th><th>Total klik</th></tr>' +
+      '<tr><td><b>👀 Kunjungan halaman link</b></td><td><b>' + views7 + '</b></td><td>-</td><td><b>' + viewsAll + '</b></td></tr>' +
+      rows.join('');
+  }
+  document.getElementById('linkRows').addEventListener('change', function (ev) {
+    var row = ev.target.closest('.link-row'); if (!row) return;
+    var l = linksEdit[Number(row.getAttribute('data-i'))], f = ev.target.getAttribute('data-f');
+    if (!l || !f) return;
+    l[f] = ev.target.type === 'checkbox' ? ev.target.checked : ev.target.value;
+    if (f === 'active') row.classList.toggle('off', !l.active);
+  });
+  document.getElementById('linkRows').addEventListener('click', function (ev) {
+    var row = ev.target.closest('.link-row'); if (!row) return;
+    var i = Number(row.getAttribute('data-i')), mv = ev.target.closest('[data-mv]');
+    if (mv) {
+      var j = i + Number(mv.getAttribute('data-mv'));
+      if (j < 0 || j >= linksEdit.length) return;
+      var tmp = linksEdit[i]; linksEdit[i] = linksEdit[j]; linksEdit[j] = tmp;
+      setTimeout(renderLinkRows, 0);
+    } else if (ev.target.closest('[data-del]')) {
+      linksEdit.splice(i, 1); setTimeout(function () { renderLinkRows(); renderLinkStats(); }, 0);
+    }
+  });
+  document.getElementById('linkAdd').addEventListener('click', function () {
+    var last = linksEdit.length ? linksEdit[linksEdit.length - 1].group : '';
+    linksEdit.push({ id: 'l' + Date.now().toString(36), title: '', desc: '', url: '', icon: '🔗', style: 'normal', badge: '', group: last, active: true });
+    renderLinkRows();
+  });
+  document.getElementById('linkSave').addEventListener('click', function () {
+    var msg = document.getElementById('linkSaveMsg');
+    var bad = linksEdit.filter(function (l) { return l.url && !/^(https?:\/\/|\/|#|mailto:|tel:|wa:)/i.test(l.url.trim()); })[0];
+    if (bad) { msg.textContent = 'Alamat "' + (bad.title || bad.url) + '" tidak valid. Pakai https://, /, #, mailto:, tel:, atau wa:'; return; }
+    msg.textContent = 'Menyimpan...';
+    var profile = {
+      title: document.getElementById('lp-title').value, tagline: document.getElementById('lp-tagline').value,
+      avatar_url: document.getElementById('lp-avatar').value.trim(), footer: document.getElementById('lp-footer').value,
+      bio: document.getElementById('lp-bio').value
+    };
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'links_save', password: password, links: linksEdit, profile: profile })
+    }).then(function (r) { return r.json(); }).then(function (res) {
+      if (res.ok) { DATA.links = linksEdit.map(function (l) { return Object.assign({}, l); }); DATA.links_profile = profile; }
+      msg.textContent = res.ok ? 'Tersimpan ✓ (tampil di halaman link dalam beberapa detik)' : 'Gagal: ' + (res.error || 'coba lagi');
+    }).catch(function () { msg.textContent = 'Gagal terhubung ke Apps Script'; });
+  });
+
+  /* ---------- RINGKASAN MINGGUAN (EOS) ---------- */
+  // Minggu = Senin–Minggu (zona waktu browser). Data dihitung dari SESSIONS, LEADS, LEADS_PARTIAL, LEAD_EVENTS, ORDERS.
+  function isYes(v) { return v === 'YES' || v === true; }
+  var MEASURES = [
+    { k: 'visitors', label: 'Pengunjung (sesi)', f: 'n', better: 'up', calc: function (w) { return w.sessions.length; } },
+    { k: 'catalog', label: 'Sampai katalog', f: 'n', better: 'up', calc: function (w) { return w.sessions.filter(function (s) { return isYes(s.reached_catalog); }).length; } },
+    { k: 'cart', label: 'Masukkan keranjang', f: 'n', better: 'up', calc: function (w) { return w.sessions.filter(function (s) { return isYes(s.reached_cart); }).length; } },
+    { k: 'leads', label: 'Lead baru (submit form)', f: 'n', better: 'up', calc: function (w) { return w.leads.length; } },
+    { k: 'partial', label: 'Lead parsial belum submit', f: 'n', better: 'down', calc: function (w) { return w.partials.filter(function (p) { return p.status !== 'CONVERTED'; }).length; } },
+    { k: 'intents', label: 'Minat pelanggan lama (klik WA)', f: 'n', better: 'up', calc: function (w) { return w.events.length; } },
+    { k: 'orders', label: 'Checkout WA (order masuk)', f: 'n', better: 'up', calc: function (w) { return w.orders.length; } },
+    { k: 'revenue', label: 'Nilai checkout', f: 'rp', better: 'up', calc: function (w) { return w.orders.reduce(function (a, o) { return a + (Number(o.total) || 0); }, 0); } },
+    { k: 'aov', label: 'Rata-rata nilai checkout', f: 'rp', better: 'up', calc: function (w) { var t = w.orders.reduce(function (a, o) { return a + (Number(o.total) || 0); }, 0); return w.orders.length ? t / w.orders.length : 0; } },
+    { k: 'cvLead', label: 'Pengunjung → lead (%)', f: 'pct', better: 'up', calc: function (w) { return w.sessions.length ? w.leads.length / w.sessions.length * 100 : 0; } },
+    { k: 'cvOrder', label: 'Pengunjung → checkout (%)', f: 'pct', better: 'up', calc: function (w) { return w.sessions.length ? w.orders.length / w.sessions.length * 100 : 0; } },
+    { k: 'calcLeads', label: 'Lead yang memakai kalkulator', f: 'n', better: 'up', calc: function (w) { return w.leads.filter(function (l) { return isYes(l.calculator_used); }).length; } },
+    { k: 'linkViews', label: 'Kunjungan halaman link', f: 'n', better: 'up', calc: function (w) { return w.clicks.filter(function (c) { return c.link_id === '__view__'; }).length; } },
+    { k: 'linkClicks', label: 'Klik di halaman link', f: 'n', better: 'up', calc: function (w) { return w.clicks.filter(function (c) { return c.link_id !== '__view__'; }).length; } }
+  ];
+  var KPI_KEYS = ['visitors', 'leads', 'intents', 'orders', 'revenue', 'cvLead'];
+  var L10 = [
+    ['Segue: kabar baik pribadi & bisnis', 5], ['Scorecard', 5], ['Review Rock', 5], ['Headlines pelanggan', 5],
+    ['To-Do list', 5], ['IDS: Identify, Discuss, Solve', 60], ['Conclude: rekap & nilai rapat 1–10', 5]
+  ];
+  var eosOffset = 0, eosCtx = null, eosTimers = {};
+  var EOS_MSG = { goals: 'eosGoalsMsg', rocks: 'eosRocksMsg', todos: 'eosTodosMsg', issues: 'eosIssuesMsg' };
+
+  function eos() {
+    var e = DATA.eos = DATA.eos || {};
+    if (!e.goals || Array.isArray(e.goals)) e.goals = {};
+    ['rocks', 'todos', 'issues'].forEach(function (k) { if (!Array.isArray(e[k])) e[k] = []; });
+    return e;
+  }
+  function weekStartOf(d) { var x = new Date(d); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function weekTs(iso) { var d = new Date(iso); return isNaN(d) ? null : weekStartOf(d).getTime(); }
+  function bucket(list, field) {
+    var m = {};
+    (list || []).forEach(function (it) { var k = weekTs(it[field]); if (k == null) return; (m[k] = m[k] || []).push(it); });
+    return m;
+  }
+  function fmtDay(d) { return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }); }
+  function fmtShort(n) {
+    n = Number(n) || 0;
+    if (n >= 1e6) return 'Rp' + (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace('.', ',') + 'jt';
+    if (n >= 1e3) return 'Rp' + Math.round(n / 1e3) + 'rb';
+    return 'Rp' + Math.round(n);
+  }
+  function fmtVal(m, v) {
+    if (m.f === 'rp') return fmtShort(v);
+    if (m.f === 'pct') return (Number(v) || 0).toFixed(1).replace('.', ',') + '%';
+    return (Math.round(v * 10) / 10).toLocaleString('id-ID');
+  }
+  function statusOf(m, v, goal) {
+    if (goal === '' || goal == null || isNaN(Number(goal))) return '';
+    return (m.better === 'down' ? v <= Number(goal) : v >= Number(goal)) ? 'on' : 'off';
+  }
+  function weekData(B, ts) {
+    return { sessions: B.sessions[ts] || [], leads: B.leads[ts] || [], partials: B.partials[ts] || [], events: B.events[ts] || [], orders: B.orders[ts] || [], clicks: B.clicks[ts] || [] };
+  }
+  function topOf(arr) {
+    var c = {}, best = null;
+    arr.forEach(function (x) { if (x) c[x] = (c[x] || 0) + 1; });
+    Object.keys(c).forEach(function (k) { if (best === null || c[k] > c[best]) best = k; });
+    return best === null ? null : [best, c[best]];
+  }
+  function stripHtml(h) { var d = document.createElement('div'); d.innerHTML = h; return d.textContent; }
+
+  function eosBuild() {
+    var B = {
+      sessions: bucket(DATA.sessions, 'first_seen'), leads: bucket(DATA.leads, 'created_at'),
+      partials: bucket(DATA.partial_leads, 'first_seen'), events: bucket(DATA.lead_events, 'created_at'),
+      orders: bucket(DATA.orders, 'created_at'), clicks: bucket(DATA.link_clicks, 'created_at')
+    };
+    var cur = addDays(weekStartOf(new Date()), 7 * eosOffset);
+    var weeks = [];
+    for (var i = 12; i >= 0; i--) weeks.push(addDays(cur, -7 * i).getTime());
+    var wd = weeks.map(function (ts) { return weekData(B, ts); });
+    var vals = wd.map(function (w) { var o = {}; MEASURES.forEach(function (m) { o[m.k] = m.calc(w); }); return o; });
+    var all = [];
+    Object.keys(B).forEach(function (k) { all = all.concat(Object.keys(B[k]).map(Number)); });
+    // minggu sebelum data pertama masuk tidak dinilai merah/hijau
+    eosCtx = { weeks: weeks, wd: wd, vals: vals, last: weeks.length - 1, first: all.length ? Math.min.apply(null, all) : Infinity };
+  }
+
+  function deltaHtml(m, cur, prev) {
+    if (!prev && !cur) return '<small class="flat">sama seperti minggu lalu (0)</small>';
+    if (!prev) return '<small class="' + (m.better === 'up' ? 'good' : 'bad') + '">baru (minggu lalu 0)</small>';
+    var pct = (cur - prev) / prev * 100;
+    if (Math.abs(pct) < 0.5) return '<small class="flat">sama seperti minggu lalu</small>';
+    var up = pct > 0, good = m.better === 'up' ? up : !up;
+    return '<small class="' + (good ? 'good' : 'bad') + '">' + (up ? '▲ +' : '▼ ') + Math.round(pct) + '% vs minggu lalu</small>';
+  }
+
+  function eosHeadlineItems() {
+    var c = eosCtx, w = c.wd[c.last], out = [];
+    if (w.leads.length) {
+      var src = topOf(w.leads.map(function (l) { return l.source; }));
+      out.push('<b>' + w.leads.length + ' lead baru</b> masuk' + (src ? ', sumber terbanyak: <b>' + esc(src[0]) + '</b> (' + src[1] + ')' : '') + '.');
+    } else out.push('Belum ada lead baru minggu ini.');
+    var svcs = [];
+    w.leads.concat(w.events).forEach(function (x) { String(x.service_interest || '').split(/,\s*/).forEach(function (s) { if (s) svcs.push(s); }); });
+    var ts = topOf(svcs);
+    if (ts) out.push('Layanan paling diminati: <b>' + esc(ts[0]) + '</b> (' + ts[1] + ' kali dipilih).');
+    var menu = {};
+    w.orders.forEach(function (o) {
+      var re = /-\s*([^|]+?)\s+x(\d+)\s*\(/g, m;
+      while ((m = re.exec(String(o.items_summary || '')))) menu[m[1]] = (menu[m[1]] || 0) + Number(m[2]);
+    });
+    var best = null; Object.keys(menu).forEach(function (k) { if (best === null || menu[k] > menu[best]) best = k; });
+    if (best) out.push('Menu terlaris: <b>' + esc(best) + '</b> (' + menu[best] + ' kemasan di checkout).');
+    if (w.orders.length) {
+      var big = w.orders.slice().sort(function (a, b) { return (Number(b.total) || 0) - (Number(a.total) || 0); })[0];
+      out.push('Checkout terbesar: <b>' + fmt(big.total) + '</b>' + (big.customer_name ? ' atas nama ' + esc(big.customer_name) : '') + '.');
+    }
+    var part = w.partials.filter(function (p) { return p.status !== 'CONVERTED'; }).length;
+    if (part) out.push('<b>' + part + ' lead parsial</b> mengisi sebagian form tapi belum submit. Bisa jadi tanda form terasa terlalu panjang.');
+    var ab = w.sessions.filter(function (s) { return isYes(s.reached_cart) && !isYes(s.reached_submit); });
+    if (ab.length) out.push('<b>' + ab.length + ' keranjang</b> belum berlanjut ke WhatsApp (nilai ± ' + fmtShort(ab.reduce(function (a, s) { return a + (Number(s.cart_total) || 0); }, 0)) + ').');
+    return out;
+  }
+
+  function renderEosTop() {
+    var c = eosCtx, start = new Date(c.weeks[c.last]), end = addDays(start, 6);
+    document.getElementById('eosWeekLabel').textContent = 'Minggu ' + fmtDay(start) + ' – ' + fmtDay(end) + ' ' + end.getFullYear() + (eosOffset === 0 ? ' (berjalan)' : '');
+    document.getElementById('eosNext').disabled = eosOffset >= 0;
+    var cur = c.vals[c.last], prev = c.vals[c.last - 1];
+    document.getElementById('eosKpis').innerHTML = KPI_KEYS.map(function (k) {
+      var m = MEASURES.filter(function (x) { return x.k === k; })[0];
+      return '<div class="kpi"><span>' + esc(m.label) + '</span><b>' + fmtVal(m, cur[k]) + '</b>' + deltaHtml(m, cur[k], prev[k]) + '</div>';
+    }).join('');
+    document.getElementById('eosHeadlines').innerHTML = eosHeadlineItems().map(function (h) { return '<li>' + h + '</li>'; }).join('');
+  }
+
+  function renderScorecard() {
+    var c = eosCtx, goals = eos().goals;
+    var head = '<tr><th>Ukuran</th><th>Pemilik</th><th>Target / mgg</th>' + c.weeks.map(function (ts, i) {
+      return '<th class="' + (i === c.last ? 'sel' : '') + '">' + fmtDay(new Date(ts)) + '</th>';
+    }).join('') + '<th>Rata²</th></tr>';
+    var rows = MEASURES.map(function (m) {
+      var g = goals[m.k] || {};
+      var cells = c.vals.map(function (v, i) {
+        return '<td class="' + (c.weeks[i] < c.first ? '' : statusOf(m, v[m.k], g.goal)) + (i === c.last ? ' sel' : '') + '">' + fmtVal(m, v[m.k]) + '</td>';
+      }).join('');
+      var avg = c.vals.reduce(function (a, v) { return a + v[m.k]; }, 0) / c.vals.length;
+      return '<tr><td>' + esc(m.label) + (m.better === 'down' ? ' <small style="color:var(--ink-soft)">(lebih kecil lebih baik)</small>' : '') + '</td>' +
+        '<td><input class="own" type="text" data-k="' + m.k + '" data-f="owner" value="' + esc(g.owner || '') + '" placeholder="Pemilik"></td>' +
+        '<td><input type="number" step="any" data-k="' + m.k + '" data-f="goal" value="' + (g.goal != null && g.goal !== '' ? esc(g.goal) : '') + '" placeholder="Target"></td>' +
+        cells + '<td>' + fmtVal(m, avg) + '</td></tr>';
+    }).join('');
+    document.getElementById('eosScorecard').innerHTML = head + rows;
+  }
+
+  function saveEos(key) {
+    clearTimeout(eosTimers[key]);
+    var msg = document.getElementById(EOS_MSG[key]);
+    msg.textContent = 'Menyimpan...';
+    eosTimers[key] = setTimeout(function () {
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ type: 'eos_update', password: password, key: key, value: eos()[key] })
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        msg.textContent = res.ok ? 'Tersimpan ✓' : 'Gagal: ' + (res.error || 'coba lagi');
+      }).catch(function () { msg.textContent = 'Gagal terhubung ke Apps Script'; });
+    }, 500);
+  }
+  function newId(p) { return p + Date.now().toString(36) + Math.floor(Math.random() * 1000); }
+
+  function renderRocks() {
+    var rocks = eos().rocks;
+    document.getElementById('eosRocks').innerHTML = rocks.length ? rocks.map(function (r, i) {
+      return '<div class="eos-row" data-i="' + i + '">' +
+        '<input type="text" data-f="title" value="' + esc(r.title) + '" placeholder="Rock (hasil yang jelas & terukur)">' +
+        '<input type="text" data-f="owner" value="' + esc(r.owner) + '" placeholder="Pemilik">' +
+        '<input type="date" data-f="due" value="' + esc(r.due) + '">' +
+        '<select data-f="status"><option value="on"' + (r.status === 'on' ? ' selected' : '') + '>On track</option><option value="off"' + (r.status === 'off' ? ' selected' : '') + '>Off track</option><option value="done"' + (r.status === 'done' ? ' selected' : '') + '>Selesai</option></select>' +
+        '<button type="button" class="eos-del" aria-label="Hapus">✕</button></div>';
+    }).join('') : '<p class="eos-hint">Belum ada Rock. Tambahkan 3–7 prioritas untuk kuartal ini.</p>';
+  }
+  function renderTodos() {
+    var todos = eos().todos;
+    var done = todos.filter(function (t) { return t.done; }).length;
+    document.getElementById('eosTodoStat').textContent = todos.length ? 'Selesai ' + done + ' dari ' + todos.length + ' (' + Math.round(done / todos.length * 100) + '%). Target EOS: 90% atau lebih.' : 'Tugas kecil yang bisa selesai dalam 7 hari.';
+    document.getElementById('eosTodos').innerHTML = todos.length ? todos.map(function (t, i) {
+      return '<div class="eos-row todo' + (t.done ? ' done' : '') + '" data-i="' + i + '">' +
+        '<input type="checkbox" data-f="done"' + (t.done ? ' checked' : '') + ' aria-label="Selesai">' +
+        '<input type="text" data-f="title" value="' + esc(t.title) + '" placeholder="To-do">' +
+        '<input type="text" data-f="owner" value="' + esc(t.owner) + '" placeholder="Pemilik">' +
+        '<input type="date" data-f="due" value="' + esc(t.due) + '">' +
+        '<button type="button" class="eos-del" aria-label="Hapus">✕</button></div>';
+    }).join('') : '';
+  }
+  function renderIssues() {
+    var issues = eos().issues;
+    var order = issues.map(function (it, i) { return { it: it, i: i }; }).sort(function (a, b) {
+      var sa = a.it.status === 'solved' ? 1 : 0, sb = b.it.status === 'solved' ? 1 : 0;
+      return sa - sb || (a.it.priority || 2) - (b.it.priority || 2);
+    });
+    document.getElementById('eosIssues').innerHTML = order.length ? order.map(function (o) {
+      var it = o.it, p = it.priority || 2;
+      return '<div class="eos-row issue' + (it.status === 'solved' ? ' done' : '') + '" data-i="' + o.i + '">' +
+        '<input type="text" data-f="title" value="' + esc(it.title) + '" placeholder="Issue">' +
+        '<select data-f="priority"><option value="1"' + (p === 1 ? ' selected' : '') + '>Prioritas 1</option><option value="2"' + (p === 2 ? ' selected' : '') + '>Prioritas 2</option><option value="3"' + (p === 3 ? ' selected' : '') + '>Prioritas 3</option></select>' +
+        '<select data-f="status"><option value="open"' + (it.status !== 'solved' ? ' selected' : '') + '>Terbuka</option><option value="solved"' + (it.status === 'solved' ? ' selected' : '') + '>Selesai</option></select>' +
+        '<button type="button" class="eos-del" aria-label="Hapus">✕</button></div>';
+    }).join('') : '<p class="eos-hint">Belum ada Issue.</p>';
+    renderSuggestions();
+  }
+  function renderSuggestions() {
+    var c = eosCtx, goals = eos().goals, existing = eos().issues.map(function (i) { return i.title; }), sug = [];
+    MEASURES.forEach(function (m) {
+      var g = goals[m.k]; if (!g || g.goal === '' || g.goal == null) return;
+      if (statusOf(m, c.vals[c.last][m.k], g.goal) === 'off' && statusOf(m, c.vals[c.last - 1][m.k], g.goal) === 'off')
+        sug.push(m.label + (m.better === 'down' ? ' di atas' : ' di bawah') + ' target 2 minggu berturut-turut');
+    });
+    var cur = c.vals[c.last];
+    if (cur.partial > 0 && cur.partial >= cur.leads) sug.push('Lead parsial (' + cur.partial + ') ≥ lead submit (' + cur.leads + '): form mungkin perlu disederhanakan');
+    sug = sug.filter(function (t) { return existing.indexOf(t) === -1; });
+    document.getElementById('eosSuggest').innerHTML = sug.map(function (t, i) {
+      return '<button type="button" data-sug="' + esc(t) + '">＋ ' + esc(t) + '</button>';
+    }).join('');
+  }
+
+  function bindList(containerId, key, renderFn) {
+    var box = document.getElementById(containerId);
+    box.addEventListener('change', function (ev) {
+      var row = ev.target.closest('.eos-row'); if (!row) return;
+      var item = eos()[key][Number(row.getAttribute('data-i'))], f = ev.target.getAttribute('data-f');
+      if (!item || !f) return;
+      item[f] = ev.target.type === 'checkbox' ? ev.target.checked : (f === 'priority' ? Number(ev.target.value) : ev.target.value);
+      saveEos(key);
+      // ketikan teks cukup disimpan; render ulang hanya bila tampilan ikut berubah (dicoret, urutan prioritas)
+      if (f === 'done' || f === 'status' || f === 'priority') setTimeout(renderFn, 0);
+    });
+    box.addEventListener('click', function (ev) {
+      if (!ev.target.closest('.eos-del')) return;
+      var row = ev.target.closest('.eos-row');
+      eos()[key].splice(Number(row.getAttribute('data-i')), 1);
+      saveEos(key); setTimeout(renderFn, 0);
+    });
+  }
+  bindList('eosRocks', 'rocks', renderRocks);
+  bindList('eosTodos', 'todos', renderTodos);
+  bindList('eosIssues', 'issues', renderIssues);
+  document.getElementById('eosAddRock').addEventListener('click', function () { eos().rocks.push({ id: newId('r'), title: '', owner: '', due: '', status: 'on' }); saveEos('rocks'); renderRocks(); });
+  document.getElementById('eosAddTodo').addEventListener('click', function () { eos().todos.push({ id: newId('t'), title: '', owner: '', due: '', done: false }); saveEos('todos'); renderTodos(); });
+  document.getElementById('eosAddIssue').addEventListener('click', function () { eos().issues.push({ id: newId('i'), title: '', priority: 2, status: 'open', created: new Date().toISOString() }); saveEos('issues'); renderIssues(); });
+  document.getElementById('eosSuggest').addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-sug]'); if (!b) return;
+    eos().issues.push({ id: newId('i'), title: b.getAttribute('data-sug'), priority: 2, status: 'open', created: new Date().toISOString() });
+    saveEos('issues'); renderIssues();
+  });
+  document.getElementById('eosScorecard').addEventListener('change', function (ev) {
+    var inp = ev.target.closest('input[data-k]'); if (!inp) return;
+    var k = inp.getAttribute('data-k'), f = inp.getAttribute('data-f'), goals = eos().goals;
+    goals[k] = goals[k] || {};
+    goals[k][f] = f === 'goal' ? (inp.value === '' ? null : Number(inp.value)) : inp.value;
+    saveEos('goals');
+    setTimeout(function () { renderScorecard(); renderSuggestions(); }, 0);   // tunda agar tidak bentrok dengan event blur
+  });
+  document.getElementById('eosPrev').addEventListener('click', function () { eosOffset--; renderEos(); });
+  document.getElementById('eosNext').addEventListener('click', function () { if (eosOffset < 0) { eosOffset++; renderEos(); } });
+  document.getElementById('eosToday').addEventListener('click', function () { eosOffset = 0; renderEos(); });
+  document.getElementById('eosCopy').addEventListener('click', function () {
+    var c = eosCtx, cur = c.vals[c.last], prev = c.vals[c.last - 1];
+    var lines = ['Ringkasan Bento for Kids — ' + document.getElementById('eosWeekLabel').textContent, ''];
+    MEASURES.forEach(function (m) {
+      if (KPI_KEYS.indexOf(m.k) === -1) return;
+      lines.push(m.label + ': ' + fmtVal(m, cur[m.k]) + ' (minggu lalu ' + fmtVal(m, prev[m.k]) + ')');
+    });
+    lines.push('', 'Headlines:');
+    eosHeadlineItems().forEach(function (h) { lines.push('- ' + stripHtml(h)); });
+    var text = lines.join('\n');
+    var btn = document.getElementById('eosCopy');
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { btn.textContent = 'Tersalin ✓'; }, function () { window.prompt('Salin teks ini:', text); });
+    setTimeout(function () { btn.textContent = 'Salin ringkasan'; }, 1800);
+  });
+
+  /* ---- Rapat Level 10: timer per segmen ---- */
+  var l10 = { idx: 0, left: L10[0][1] * 60, timer: null };
+  function l10Render() {
+    var m = Math.floor(l10.left / 60), s = l10.left % 60;
+    document.getElementById('l10Clock').textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    document.getElementById('l10Start').textContent = l10.timer ? 'Jeda' : (l10.left < L10[l10.idx][1] * 60 ? 'Lanjut' : 'Mulai');
+    document.getElementById('l10List').innerHTML = L10.map(function (seg, i) {
+      return '<li class="' + (i === l10.idx ? 'cur' : (i < l10.idx ? 'past' : '')) + '"><span>' + (i + 1) + '. ' + esc(seg[0]) + '</span><span>' + seg[1] + ' mnt</span></li>';
+    }).join('');
+  }
+  function l10Go(i) {
+    if (i >= L10.length) { clearInterval(l10.timer); l10.timer = null; l10.idx = L10.length - 1; l10.left = 0; l10Render(); return; }
+    l10.idx = i; l10.left = L10[i][1] * 60; l10Render();
+  }
+  document.getElementById('l10Start').addEventListener('click', function () {
+    if (l10.timer) { clearInterval(l10.timer); l10.timer = null; l10Render(); return; }
+    l10.timer = setInterval(function () { l10.left--; if (l10.left <= 0) l10Go(l10.idx + 1); else l10Render(); }, 1000);
+    l10Render();
+  });
+  document.getElementById('l10Next').addEventListener('click', function () { l10Go(l10.idx + 1); });
+  document.getElementById('l10Reset').addEventListener('click', function () { clearInterval(l10.timer); l10.timer = null; l10Go(0); });
+  l10Render();
+
+  function renderEos() {
+    eosBuild();
+    renderEosTop();
+    renderScorecard();
+    renderRocks();
+    renderTodos();
+    renderIssues();
   }
 
   function fmtDate(iso) {

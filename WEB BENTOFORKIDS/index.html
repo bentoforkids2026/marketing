@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bento for Kids Bandar Lampung | Bekal Anak Praktis &amp; Variatif</title>
-<meta name="description" content="Bento for Kids membantu orang tua di Bandar Lampung menyiapkan bekal anak dengan lebih praktis, variatif, dan terencana.">
+<title>Bento for Kids | Healthy Lifestyle Brand for Kids, Bandar Lampung</title>
+<meta name="description" content="Healthy food, healthy habits, happy kids. Bento for Kids menemani orang tua membangun kebiasaan hidup sehat sejak kecil: frozen food tanpa MSG dan pengawet, cooking class, edukasi, dan komunitas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -548,16 +548,167 @@
     display:grid; place-items:center; text-decoration:none; box-shadow:0 8px 20px rgba(38,50,48,.25);
   }
   .wa-float:hover{background:var(--moss-dark);}
+
+  /* ---------- Gate data pelanggan + Kalkulator gizi (popup) ---------- */
+  #calcBackdrop{z-index:120;}
+  #gateBackdrop{z-index:130;}
+  .gate-sheet .modal-body{padding:28px 24px 26px;}
+  .gate-sheet h3{margin:0 0 6px; font-size:22px;}
+  .gate-sheet .btn{width:100%;}
+  .gate-emoji{font-size:36px; line-height:1; margin-bottom:6px;}
+  .gate-note{font-size:12px; color:var(--ink-soft); margin:12px 0 0; text-align:center;}
+  .cart-customer{font-size:12.5px; color:var(--ink-soft); text-align:center; margin:10px 0 0;}
+  .cart-customer button{background:none; border:none; padding:0; font:inherit; font-weight:700; color:var(--moss-dark); text-decoration:underline; cursor:pointer;}
+
+  .calc-sheet{max-width:640px; max-height:92vh;}
+  @media(min-width:720px){ .calc-sheet{max-height:88vh;} }
+  .calc-sheet .modal-body{padding:28px 22px 30px;}
+  .calc-sheet h3{margin:2px 0 6px; font-size:23px;}
+  .calc-sheet h4{font-family:'Baloo 2',system-ui,sans-serif; font-size:17px; margin:0 0 8px; color:var(--moss-dark);}
+  .calc-lead{font-size:14px;}
+  .field .seg{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .field .seg label, .field .act-list label{position:relative; margin:0; font-weight:400;}
+  .seg input, .act-list input{position:absolute; opacity:0; inset:0; width:100%; height:100%; margin:0; cursor:pointer;}
+  .seg span{display:block; padding:11px 12px; border:1.5px solid var(--line); border-radius:12px; background:var(--white); text-align:center; font-weight:600; font-size:14px;}
+  .seg input:checked + span, .act-list input:checked + .act{border-color:var(--moss); background:#EEF3EA;}
+  .seg input:focus-visible + span, .act-list input:focus-visible + .act{outline:3px solid var(--coral); outline-offset:2px;}
+  .act-list{display:grid; gap:8px;}
+  .act{display:block; padding:10px 12px; border:1.5px solid var(--line); border-radius:12px; background:var(--white);}
+  .act b{display:block; font-size:14px; color:var(--ink);}
+  .act small{display:block; font-size:12.5px; color:var(--ink-soft); line-height:1.4;}
+  .field.error .seg span, .field.error .act{border-color:var(--coral);}
+  .calc-actions{display:grid; gap:10px; margin-top:6px;}
+  .calc-sheet .btn{width:100%;}
+  .btn-ghost-calc{background:var(--cream-2); color:var(--moss-dark);}
+  .btn-ghost-calc:hover{background:var(--line);}
+  .res-card{background:var(--white); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:14px;}
+  .res-hero{background:linear-gradient(135deg,#FFF6E4,#FBEFD3); border-color:#F1D9A8;}
+  .energy-num{font-family:'Baloo 2',system-ui,sans-serif; font-size:40px; font-weight:800; color:var(--coral); line-height:1;}
+  .energy-num small{font-size:16px; font-weight:700; color:var(--ink-soft);}
+  .res-meta{font-size:13px; color:var(--ink-soft); margin:6px 0 0;}
+  .nut-table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  .nut-table th, .nut-table td{padding:8px 6px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top;}
+  .nut-table tr:last-child td{border-bottom:none;}
+  .nut-table th{font-size:11.5px; text-transform:uppercase; letter-spacing:.02em; color:var(--ink-soft);}
+  .nut-table td.n, .nut-table th.n{text-align:right; font-variant-numeric:tabular-nums;}
+  .nut-table td.n{font-weight:700; white-space:nowrap;}
+  .nut-table td small{display:block; color:var(--ink-soft); font-size:11.5px;}
+  .nut-table .u{font-size:11.5px; font-weight:600; color:var(--ink-soft);}
+  .cov-row{margin:9px 0;}
+  .cov-top{display:flex; justify-content:space-between; font-size:12.5px; font-weight:600;}
+  .cov-track{height:8px; border-radius:99px; background:var(--cream-2); overflow:hidden; margin-top:4px;}
+  .cov-fill{height:100%; background:var(--moss); border-radius:99px;}
+  .combo-list{list-style:none; margin:0 0 10px; padding:0;}
+  .combo-list li{display:flex; justify-content:space-between; gap:10px; font-size:14px; font-weight:600; padding:6px 0; border-bottom:1px dashed var(--line);}
+  .combo-list li span:last-child{color:var(--coral); white-space:nowrap;}
+  .calc-note{font-size:12.5px; color:var(--ink-soft); margin:8px 0 0;}
+  .calc-warn{background:#FFF4E0; border:1px solid #F1D9A8; border-radius:12px; padding:10px 12px; font-size:13px; color:#7A5A16; margin-bottom:12px;}
+  .calc-soon{background:#EEF3EA; border-color:#CFDDC9;}
+  .calc-src summary{cursor:pointer; font-weight:700; font-size:13.5px; color:var(--moss-dark);}
+  .calc-src ul{margin:8px 0 0; padding-left:18px; font-size:12.5px; color:var(--ink-soft);}
+  .calc-src li{margin-bottom:5px;}
+
+  /* ---------- Brand story: Healthy Lifestyle Brand for Kids ---------- */
+  .hero h1{max-width:18ch;}
+  .kicker{display:inline-block; font-size:12px; font-weight:700; color:var(--moss); text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px;}
+  .tagline{font-family:'Baloo 2',system-ui,sans-serif; font-weight:700; font-size:19px; color:var(--coral); margin:0 0 18px;}
+  .story-grid{display:grid; gap:28px; align-items:center;}
+  @media(min-width:900px){ .story-grid{grid-template-columns:1.1fr .9fr; gap:48px;} }
+  .story h2{font-size:clamp(26px,3.8vw,40px); max-width:18ch;}
+  .story p{font-size:16.5px; max-width:52ch;}
+  .story-quote{background:var(--moss-dark); border-radius:28px; padding:34px 28px; position:relative;}
+  .story-quote p{color:#F3F7EF; font-family:'Baloo 2',system-ui,sans-serif; font-size:clamp(21px,2.8vw,28px); line-height:1.3; margin:0;}
+  .story-quote small{display:block; margin-top:16px; color:#DCE7D8; font-weight:600; font-size:14px;}
+  .pillar-grid{display:grid; gap:18px;}
+  @media(min-width:800px){ .pillar-grid{grid-template-columns:repeat(3,1fr);} }
+  .pillar{background:var(--white); border:1px solid var(--line); border-radius:var(--radius-tray); padding:26px 22px;}
+  .pillar .icon{font-size:32px; margin-bottom:10px; line-height:1;}
+  .pillar h3{font-size:19px; margin-bottom:6px;}
+  .pillar p{margin:0; font-size:14.5px;}
+  .mini-grid{display:grid; gap:16px;}
+  @media(min-width:720px){ .mini-grid{grid-template-columns:repeat(3,1fr);} }
+  .mini-card{background:var(--white); border:1px solid var(--line); border-radius:var(--radius-tray); padding:22px 20px;}
+  .mini-card .icon{font-size:28px; margin-bottom:8px; line-height:1;}
+  .mini-card h3{font-size:18px; margin-bottom:4px;}
+  .mini-card p{margin:0; font-size:14px;}
+  .edu-grid{display:grid; gap:12px; grid-template-columns:1fr 1fr;}
+  @media(min-width:720px){ .edu-grid{grid-template-columns:repeat(3,1fr);} }
+  .edu-item{background:var(--white); border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px 16px; display:flex; gap:10px; align-items:center; font-weight:600; font-size:14.5px; color:var(--ink);}
+  .edu-item span{font-size:24px; line-height:1;}
+  .section-cta{margin-top:26px; display:flex; flex-wrap:wrap; gap:12px; align-items:center;}
+  .section-cta .note{font-size:13.5px; color:var(--ink-soft);}
+  .community-band{background:var(--cream-2); border-radius:28px; padding:48px 26px; text-align:center;}
+  .community-band h2{font-size:clamp(25px,3.6vw,36px); max-width:20ch; margin:0 auto .5em;}
+  .community-band p{max-width:52ch; margin:0 auto 16px;}
+  .community-tags{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:0 0 24px;}
+  .community-tags span{background:var(--white); border:1px solid var(--line); border-radius:999px; padding:7px 14px; font-weight:600; font-size:13.5px; color:var(--moss-dark);}
+  .final-lines{display:flex; flex-wrap:wrap; gap:8px 18px; justify-content:center; margin:0 0 26px; padding:0; list-style:none; color:#FFF2EE; font-weight:600;}
+  @media(min-width:720px){ .steps.four{grid-template-columns:repeat(4,1fr);} }
+  .footer-links{flex-wrap:wrap; row-gap:8px;}
+
+  /* ---------- Form leads: chips, meter, quick view, coach ---------- */
+  .gate-lead{font-size:14.5px; margin:0 0 12px;}
+  .field .opt{font-weight:400; color:var(--ink-soft); font-size:12.5px;}
+  .svc-chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    border:1.5px solid var(--line); background:var(--white); border-radius:999px; padding:9px 13px;
+    font:inherit; font-size:13.5px; font-weight:600; color:var(--ink); cursor:pointer; line-height:1.2;
+    transition:border-color .12s ease, background .12s ease, transform .08s ease;
+  }
+  .chip:hover{border-color:var(--moss);}
+  .chip:active{transform:scale(.97);}
+  .chip[aria-pressed="true"]{border-color:var(--moss); background:#EEF3EA; color:var(--moss-dark);}
+  .chip:focus-visible{outline:3px solid var(--coral); outline-offset:2px;}
+  .svc-chips.age .chip{padding:9px 12px;}
+  .field.error .svc-chips .chip{border-color:var(--coral);}
+  .svc-chips.shake{animation:bfkShake .35s ease;}
+  @keyframes bfkShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .gate-who{font-size:12.5px; color:var(--ink-soft); margin:14px 0 16px;}
+  .linklike{background:none; border:none; padding:0; font:inherit; font-weight:700; color:var(--moss-dark); text-decoration:underline; cursor:pointer;}
+  .meter{background:var(--cream-2); border-radius:14px; padding:10px 14px; margin:0 0 16px;}
+  .meter-top{display:flex; justify-content:space-between; gap:10px; font-size:13px; font-weight:700; color:var(--moss-dark);}
+  .meter-count{color:var(--ink-soft); font-weight:600;}
+  .meter-track{height:7px; border-radius:99px; background:var(--white); margin-top:8px; overflow:hidden;}
+  .meter-fill{height:100%; width:0; background:var(--coral); border-radius:99px; transition:width .25s ease, background .25s ease;}
+  .meter.done .meter-fill{background:var(--moss);}
+  .meter.done .meter-top{color:var(--moss);}
+  .coach{
+    position:fixed; left:14px; right:84px; bottom:18px; z-index:57; max-width:400px;
+    background:var(--white); border:1.5px solid var(--moss); border-radius:16px; padding:12px 14px;
+    box-shadow:0 10px 26px rgba(38,50,48,.18); display:none; align-items:flex-start; gap:10px;
+  }
+  body.has-cart-bar .coach{bottom:92px;}
+  .coach.show{display:flex; animation:slideUp .25s ease;}
+  @media(min-width:720px){ .coach{left:20px; right:auto; width:380px;} }
+  @media(max-width:719px){
+    .coach{flex-wrap:wrap;}
+    .coach-actions{flex-basis:100%; flex-direction:row; justify-content:space-between; align-items:center;}
+  }
+  .coach-emoji{font-size:24px; line-height:1; flex:none; margin-top:2px;}
+  .coach-body{flex:1; min-width:0;}
+  .coach-body b{display:block; font-family:'Baloo 2',sans-serif; font-size:14px; color:var(--ink); line-height:1.25;}
+  .coach-body span{display:block; font-size:12.5px; color:var(--ink-soft); margin-top:2px; line-height:1.4;}
+  .coach-actions{display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex:none;}
+  .coach-act{background:var(--moss); color:var(--white); border:none; border-radius:999px; padding:7px 12px; font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; white-space:nowrap;}
+  .coach-act:empty{display:none;}
+  .coach-x{background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:14px; padding:2px 4px;}
+  @media (prefers-reduced-motion: reduce){ .coach.show{animation:none;} }
+
+  /* ---------- Panduan menu bekal (kalkulator) ---------- */
+  .plate{display:flex; height:38px; border-radius:12px; overflow:hidden; margin:6px 0 8px;}
+  .plate span{display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:700; text-align:center; line-height:1.1; padding:0 4px;}
+  .guide-list{margin:0 0 4px; padding:0; list-style:none;}
+  .guide-list li{font-size:13.5px; padding:7px 0 7px 26px; position:relative; border-bottom:1px dashed var(--line);}
+  .guide-list li:last-child{border-bottom:none;}
+  .guide-list li::before{content:attr(data-i); position:absolute; left:0; top:6px; font-size:16px;}
+  .rot-list{list-style:none; margin:0 0 10px; padding:0;}
+  .rot-list li{display:flex; gap:10px; padding:9px 0; border-bottom:1px dashed var(--line); font-size:14px;}
+  .rot-list li:last-child{border-bottom:none;}
+  .rot-day{flex:none; width:52px; font-weight:800; color:var(--moss-dark); font-family:'Baloo 2',sans-serif;}
+  .rot-main b{display:block;}
+  .rot-main small{color:var(--ink-soft); font-size:12px;}
 </style>
 
-<!-- =========================================================================
-     KONFIGURASI UTAMA — isi 3 nilai di bawah ini, cukup di SATU tempat ini.
-     1) APPS_SCRIPT_URL → URL Web App Google Apps Script (untuk simpan Leads & Order ke Spreadsheet)
-     2) GA4_ID          → GA4 Measurement ID, mis. 'G-XXXXXXXXXX'
-     3) META_PIXEL_ID   → Meta Pixel ID, mis. '1234567890123456'
-     Kosongkan ('') salah satu ID kalau belum ada — fitur terkait otomatis nonaktif,
-     tidak akan error. Lihat dokumen "Cara Setup" untuk langkah dapatkan tiap nilai ini.
-     ========================================================================= -->
 <script>
   window.CONFIG = {
     APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbz94KoVYS7YGz2DxN9pVyGRaeq6BtsZm3OzVuR7p_K5DQvlETZ9rcOuMmQecmYLkSrW/exec',
@@ -607,14 +758,15 @@
       <span class="mark">🍱</span> Bento for Kids
     </a>
     <nav class="nav-links">
-      <a href="#katalog">Katalog</a>
-      <a href="#program">Program</a>
+      <a href="#cerita">Cerita Kami</a>
+      <a href="#aktivitas">Aktivitas</a>
+      <a href="#edukasi">Edukasi</a>
+      <a href="#komunitas">Komunitas</a>
+      <a href="#katalog">Menu</a>
       <a href="#kalkulator">Kalkulator</a>
-      <a href="#dapatkan-katalog">Dapatkan Katalog</a>
-      <a href="#faq">FAQ</a>
     </nav>
     <a class="btn btn-wa nav-cta" href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20bertanya%20tentang%20bekal%20anak." target="_blank" rel="noopener" data-event="whatsapp_click" data-source="header">
-      Tanya via WhatsApp
+      Ngobrol via WhatsApp
     </a>
   </div>
 </header>
@@ -625,43 +777,75 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow-loc">📍 Melayani Bandar Lampung &amp; sekitarnya</span>
-        <h1>Bekal Anak Lebih Praktis, Variatif, dan Terencana</h1>
-        <p class="sub">Realfood for Real Family — solusi harian bekal &amp; katering anak dari Bento for Kids, tanpa pengawet, penyedap, dan pewarna (Non 3P).</p>
+        <span class="eyebrow-loc">❤️ Healthy food · Healthy habits · Happy kids</span>
+        <h1>Kebiasaan sehat dimulai sejak mereka kecil</h1>
+        <p class="sub">Bento for Kids lahir dari seorang ibu yang menyiapkan bekal untuk anaknya. Kini kami menemani keluarga Indonesia membangun hidup sehat, dari meja makan sampai tumbuh kembang si kecil.</p>
         <div class="hero-ctas">
-          <a href="#kalkulator" class="btn btn-primary" data-event="hero_cta_click" data-cta="calculator">Cek Kebutuhan Bekal Anak</a>
-          <a href="#katalog" class="btn btn-secondary" data-event="hero_cta_click" data-cta="catalog">Lihat Katalog</a>
+          <a href="#cerita" class="btn btn-primary" data-event="hero_cta_click" data-cta="story">Baca Cerita Kami</a>
+          <a href="#kalkulator" class="btn btn-secondary" data-open-calc data-event="hero_cta_click" data-cta="calculator">Hitung Kebutuhan Gizi Anak</a>
         </div>
         <div class="badges">
-          <span class="badge">✅ Non MSG</span>
-          <span class="badge">✅ Non Pengawet</span>
-          <span class="badge">✅ Non UPF</span>
-          <span class="badge">✅ BPOM &amp; Halal Certified</span>
+          <span class="badge">🌱 Tanpa MSG &amp; pengawet</span>
+          <span class="badge">🍱 Homemade Non 3P</span>
+          <span class="badge">✅ BPOM &amp; Halal</span>
         </div>
       </div>
       <div class="bento-visual" aria-hidden="true">
-        <div class="tray t1">Menu Harian</div>
-        <div class="tray t2">Buah &amp; Sayur</div>
-        <div class="tray t3">Sumber Protein</div>
+        <div class="tray t1">Healthy Food</div>
+        <div class="tray t2">Healthy Habits</div>
+        <div class="tray t3">Happy Kids</div>
       </div>
     </div>
   </section>
 
-  <!-- ============ PROBLEM ============ -->
+  <!-- ============ BRAND STORY ============ -->
+  <section id="cerita" class="story">
+    <div class="wrap story-grid">
+      <div>
+        <span class="kicker">Cerita Kami</span>
+        <h2>Dari sebuah bekal, lahirlah sebuah harapan.</h2>
+        <p>Bento for Kids berawal dari kecintaan seorang ibu dalam menyiapkan bekal bernutrisi untuk anaknya.</p>
+        <p>Dari sebuah bekal itu lahirlah brand dengan visi yang lebih besar: membantu keluarga Indonesia membangun kebiasaan hidup sehat sejak anak-anak.</p>
+        <p>Kami tidak berhenti di meja makan. Kami hadir untuk menemani perjalanan tumbuh kembang anak.</p>
+      </div>
+      <div class="story-quote">
+        <p>“Healthy lifestyle bukan sesuatu yang harus dimulai ketika dewasa. It starts when they are little ❤️”</p>
+        <small>— Bento for Kids</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHILOSOPHY ============ -->
+  <section id="filosofi">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Our Philosophy</span>
+        <h2>More than just FOOD</h2>
+        <p>Healthy lifestyle dimulai dari kebiasaan kecil yang dibangun sejak dini.</p>
+      </div>
+      <div class="pillar-grid">
+        <div class="pillar"><div class="icon">🥦</div><h3>Makanan yang bernutrisi</h3><p>Pilihan makanan yang praktis untuk orang tua dan menyenangkan untuk anak, tanpa MSG dan pengawet.</p></div>
+        <div class="pillar"><div class="icon">🎨</div><h3>Aktivitas yang menyenangkan</h3><p>Anak belajar lewat bermain: memasak, mengenal bahan makanan, dan berkreasi bersama.</p></div>
+        <div class="pillar"><div class="icon">📚</div><h3>Edukasi pola hidup sehat</h3><p>Mengenalkan anak, dan mendampingi orang tua, pada kebiasaan hidup sehat dengan cara yang sederhana.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM (empati orang tua) ============ -->
   <section class="problem">
     <div class="wrap">
-      <h2>Menyiapkan bekal anak setiap hari, bukan hal yang selalu mudah.</h2>
-      <p>Centang mana yang paling terasa buat Anda:</p>
+      <h2>Menjadi orang tua tidak selalu mudah. Kami paham.</h2>
+      <p>Centang perasaan yang paling Anda kenali. Anda tidak sendirian.</p>
       <ul class="problem-list" id="problemList">
-        <li><input type="checkbox"><span class="txt">Bingung menentukan menu bekal yang tepat untuk anak.</span></li>
-        <li><input type="checkbox"><span class="txt">Waktu pagi terbatas untuk menyiapkan bekal dari nol.</span></li>
-        <li><input type="checkbox"><span class="txt">Anak mudah bosan dengan menu yang itu-itu saja.</span></li>
-        <li><input type="checkbox"><span class="txt">Sulit memperkirakan porsi yang sesuai kebutuhan anak.</span></li>
-        <li><input type="checkbox"><span class="txt">Khawatir kandungan MSG, pengawet, atau pewarna dalam bekal instan.</span></li>
-        <li><input type="checkbox"><span class="txt">Ingin bekal yang praktis tapi tetap terencana dengan baik.</span></li>
+        <li><input type="checkbox"><span class="txt">Cemas apakah anak sudah cukup makan dan cukup gizi hari ini.</span></li>
+        <li><input type="checkbox"><span class="txt">Lelah membujuk anak yang susah makan (GTM) di tengah hari yang padat.</span></li>
+        <li><input type="checkbox"><span class="txt">Bingung mau membawakan bekal apa lagi supaya anak tidak bosan.</span></li>
+        <li><input type="checkbox"><span class="txt">Khawatir anak terlalu sering makan makanan ultra-proses (UPF).</span></li>
+        <li><input type="checkbox"><span class="txt">Waktu pagi terbatas, tapi ingin tetap memberi yang terbaik.</span></li>
+        <li><input type="checkbox"><span class="txt">Ingin kebiasaan sehat tertanam sejak kecil, tapi belum tahu mulai dari mana.</span></li>
       </ul>
       <p class="problem-counter" id="problemCounter"></p>
-      <p class="problem-bridge"><span class="arrow">→</span> Bento for Kids menyiapkan stok bekal homemade Non 3P yang tinggal disajikan, jadi pagi Anda lebih ringan.</p>
+      <p class="problem-bridge"><span class="arrow">→</span> Anda tidak perlu menjalaninya sendirian. Bento for Kids menemani, dari bekal, aktivitas, sampai edukasi untuk orang tua.</p>
     </div>
   </section>
 
@@ -669,37 +853,37 @@
   <section id="untuk-siapa">
     <div class="wrap">
       <div class="section-head">
-        <h2>Untuk Siapa Bento for Kids?</h2>
-        <p>Klik profil yang paling sesuai dengan Anda — boleh pilih lebih dari satu.</p>
+        <h2>Siapa yang kami temani?</h2>
+        <p>Klik yang paling sesuai dengan Anda, boleh pilih lebih dari satu.</p>
       </div>
       <div class="persona-grid" id="personaGrid">
-        <div class="persona" data-label="Orang Tua yang Bekerja">
-          <input type="checkbox" aria-label="Pilih: Orang Tua yang Bekerja">
-          <div class="icon">💼</div>
-          <h3>Orang Tua yang Bekerja</h3>
-          <p>Waktu pagi terbatas, tidak sempat masak dari nol setiap hari.</p>
-          <div class="fit">Cocok jika: butuh stok frozen food tinggal goreng/panggang.</div>
+        <div class="persona" data-label="Orang Tua dengan Anak 3–12 Tahun">
+          <input type="checkbox" aria-label="Pilih: Orang Tua dengan Anak 3–12 Tahun">
+          <div class="icon">👨‍👩‍👧</div>
+          <h3>Orang Tua dengan Anak 3–12 Tahun</h3>
+          <p>Sedang membangun kebiasaan makan sehat di rumah dan ingin ditemani.</p>
+          <div class="fit">Mulai dari: kalkulator gizi &amp; ide bekal.</div>
         </div>
-        <div class="persona" data-label="Anak yang Susah Makan">
-          <input type="checkbox" aria-label="Pilih: Anak yang Susah Makan">
-          <div class="icon">🍽️</div>
-          <h3>Anak yang Susah Makan</h3>
-          <p>Butuh variasi menu supaya anak tidak bosan dan lebih semangat makan.</p>
-          <div class="fit">Cocok jika: ingin rotasi menu tanpa pusing mikir tiap hari.</div>
+        <div class="persona" data-label="Komunitas Parenting">
+          <input type="checkbox" aria-label="Pilih: Komunitas Parenting">
+          <div class="icon">🤝</div>
+          <h3>Komunitas Parenting</h3>
+          <p>Ingin belajar bersama dan berbagi pengalaman dengan sesama orang tua.</p>
+          <div class="fit">Mulai dari: bergabung di komunitas.</div>
         </div>
-        <div class="persona" data-label="Peduli Kandungan Bekal">
-          <input type="checkbox" aria-label="Pilih: Peduli Kandungan Bekal">
-          <div class="icon">🛡️</div>
-          <h3>Peduli Kandungan Bekal</h3>
-          <p>Ingin memastikan bekal anak bebas MSG, pengawet, dan pewarna buatan.</p>
-          <div class="fit">Cocok jika: mencari produk homemade Non 3P, BPOM &amp; Halal.</div>
+        <div class="persona" data-label="Kelas Bermain &amp; Sekolah">
+          <input type="checkbox" aria-label="Pilih: Kelas Bermain dan Sekolah">
+          <div class="icon">🧸</div>
+          <h3>Kelas Bermain &amp; Sekolah</h3>
+          <p>Mencari kegiatan food education, cooking class, atau catering acara anak.</p>
+          <div class="fit">Mulai dari: ngobrol soal acara Anda.</div>
         </div>
-        <div class="persona" data-label="Butuh Stok Mingguan / Katering">
-          <input type="checkbox" aria-label="Pilih: Butuh Stok Mingguan / Katering">
-          <div class="icon">📦</div>
-          <h3>Butuh Stok Mingguan / Katering</h3>
-          <p>Ingin menyetok bekal untuk kebutuhan sekolah atau katering harian anak.</p>
-          <div class="fit">Cocok jika: memesan dalam jumlah lebih besar secara rutin.</div>
+        <div class="persona" data-label="Dapur SPPG">
+          <input type="checkbox" aria-label="Pilih: Dapur SPPG">
+          <div class="icon">🍲</div>
+          <h3>Dapur SPPG</h3>
+          <p>Mencari mitra menu anak yang bergizi, menarik, dan sesuai usia.</p>
+          <div class="fit">Mulai dari: ngobrol soal kemitraan.</div>
         </div>
       </div>
       <p class="persona-result" id="personaResult"></p>
@@ -709,9 +893,9 @@
   <!-- ============ CALCULATOR CTA ============ -->
   <section id="kalkulator">
     <div class="calc-band">
-      <h2>Ingin tahu kebutuhan bekal anak Anda?</h2>
-      <p>Isi data singkat anak Anda untuk melihat estimasi kebutuhan energi dan nutrisi bekal hariannya.</p>
-      <a href="/kalkulator.html" class="btn btn-primary" data-event="calculator_start" data-source="calc_band">Hitung Sekarang</a>
+      <h2>Ingin tahu apa yang dibutuhkan si kecil untuk tumbuh?</h2>
+      <p>Isi usia, berat, dan tinggi anak. Kami hitungkan kebutuhan energi dan zat gizinya dengan tenang, berdasarkan AKG Kemenkes RI.</p>
+      <button type="button" class="btn btn-primary" data-open-calc data-event="calculator_start" data-source="calc_band">Hitung Kebutuhan Gizi Anak</button>
     </div>
   </section>
 
@@ -719,8 +903,9 @@
   <section id="katalog">
     <div class="wrap">
       <div class="section-head">
-        <h2>Katalog Produk</h2>
-        <p>Frozen food homemade, Non 3P (pengawet, penyedap, pewarna) — tahan 2 hari di chiller, 6 bulan di freezer. Pilih produk, tambah ke keranjang.</p>
+        <span class="kicker">Our Product</span>
+        <h2>Healthy Food Made For Little Ones</h2>
+        <p>Frozen food kami dibuat untuk membantu orang tua menyediakan pilihan makanan yang praktis dan bernutrisi, tanpa MSG dan pengawet. Praktis untuk orang tua, menyenangkan untuk anak. Tahan 2 hari di chiller dan 6 bulan di freezer.</p>
       </div>
 
       <div class="inline-program-banner" id="inlineProgramBanner"></div>
@@ -746,6 +931,83 @@
         <p>Paket bekal terjadwal untuk kebutuhan mingguan hingga bulanan — menu diatur bergantian dari katalog di atas.</p>
       </div>
       <div class="program-grid" id="programGrid"><!-- rendered by JS from PROGRAMS --></div>
+    </div>
+  </section>
+
+  <!-- ============ CATERING ACARA ============ -->
+  <section id="catering">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Catering Acara</span>
+        <h2>Momen kecil mereka, layak dirayakan dengan baik.</h2>
+        <p class="tagline">Tampilan lucu, gizi seimbang, porsi sesuai usia.</p>
+      </div>
+      <div class="mini-grid">
+        <div class="mini-card"><div class="icon">🎂</div><h3>Catering Ulang Tahun</h3><p>Hidangan menarik untuk pesta ulang tahun anak yang tetap memikirkan gizi.</p></div>
+        <div class="mini-card"><div class="icon">🏫</div><h3>Catering Acara Sekolah</h3><p>Menu sehat dan porsi pas untuk kegiatan dan acara di sekolah.</p></div>
+        <div class="mini-card"><div class="icon">🎤</div><h3>Catering Seminar Anak</h3><p>Sajian ramah anak untuk seminar dan kegiatan belajar bersama.</p></div>
+      </div>
+      <div class="section-cta">
+        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20berdiskusi%20tentang%20catering%20acara%20anak." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="catering">Ceritakan acara Anda</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AKTIVITAS ============ -->
+  <section id="aktivitas">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Bento for Kids Activity</span>
+        <h2>Anak belajar sehat lewat bermain.</h2>
+        <p>Bukan cuma soal apa yang ada di piring, tapi juga bagaimana anak mengenal, menyentuh, dan mencintai makanan sehat.</p>
+      </div>
+      <div class="mini-grid">
+        <div class="mini-card"><div class="icon">👩‍🍳</div><h3>Cooking Class</h3><p>Mengenalkan anak pada proses membuat makanan.</p></div>
+        <div class="mini-card"><div class="icon">🥕</div><h3>Food Education</h3><p>Belajar mengenal bahan makanan dan nutrisi.</p></div>
+        <div class="mini-card"><div class="icon">🖍️</div><h3>Creative Activities</h3><p>Aktivitas kreatif lewat mewarnai bertema makanan dan kesehatan.</p></div>
+      </div>
+      <div class="section-cta">
+        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20tahu%20info%20kegiatan%20cooking%20class%20dan%20food%20education." class="btn btn-secondary" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="activity">Tanya info kegiatan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARENT EDUCATION ============ -->
+  <section id="edukasi">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Parent Education</span>
+        <h2>For parents who want their kids to grow healthy.</h2>
+        <p>Menjadi orang tua tidak selalu mudah. Karena itu, Bento for Kids ingin menjadi partner Anda, bukan sekadar tempat membeli makanan. Temukan informasi sederhana tentang:</p>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-item"><span>🥗</span> Nutrisi anak</div>
+        <div class="edu-item"><span>🍱</span> Ide bekal</div>
+        <div class="edu-item"><span>🥕</span> Mengenalkan sayur &amp; buah</div>
+        <div class="edu-item"><span>🎈</span> Aktivitas anak</div>
+        <div class="edu-item"><span>🍳</span> Tips memasak</div>
+        <div class="edu-item"><span>🌱</span> Healthy habits</div>
+      </div>
+      <div class="section-cta">
+        <a href="https://instagram.com/bento.forkids" class="btn btn-secondary" target="_blank" rel="noopener" data-event="hero_cta_click" data-cta="edu_instagram">Ikuti tips di @bento.forkids</a>
+        <a href="#kalkulator" class="btn btn-primary" data-open-calc data-event="calculator_start" data-source="edu_section">Mulai dari kalkulator gizi</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMMUNITY ============ -->
+  <section id="komunitas">
+    <div class="wrap">
+      <div class="community-band">
+        <span class="kicker">Community</span>
+        <h2>We believe it takes a community to raise healthy kids.</h2>
+        <p>Bento for Kids ingin membangun komunitas orang tua yang punya tujuan sama: membesarkan anak yang sehat, aktif, dan bahagia.</p>
+        <div class="community-tags"><span>Food education</span><span>Cooking class</span><span>Affiliate</span></div>
+        <div class="final-ctas">
+          <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20bergabung%20di%20komunitas%20orang%20tua%20Bento%20for%20Kids." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="community_join">Gabung komunitas</a>
+          <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20tertarik%20menjadi%20affiliate%20atau%20reseller." class="btn btn-secondary" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="community_affiliate">Tertarik jadi affiliate</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -810,6 +1072,7 @@
           <b id="cartTotal">Rp0</b>
         </div>
         <button class="btn btn-wa" id="cartCheckoutBtn" style="width:100%;">Checkout via WhatsApp</button>
+        <p class="cart-customer" id="cartCustomer"></p>
       </div>
     </div>
   </div>
@@ -845,14 +1108,14 @@
   <section id="cara-kerja">
     <div class="wrap">
       <div class="section-head">
-        <h2>Cara Kerjanya</h2>
+        <h2>Mulai dari hal sederhana</h2>
+        <p>Tidak perlu langsung sempurna. Satu langkah kecil hari ini sudah berarti.</p>
       </div>
-      <div class="steps">
-        <div class="step"><div class="num">1</div><p>Pilih kebutuhan bekal anak Anda.</p></div>
-        <div class="step"><div class="num">2</div><p>Cek rekomendasi lewat kalkulator.</p></div>
-        <div class="step"><div class="num">3</div><p>Lihat pilihan di katalog.</p></div>
-        <div class="step"><div class="num">4</div><p>Konsultasikan lewat WhatsApp.</p></div>
-        <div class="step"><div class="num">5</div><p>Pesan bekal untuk anak Anda.</p></div>
+      <div class="steps four">
+        <div class="step"><div class="num">1</div><p>Kenali kebutuhan gizi si kecil lewat kalkulator.</p></div>
+        <div class="step"><div class="num">2</div><p>Coba menu sehat yang praktis dari katalog.</p></div>
+        <div class="step"><div class="num">3</div><p>Ngobrol dengan kami lewat WhatsApp kapan saja.</p></div>
+        <div class="step"><div class="num">4</div><p>Tumbuh bersama komunitas orang tua Bento for Kids.</p></div>
       </div>
     </div>
   </section>
@@ -884,6 +1147,14 @@
           <div class="a">Anda bisa melihat pilihan di halaman Katalog, lalu menghubungi kami melalui WhatsApp untuk konsultasi dan pemesanan.</div>
         </details>
         <details class="faq-item">
+          <summary>Apakah Bento for Kids hanya menjual makanan?</summary>
+          <div class="a">Tidak. Selain frozen food dan catering acara, kami juga punya kegiatan cooking class, food education, aktivitas kreatif, edukasi untuk orang tua, dan komunitas.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Apakah produknya mengandung MSG dan pengawet?</summary>
+          <div class="a">Frozen food kami dibuat tanpa MSG dan pengawet (Non 3P: tanpa pengawet, penyedap, dan pewarna). Simpan di chiller maksimal 2 hari atau di freezer hingga 6 bulan.</div>
+        </details>
+        <details class="faq-item">
           <summary>Apakah hasil kalkulator merupakan diagnosis medis?</summary>
           <div class="a">Tidak. Hasil kalkulator adalah estimasi edukasi dan bukan pengganti konsultasi dokter atau ahli gizi.</div>
         </details>
@@ -897,17 +1168,18 @@
     <div class="wrap">
       <div class="form-wrap">
         <div class="form-intro">
-          <h2>Dapatkan Katalog &amp; Rekomendasi Bekal</h2>
-          <p>Isi data singkat berikut, tim kami akan kirim katalog lengkap dan rekomendasi menu lewat WhatsApp.</p>
+          <h2>Mari tumbuh bersama Bento for Kids</h2>
+          <p>Tinggalkan data singkat. Kami kirimkan katalog, ide bekal, dan kabar kegiatan lewat WhatsApp, dengan hangat dan tanpa memaksa.</p>
           <ul class="includes">
-            <li><span>✓</span> Katalog lengkap &amp; harga terbaru</li>
-            <li><span>✓</span> Rekomendasi menu sesuai usia anak</li>
-            <li><span>✓</span> Konsultasi langsung dengan tim Bento for Kids</li>
+            <li><span>✓</span> Katalog menu &amp; harga terbaru</li>
+            <li><span>✓</span> Ide bekal dan tips nutrisi anak</li>
+            <li><span>✓</span> Info cooking class, food education, dan komunitas</li>
           </ul>
         </div>
 
         <div class="lead-form-container">
           <form class="lead-form" id="leadForm" novalidate>
+            <div class="meter" id="leadMeter"><div class="meter-top"><span class="meter-eta">⏱ Cuma ±30 detik</span><span class="meter-count">0/5</span></div><div class="meter-track"><div class="meter-fill"></div></div></div>
             <div class="field" id="field-name">
               <label for="lf-name">Nama Orang Tua</label>
               <input type="text" id="lf-name" name="name" placeholder="Nama lengkap" autocomplete="name">
@@ -918,6 +1190,12 @@
               <label for="lf-whatsapp">Nomor WhatsApp</label>
               <input type="tel" id="lf-whatsapp" name="whatsapp" placeholder="08xxxxxxxxxx" autocomplete="tel" inputmode="numeric">
               <div class="error-msg">Masukkan nomor WhatsApp yang valid (min. 9 digit).</div>
+            </div>
+
+            <div class="field" id="field-services">
+              <label>Mau ngobrol soal apa? <span class="opt">(boleh lebih dari satu)</span></label>
+              <div class="svc-chips" id="leadSvcChips"></div>
+              <div class="error-msg">Pilih minimal satu, ya.</div>
             </div>
 
             <div class="field-row">
@@ -960,16 +1238,16 @@
               <label for="lf-consent">Saya bersedia menerima informasi mengenai Bento for Kids melalui WhatsApp.</label>
             </div>
 
-            <button type="submit" class="btn btn-primary" data-event="lead_form_start">Dapatkan Katalog &amp; Rekomendasi Bekal</button>
-            <p class="form-disclaimer">Data Anda hanya digunakan untuk mengirim katalog &amp; konsultasi bekal anak.</p>
+            <button type="submit" class="btn btn-primary" data-event="lead_form_start">Gabung &amp; Dapatkan Katalog</button>
+            <p class="form-disclaimer">Data hanya dipakai untuk melayani Anda dan tersimpan di perangkat ini, jadi lain kali tidak perlu mengisi lagi.</p>
           </form>
 
           <div class="lead-success" id="leadSuccess">
             <div class="emoji">🎉</div>
-            <h3>Hasil Anda sudah siap!</h3>
+            <h3>Terima kasih, selamat bergabung!</h3>
             <p>Terima kasih! Berikut ringkasan data yang Anda kirim:</p>
             <div class="summary" id="leadSummary"></div>
-            <a href="#" id="leadWhatsappBtn" class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="lead_form">Lanjut ke WhatsApp →</a>
+            <a href="#" id="leadWhatsappBtn" class="btn btn-wa" target="_blank" rel="noopener" data-gate-skip data-event="whatsapp_click" data-source="lead_form">Lanjut ke WhatsApp →</a>
           </div>
         </div>
       </div>
@@ -979,10 +1257,11 @@
   <!-- ============ FINAL CTA ============ -->
   <section>
     <div class="final-cta">
-      <h2>Siap membuat bekal anak lebih praktis?</h2>
+      <h2>Let’s Raise Healthy &amp; Happy Kids Together</h2>
+      <ul class="final-lines"><li>Mulai dari hal sederhana</li><li>Mulai dari rumah</li><li>Mulai hari ini</li></ul>
       <div class="final-ctas">
-        <a href="#dapatkan-katalog" class="btn btn-primary" data-event="hero_cta_click" data-cta="final_form">Dapatkan Katalog &amp; Rekomendasi</a>
-        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20tertarik%20dengan%20produk%20bekal%20anak." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="final_cta">Tanya via WhatsApp</a>
+        <a href="#dapatkan-katalog" class="btn btn-primary" data-event="hero_cta_click" data-cta="final_form">Mari mulai bersama</a>
+        <a href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids%2C%20saya%20ingin%20ngobrol%20tentang%20kebiasaan%20makan%20sehat%20untuk%20anak%20saya." class="btn btn-wa" target="_blank" rel="noopener" data-event="whatsapp_click" data-source="final_cta">Ngobrol dengan kami</a>
       </div>
     </div>
   </section>
@@ -991,7 +1270,7 @@
 
 <footer>
   <div class="wrap footer-row">
-    <span>&copy; <span id="year"></span> Bento for Kids — Bandar Lampung · Realfood for Real Family</span>
+    <span>&copy; <span id="year"></span> Bento for Kids — Healthy Lifestyle Brand for Kids · Bandar Lampung</span>
     <div class="footer-links">
       <a href="/tentang.html">Tentang</a>
       <a href="/kontak.html">Kontak</a>
@@ -1006,6 +1285,174 @@
 <a class="wa-float" href="https://wa.me/628117919119?text=Halo%20Bento%20for%20Kids" target="_blank" rel="noopener" aria-label="Chat via WhatsApp" data-event="whatsapp_click" data-source="float_button">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.14-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.1 8.1 0 0 1-1.24-4.32c0-4.48 3.65-8.13 8.15-8.13 2.18 0 4.22.85 5.76 2.39a8.09 8.09 0 0 1 2.38 5.76c0 4.48-3.65 8.14-8.12 8.14zm4.47-6.1c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.22-1.44-1.36-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.42-.55-.42-.14 0-.3-.02-.47-.02-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.73 2.65 4.2 3.71.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
 </a>
+
+  <!-- ============ KALKULATOR GIZI ANAK (POPUP) ============ -->
+  <div class="modal-backdrop" id="calcBackdrop">
+    <div class="modal-sheet calc-sheet" role="dialog" aria-modal="true" aria-labelledby="calcTitle">
+      <button class="modal-close" id="calcClose" type="button" aria-label="Tutup">✕</button>
+      <div class="modal-body">
+
+        <div id="calcFormView">
+          <span class="modal-cat">Kalkulator Gizi Anak</span>
+          <h3 id="calcTitle">Hitung kebutuhan gizi &amp; bekal anak</h3>
+          <p class="calc-lead">Estimasi energi dan zat gizi harian anak usia 1–18 tahun berdasarkan Angka Kecukupan Gizi (AKG) Kemenkes RI 2019. Data yang Anda isi di sini tidak disimpan.</p>
+          <div class="meter" id="calcMeter"><div class="meter-top"><span class="meter-eta">⏱ Cuma ±20 detik</span><span class="meter-count">0/4</span></div><div class="meter-track"><div class="meter-fill"></div></div></div>
+
+          <form id="calcForm" novalidate>
+            <div class="field" id="cc-sex">
+              <label>Jenis kelamin anak</label>
+              <div class="seg">
+                <label><input type="radio" name="sex" value="M"><span>Laki-laki</span></label>
+                <label><input type="radio" name="sex" value="F"><span>Perempuan</span></label>
+              </div>
+              <div class="error-msg">Pilih jenis kelamin anak.</div>
+            </div>
+
+            <div class="field" id="cc-age">
+              <label for="cc-age-input">Usia anak</label>
+              <select id="cc-age-input" name="age">
+                <option value="" selected disabled>Pilih usia</option>
+                <option value="lt1">Kurang dari 1 tahun</option>
+                <option value="1">1 tahun</option><option value="2">2 tahun</option><option value="3">3 tahun</option>
+                <option value="4">4 tahun</option><option value="5">5 tahun</option><option value="6">6 tahun</option>
+                <option value="7">7 tahun</option><option value="8">8 tahun</option><option value="9">9 tahun</option>
+                <option value="10">10 tahun</option><option value="11">11 tahun</option><option value="12">12 tahun</option>
+                <option value="13">13 tahun</option><option value="14">14 tahun</option><option value="15">15 tahun</option>
+                <option value="16">16 tahun</option><option value="17">17 tahun</option><option value="18">18 tahun</option>
+              </select>
+              <div class="error-msg">Pilih usia anak.</div>
+            </div>
+
+            <div class="field-row">
+              <div class="field" id="cc-weight">
+                <label for="cc-weight-input">Berat badan (kg)</label>
+                <input type="text" id="cc-weight-input" name="weight" inputmode="decimal" placeholder="mis. 18,5">
+                <div class="error-msg">Isi berat badan 7–120 kg.</div>
+              </div>
+              <div class="field" id="cc-height">
+                <label for="cc-height-input">Tinggi badan (cm)</label>
+                <input type="text" id="cc-height-input" name="height" inputmode="decimal" placeholder="mis. 110">
+                <div class="error-msg">Isi tinggi badan 65–200 cm.</div>
+              </div>
+            </div>
+
+            <div class="field" id="cc-activity">
+              <label>Tingkat aktivitas fisik</label>
+              <div class="act-list">
+                <label><input type="radio" name="activity" value="0"><span class="act"><b>Santai</b><small>Lebih banyak duduk atau bermain tenang, jarang olahraga.</small></span></label>
+                <label><input type="radio" name="activity" value="1" checked><span class="act"><b>Cukup aktif</b><small>Sekolah plus bermain atau olahraga ringan sekitar 30–60 menit per hari.</small></span></label>
+                <label><input type="radio" name="activity" value="2"><span class="act"><b>Aktif</b><small>Bergerak aktif sedikitnya 60 menit per hari (ekskul, olahraga rutin).</small></span></label>
+                <label><input type="radio" name="activity" value="3"><span class="act"><b>Sangat aktif</b><small>Latihan atau olahraga berat lebih dari 2–3 jam per hari.</small></span></label>
+              </div>
+            </div>
+            <p class="calc-note" id="cc-activity-note" style="display:none;margin:-8px 0 16px;">Untuk usia 1–2 tahun, tingkat aktivitas tidak dipakai dalam rumus.</p>
+
+            <div class="field" id="cc-share">
+              <label for="cc-share-input">Bekal ini untuk waktu makan</label>
+              <select id="cc-share-input" name="share">
+                <option value="0.1">Camilan / selingan (± 10% kebutuhan harian)</option>
+                <option value="0.25">Sarapan atau makan malam (± 25%)</option>
+                <option value="0.3" selected>Makan siang (± 30%)</option>
+              </select>
+              <div class="hint">Pembagian porsi adalah asumsi umum, bisa berbeda untuk tiap anak.</div>
+            </div>
+
+            <div class="calc-actions">
+              <button type="submit" class="btn btn-primary" data-event="calculator_submit">Hitung Kebutuhan Gizi</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="calcResultView" style="display:none;">
+          <span class="modal-cat">Hasil Kalkulator Gizi</span>
+          <div id="calcResultBody"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FORM LEADS (satu pintu sebelum WhatsApp) ============ -->
+  <div class="modal-backdrop" id="gateBackdrop">
+    <div class="modal-sheet gate-sheet" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+      <button class="modal-close" id="gateClose" type="button" aria-label="Tutup">✕</button>
+      <div class="modal-body">
+
+        <!-- pelanggan lama: 1 tap -->
+        <div id="gateQuickView" style="display:none;">
+          <div class="gate-emoji">👋</div>
+          <h3 id="gateQuickTitle">Halo lagi!</h3>
+          <p class="gate-lead" id="gateQuickLead">Mau ngobrol soal apa hari ini? Pilih satu atau lebih, lalu kami buka WhatsApp.</p>
+          <div class="svc-chips" id="gateQuickChips"></div>
+          <p class="gate-who" id="gateWho"></p>
+          <button type="button" class="btn btn-wa" id="gateQuickGo">Lanjut ke WhatsApp →</button>
+        </div>
+
+        <!-- pengunjung baru: form singkat -->
+        <div id="gateFormView">
+          <div class="gate-emoji">👋</div>
+          <h3 id="gateTitle">Kenalan dulu, ya</h3>
+          <p id="gateLead" class="gate-lead">Cuma 5 isian, sekitar 30 detik. Setelah itu kami langsung buka WhatsApp, dan lain kali Anda tidak perlu mengisi lagi.</p>
+          <div class="meter" id="gateMeter"><div class="meter-top"><span class="meter-eta">⏱ Cuma ±30 detik</span><span class="meter-count">0/5</span></div><div class="meter-track"><div class="meter-fill"></div></div></div>
+          <form id="gateForm" novalidate>
+            <div class="field" id="gtf-name">
+              <label for="gt-name">Nama Orang Tua</label>
+              <input type="text" id="gt-name" autocomplete="name" placeholder="Nama lengkap">
+              <div class="error-msg">Nama wajib diisi.</div>
+            </div>
+            <div class="field" id="gtf-whatsapp">
+              <label for="gt-whatsapp">Nomor WhatsApp</label>
+              <input type="tel" id="gt-whatsapp" autocomplete="tel" inputmode="numeric" placeholder="08xxxxxxxxxx">
+              <div class="error-msg">Masukkan nomor WhatsApp yang valid (min. 9 digit).</div>
+            </div>
+            <div class="field" id="gtf-services">
+              <label>Mau ngobrol soal apa? <span class="opt">(boleh lebih dari satu)</span></label>
+              <div class="svc-chips" id="gateSvcChips"></div>
+              <div class="error-msg">Pilih minimal satu, ya.</div>
+            </div>
+            <div class="field" id="gtf-age">
+              <label>Usia anak</label>
+              <div class="svc-chips age" id="gateAgeChips"></div>
+              <div class="error-msg">Pilih usia anak.</div>
+            </div>
+            <div class="field" id="gtf-city">
+              <label for="gt-city">Domisili</label>
+              <input type="text" id="gt-city" list="gate-domisili" placeholder="Ketik atau pilih area" autocomplete="address-level2">
+              <datalist id="gate-domisili">
+                <option value="Kedaton"><option value="Rajabasa"><option value="Sukarame"><option value="Way Halim">
+                <option value="Tanjung Karang"><option value="Teluk Betung"><option value="Kemiling"><option value="Panjang">
+                <option value="Langkapura"><option value="Labuhan Ratu">
+              </datalist>
+              <div class="error-msg">Isi domisili Anda.</div>
+            </div>
+            <div class="consent-row" id="gtf-consent">
+              <input type="checkbox" id="gt-consent">
+              <label for="gt-consent">Saya bersedia dihubungi Bento for Kids melalui WhatsApp terkait pesanan dan pertanyaan saya.</label>
+            </div>
+            <button type="submit" class="btn btn-wa" id="gateSubmit">Simpan &amp; Lanjut ke WhatsApp →</button>
+            <p class="gate-note">Data hanya dipakai untuk melayani Anda dan tersimpan di perangkat ini.</p>
+          </form>
+        </div>
+
+        <div id="gateFallbackView" style="display:none;">
+          <div class="gate-emoji">✅</div>
+          <h3>Data tersimpan</h3>
+          <p>Browser memblokir jendela baru. Klik tombol di bawah untuk membuka WhatsApp.</p>
+          <a id="gateFallbackBtn" class="btn btn-wa" data-gate-skip href="#" target="_blank" rel="noopener">Buka WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COACH: panduan singkat saat sampai di section tertentu ============ -->
+  <div class="coach" id="coach" role="status" aria-live="polite">
+    <span class="coach-emoji" id="coachEmoji" aria-hidden="true"></span>
+    <div class="coach-body"><b id="coachTitle"></b><span id="coachText"></span></div>
+    <div class="coach-actions">
+      <button type="button" class="coach-act" id="coachAct"></button>
+      <button type="button" class="coach-x" id="coachX" aria-label="Tutup panduan">✕</button>
+    </div>
+  </div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -1104,6 +1551,380 @@
   // Kirim page_view + info UTM/reseller ke SESSIONS begitu halaman dibuka.
   trackSession({});
 
+  /* =================================================================
+     FORM LEADS (satu pintu) — SEMUA jalur ke WhatsApp (tombol header,
+     tombol melayang, CTA di tiap section, checkout keranjang, hasil
+     kalkulator) lewat form ini dulu, lengkap dengan pilihan layanan.
+     - Pengunjung baru : form singkat (5 isian, ±30 detik) + meter progres.
+     - Pelanggan lama  : cukup 1 tap (data sudah tersimpan di perangkat,
+                         tinggal pilih layanan), minat tetap tercatat.
+     ================================================================= */
+  var BFK_SERVICES = [
+    { id: 'frozen',    icon: '🍱',   label: 'Pesan frozen food',              ask: 'memesan frozen food' },
+    { id: 'catering',  icon: '🎂',   label: 'Catering acara anak',            ask: 'berdiskusi tentang catering acara anak (ulang tahun, sekolah, seminar)' },
+    { id: 'kelas',     icon: '👩‍🍳', label: 'Cooking class & food education', ask: 'tahu info kegiatan cooking class dan food education' },
+    { id: 'gizi',      icon: '🥗',   label: 'Konsultasi gizi & menu bekal',   ask: 'berkonsultasi soal gizi dan menu bekal anak' },
+    { id: 'komunitas', icon: '🤝',   label: 'Gabung komunitas orang tua',     ask: 'bergabung di komunitas orang tua Bento for Kids' },
+    { id: 'affiliate', icon: '💼',   label: 'Jadi affiliate / reseller',      ask: 'menjadi affiliate atau reseller' },
+    { id: 'mitra',     icon: '🏫',   label: 'Kemitraan sekolah / SPPG',       ask: 'menjajaki kemitraan (sekolah / kelas bermain / SPPG)' },
+    { id: 'tanya',     icon: '💬',   label: 'Tanya-tanya dulu',               ask: 'bertanya-tanya dulu tentang Bento for Kids' }
+  ];
+  // layanan yang otomatis terpilih menurut tombol yang diklik (atribut data-source)
+  var BFK_SOURCE_SERVICE = {
+    header: 'tanya', float_button: 'tanya', final_cta: 'tanya',
+    catering: 'catering', activity: 'kelas',
+    community_join: 'komunitas', community_affiliate: 'affiliate',
+    cart_checkout: 'frozen', calculator: 'gizi'
+  };
+  var BFK_AGE_ITEMS = [
+    { id: '0-1 tahun', label: '0–1 th' }, { id: '1-3 tahun', label: '1–3 th' }, { id: '4-6 tahun', label: '4–6 th' },
+    { id: '7-9 tahun', label: '7–9 th' }, { id: '10-12 tahun', label: '10–12 th' }, { id: '13+ tahun', label: '13+ th' }
+  ];
+
+  var BFKGate = (function () {
+    var BUSINESS_WA = '628117919119';
+    var KEY = 'bfk_customer', KEY_SVC = 'bfk_last_services';
+    var backdrop = document.getElementById('gateBackdrop');
+    var form = document.getElementById('gateForm');
+    var quickView = document.getElementById('gateQuickView');
+    var formView = document.getElementById('gateFormView');
+    var fallbackView = document.getElementById('gateFallbackView');
+    var fallbackBtn = document.getElementById('gateFallbackBtn');
+    var titleEl = document.getElementById('gateTitle');
+    var leadEl = document.getElementById('gateLead');
+    var submitBtn = document.getElementById('gateSubmit');
+    var quickTitle = document.getElementById('gateQuickTitle');
+    var quickChips = document.getElementById('gateQuickChips');
+    var quickWho = document.getElementById('gateWho');
+    var quickGo = document.getElementById('gateQuickGo');
+    var quickLead = document.getElementById('gateQuickLead');
+    var DEFAULT_QUICK_LEAD = quickLead.textContent;
+    var svcField = document.getElementById('gtf-services');
+    var svcChips = document.getElementById('gateSvcChips');
+    var ageChips = document.getElementById('gateAgeChips');
+    var f = {
+      name: document.getElementById('gt-name'), whatsapp: document.getElementById('gt-whatsapp'),
+      city: document.getElementById('gt-city'), consent: document.getElementById('gt-consent')
+    };
+    var pending = null;
+    var selServices = [];
+    var selAge = [];
+    var prevOverflow = '';
+    var listeners = [];
+    var partialTimer = null;
+    var DEFAULT_LEAD = leadEl.textContent;
+
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); }
+    function digits(s) { return String(s || '').replace(/\D/g, ''); }
+    function svcById(id) { for (var i = 0; i < BFK_SERVICES.length; i++) if (BFK_SERVICES[i].id === id) return BFK_SERVICES[i]; return null; }
+    function labelsOf(ids) { return (ids || []).map(svcById).filter(Boolean).map(function (s) { return s.label; }); }
+
+    function get() {
+      try {
+        var c = JSON.parse(localStorage.getItem(KEY) || 'null');
+        if (c && c.name && digits(c.whatsapp).length >= 9 && c.child_age && c.city && c.consent) return c;
+      } catch (e) {}
+      return null;
+    }
+    function save(c) {
+      try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) {}
+      listeners.forEach(function (fn) { try { fn(c); } catch (e) {} });
+    }
+    function onChange(fn) { listeners.push(fn); }
+    function lastServices() {
+      try { var s = JSON.parse(localStorage.getItem(KEY_SVC) || '[]'); if (s && s.length) return s; } catch (e) {}
+      return ['tanya'];
+    }
+    function saveLast(ids) { if (ids && ids.length) { try { localStorage.setItem(KEY_SVC, JSON.stringify(ids)); } catch (e) {} } }
+
+    /* ---------- pesan WhatsApp ---------- */
+    function askText(ids) {
+      var list = (ids || []).map(svcById).filter(Boolean);
+      if (!list.length) return 'Halo Bento for Kids, saya ingin ngobrol.';
+      if (list.length === 1) return 'Halo Bento for Kids, saya ingin ' + list[0].ask + '.';
+      return 'Halo Bento for Kids, saya ingin:\n' + list.map(function (s) { return '- ' + s.ask; }).join('\n');
+    }
+    function customerBlock(c, ids) {
+      var b = 'Data saya:\nNama: ' + c.name + '\nWhatsApp: ' + c.whatsapp + '\nUsia anak: ' + c.child_age + '\nDomisili: ' + c.city;
+      var l = labelsOf(ids);
+      if (l.length) b += '\nMinat: ' + l.join(', ');
+      return b;
+    }
+    function compose(text, c, ids) {
+      var body = text ? String(text).replace(/\s+$/, '') : askText(ids);
+      return body + '\n\n' + customerBlock(c, ids);
+    }
+    function waUrl(msg) { return 'https://wa.me/' + BUSINESS_WA + '?text=' + encodeURIComponent(msg); }
+
+    /* Sengaja TANPA 'noopener' di window.open agar pop-up yang diblokir browser terdeteksi (return null). */
+    function openWhatsApp(text, c, ids) {
+      var url = waUrl(compose(text, c, ids));
+      var w = window.open(url, '_blank');
+      if (w) { try { w.opener = null; } catch (e) {} return; }
+      fallbackBtn.href = url;
+      showView('fallback');
+      show();
+    }
+
+    /* ---------- komponen: chips & meter progres ---------- */
+    function renderChips(container, items, selected, multi, cb) {
+      container.innerHTML = '';
+      items.forEach(function (it) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'chip'; b.setAttribute('data-id', it.id);
+        b.setAttribute('aria-pressed', selected.indexOf(it.id) > -1 ? 'true' : 'false');
+        b.textContent = (it.icon ? it.icon + ' ' : '') + it.label;
+        b.addEventListener('click', function () {
+          var i = selected.indexOf(it.id);
+          if (multi) { if (i > -1) selected.splice(i, 1); else selected.push(it.id); }
+          else { selected.length = 0; selected.push(it.id); }
+          [].forEach.call(container.children, function (ch) {
+            ch.setAttribute('aria-pressed', selected.indexOf(ch.getAttribute('data-id')) > -1 ? 'true' : 'false');
+          });
+          container.classList.remove('shake');
+          if (cb) cb(selected.slice());
+        });
+        container.appendChild(b);
+      });
+    }
+
+    /* Meter: "⏱ Cuma ±30 detik" → turun sesuai isian yang sudah selesai → "🎉 Siap!" */
+    function attachMeter(meterEl, formEl, getChecks, cfg) {
+      cfg = cfg || {};
+      var per = cfg.secPer || 5;
+      var eta = meterEl.querySelector('.meter-eta');
+      var cnt = meterEl.querySelector('.meter-count');
+      var fill = meterEl.querySelector('.meter-fill');
+      function update() {
+        var checks = getChecks();
+        var total = checks.length;
+        var done = checks.filter(function (fn) { try { return !!fn(); } catch (e) { return false; } }).length;
+        var remaining = total - done;
+        cnt.textContent = done + '/' + total;
+        fill.style.width = Math.round(done / total * 100) + '%';
+        meterEl.classList.toggle('done', remaining === 0);
+        if (remaining === 0) eta.textContent = '🎉 Siap! Tinggal tekan tombol';
+        else if (done === 0) eta.textContent = '⏱ Cuma ±' + (total * per) + ' detik';
+        else if (remaining === 1) eta.textContent = '⏱ Tinggal 1 langkah lagi';
+        else eta.textContent = '⏱ Sisa ±' + (remaining * per) + ' detik';
+      }
+      ['input', 'change', 'click', 'keyup'].forEach(function (ev) {
+        formEl.addEventListener(ev, function () { setTimeout(update, 0); });
+      });
+      update();
+      return update;
+    }
+    var gateMeterUpdate = attachMeter(document.getElementById('gateMeter'), form, function () {
+      return [
+        function () { return f.name.value.trim(); },
+        function () { return digits(f.whatsapp.value).length >= 9; },
+        function () { return selAge.length > 0; },
+        function () { return f.city.value.trim(); },
+        function () { return f.consent.checked; }
+      ];
+    }, { secPer: 6 });
+
+    /* ---------- tampilan ---------- */
+    function showView(which) {
+      quickView.style.display = which === 'quick' ? '' : 'none';
+      formView.style.display = which === 'form' ? '' : 'none';
+      fallbackView.style.display = which === 'fallback' ? '' : 'none';
+    }
+    function show() {
+      if (!backdrop.classList.contains('open')) {
+        prevOverflow = document.body.style.overflow;
+        backdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function hide() {
+      backdrop.classList.remove('open');
+      document.body.style.overflow = prevOverflow;
+    }
+    function cancel() { pending = null; hide(); }
+    function setError(id, on) { document.getElementById(id).classList.toggle('error', on); }
+
+    function openQuick(c) {
+      showView('quick');
+      var first = c.name.trim().split(/\s+/)[0];
+      quickTitle.textContent = 'Halo lagi, ' + first + '!';
+      quickLead.textContent = pending.quickLead || DEFAULT_QUICK_LEAD;
+      quickGo.textContent = pending.goLabel || 'Lanjut ke WhatsApp →';
+      renderChips(quickChips, BFK_SERVICES, selServices, true, null);
+      var masked = c.whatsapp.length > 7 ? c.whatsapp.slice(0, 4) + '••••' + c.whatsapp.slice(-3) : c.whatsapp;
+      quickWho.textContent = '';
+      quickWho.appendChild(document.createTextNode('Data Anda sudah tersimpan (' + masked + ' · ' + c.city + '). '));
+      var ed = document.createElement('button'); ed.type = 'button'; ed.className = 'linklike'; ed.textContent = 'Ubah data';
+      ed.addEventListener('click', function () { openForm(get()); });
+      quickWho.appendChild(ed);
+    }
+
+    function openForm(c) {
+      showView('form');
+      var edit = !!(pending && pending.editOnly);
+      titleEl.textContent = edit ? 'Ubah data Anda' : 'Kenalan dulu, ya';
+      leadEl.textContent = edit ? 'Perbarui data Anda. Data ini dipakai di pesan WhatsApp berikutnya.' : DEFAULT_LEAD;
+      submitBtn.textContent = edit ? 'Simpan Data' : (pending.goLabel || 'Simpan & Lanjut ke WhatsApp →');
+      f.name.value = c ? c.name : '';
+      f.whatsapp.value = c ? c.whatsapp : '';
+      f.city.value = c ? c.city : '';
+      f.consent.checked = !!(c && c.consent);
+      selAge.length = 0; if (c && c.child_age) selAge.push(c.child_age);
+      renderChips(svcChips, BFK_SERVICES, selServices, true, null);
+      renderChips(ageChips, BFK_AGE_ITEMS, selAge, false, null);
+      svcField.style.display = edit ? 'none' : '';
+      ['gtf-name', 'gtf-whatsapp', 'gtf-services', 'gtf-age', 'gtf-city'].forEach(function (id) { setError(id, false); });
+      document.getElementById('gtf-consent').style.outline = 'none';
+      gateMeterUpdate();
+      setTimeout(function () { (c ? f.city : f.name).focus(); }, 80);
+    }
+
+    /* opts: { source, services:[id], text, onDone(customer, servicesChosen), editOnly } */
+    function open(opts) {
+      opts = opts || {};
+      pending = { source: opts.source || 'unknown', onDone: opts.onDone || null, editOnly: !!opts.editOnly, text: opts.text || '', quickLead: opts.quickLead || '', goLabel: opts.goLabel || '' };
+      var pre = (opts.services && opts.services.length) ? opts.services.slice() : lastServices();
+      selServices.length = 0; pre.forEach(function (id) { selServices.push(id); });
+      var c = get();
+      if (c && !pending.editOnly) openQuick(c); else openForm(c);
+      show();
+      bfkTrack('gate_view', { event_name: 'gate_view', trigger: pending.source, mode: (c && !pending.editOnly) ? 'quick' : 'form', page: window.location.pathname });
+    }
+
+    /* Tombol WA biasa: buka form leads → lalu WhatsApp */
+    function start(ids, source, text) {
+      open({ source: source, services: ids, text: text, onDone: function (c, chosen) { openWhatsApp(text, c, chosen); } });
+    }
+    /* Untuk alur yang sudah punya konteks sendiri (checkout): kalau data sudah ada, langsung lanjut. */
+    function requireData(opts, cb) {
+      var c = get();
+      if (c && opts.skipIfKnown) { cb(c, opts.services || []); return; }
+      open({ source: opts.source, services: opts.services, text: opts.text, quickLead: opts.quickLead, goLabel: opts.goLabel, onDone: cb });
+    }
+
+    /* ---------- kirim ke Google Sheets ---------- */
+    function ctxPayload() {
+      return {
+        source: sessionStorage.getItem('utm_source') || 'direct',
+        medium: sessionStorage.getItem('utm_medium') || null,
+        campaign: sessionStorage.getItem('utm_campaign') || null,
+        landing_page: window.location.pathname
+      };
+    }
+    function logIntent(c, ids, trigger) {
+      var p = ctxPayload();
+      p.lead_id = c.lead_id; p.name = c.name; p.whatsapp = c.whatsapp;
+      p.service_interest = labelsOf(ids).join(', '); p.trigger = trigger || 'unknown';
+      sendToSheet('lead_intent', p);
+      bfkTrack('lead_intent', { event_name: 'lead_intent', trigger: trigger, services: ids.join(','), page: window.location.pathname });
+    }
+    /* Simpan pelanggan: baru / ganti nomor → baris LEADS; pelanggan lama → catat minat di LEAD_EVENTS. */
+    function commit(d, trigger) {
+      var prev = get();
+      var c = {
+        lead_id: (prev && prev.lead_id) || ('lead_' + Date.now()),
+        name: d.name.trim(), whatsapp: digits(d.whatsapp), child_age: d.child_age,
+        city: d.city.trim(), consent: true, saved_at: new Date().toISOString()
+      };
+      var isNew = !prev || digits(prev.whatsapp) !== c.whatsapp;
+      var ids = d.services || [];
+      if (isNew) {
+        c.lead_id = 'lead_' + Date.now();
+        var p = ctxPayload();
+        p.lead_id = c.lead_id; p.created_at = c.saved_at; p.name = c.name; p.whatsapp = c.whatsapp;
+        p.child_age = c.child_age; p.city = c.city; p.consent = true;
+        p.first_reseller_code = localStorage.getItem('first_reseller_code') || null;
+        p.last_reseller_code = sessionStorage.getItem('last_reseller_code') || null;
+        p.calculator_used = !!window.__bfkCalcUsed;
+        p.service_interest = labelsOf(ids).join(', ');
+        p.session_id = BFK_SESSION_ID;
+        sendToSheet('lead', p);
+        bfkTrack('lead_submit', { event_name: 'lead_submit', trigger: trigger, services: ids.join(','), page: window.location.pathname });
+        trackSession({ reached_form: true, reached_submit: true });
+      } else if (ids.length) {
+        logIntent(c, ids, trigger);
+      }
+      save(c);
+      saveLast(ids);
+      return c;
+    }
+
+    /* ---------- event ---------- */
+    function validate(d) {
+      var ok = true, edit = !!(pending && pending.editOnly);
+      var nameOk = !!d.name.trim(); setError('gtf-name', !nameOk); ok = ok && nameOk;
+      var waOk = digits(d.whatsapp).length >= 9; setError('gtf-whatsapp', !waOk); ok = ok && waOk;
+      if (!edit) { var sOk = selServices.length > 0; setError('gtf-services', !sOk); ok = ok && sOk; }
+      var ageOk = !!d.child_age; setError('gtf-age', !ageOk); ok = ok && ageOk;
+      var cityOk = !!d.city.trim(); setError('gtf-city', !cityOk); ok = ok && cityOk;
+      var box = document.getElementById('gtf-consent');
+      if (!d.consent) { box.style.outline = '2px solid var(--coral)'; box.style.borderRadius = '8px'; ok = false; }
+      else box.style.outline = 'none';
+      return ok;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var d = { name: f.name.value, whatsapp: f.whatsapp.value, child_age: selAge[0] || '', city: f.city.value, consent: f.consent.checked };
+      if (!validate(d)) return;
+      var edit = !!(pending && pending.editOnly);
+      var ids = edit ? [] : selServices.slice();
+      d.services = ids;
+      var c = commit(d, pending ? pending.source : 'unknown');
+      var job = pending; pending = null;
+      hide();
+      if (job && job.onDone) job.onDone(c, ids); // sinkron di handler submit → pop-up WhatsApp tidak diblokir
+    });
+
+    quickGo.addEventListener('click', function () {
+      if (!selServices.length) { quickChips.classList.add('shake'); return; }
+      var c = get(); if (!c) return;
+      var ids = selServices.slice();
+      logIntent(c, ids, pending ? pending.source : 'unknown');
+      saveLast(ids);
+      var job = pending; pending = null;
+      hide();
+      if (job && job.onDone) job.onDone(c, ids);
+    });
+
+    /* simpan data parsial (belum submit) */
+    [f.name, f.whatsapp, f.city].forEach(function (el) {
+      var fire = function () {
+        clearTimeout(partialTimer);
+        partialTimer = setTimeout(function () {
+          var name = f.name.value.trim(), wa = f.whatsapp.value.trim();
+          if (!name && !wa) return;
+          trackPartialLead({ name: name, whatsapp: wa, child_age: selAge[0] || '', city: f.city.value.trim() || '' });
+        }, 600);
+      };
+      el.addEventListener('blur', fire);
+      el.addEventListener('change', fire);
+    });
+
+    document.getElementById('gateClose').addEventListener('click', cancel);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) cancel(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && backdrop.classList.contains('open')) { e.preventDefault(); cancel(); }
+    });
+
+    /* Cegat SEMUA link wa.me di halaman (kecuali yang diberi data-gate-skip) → form leads dulu. */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href*="wa.me"]') : null;
+      if (!a || a.hasAttribute('data-gate-skip')) return;
+      e.preventDefault();
+      var source = a.getAttribute('data-source') || 'link';
+      var svc = a.getAttribute('data-service') || BFK_SOURCE_SERVICE[source] || 'tanya';
+      start([svc], source);
+    }, true);
+
+    return {
+      get: get, open: open, start: start, require: requireData, commit: commit, compose: compose, askText: askText,
+      openWhatsApp: openWhatsApp, waUrl: waUrl, onChange: onChange, renderChips: renderChips, attachMeter: attachMeter,
+      labelsOf: labelsOf, esc: esc, SERVICES: BFK_SERVICES, lastServices: lastServices
+    };
+  })();
+  window.BFKGate = BFKGate;
+
   /* ---- lightweight event tracking hook (klik apa pun ber-atribut data-event) ---- */
   document.addEventListener('click', function (e) {
     var el = e.target.closest('[data-event]');
@@ -1120,140 +1941,616 @@
     bfkTrack(payload.event_name, payload);
   });
 
-  /* ---- Lead form: validate → build WhatsApp message → (TODO) POST /api/leads → success ---- */
+  /* ---- Form leads di halaman (section "Mari tumbuh bersama"): pakai mesin yang sama dengan popup ---- */
   (function () {
-    var BUSINESS_WA = '628117919119';
     var form = document.getElementById('leadForm');
     if (!form) return;
+    var G = window.BFKGate;
 
     var successEl = document.getElementById('leadSuccess');
     var summaryEl = document.getElementById('leadSummary');
     var waBtn = document.getElementById('leadWhatsappBtn');
+    var el = {
+      name: document.getElementById('lf-name'), whatsapp: document.getElementById('lf-whatsapp'),
+      age: document.getElementById('lf-child-age'), city: document.getElementById('lf-city'),
+      consent: document.getElementById('lf-consent')
+    };
     var fieldsSeen = false;
+
+    /* pilihan layanan + meter progres */
+    var sel = ['tanya'];
+    G.renderChips(document.getElementById('leadSvcChips'), G.SERVICES, sel, true, null);
+    G.attachMeter(document.getElementById('leadMeter'), form, function () {
+      return [
+        function () { return el.name.value.trim(); },
+        function () { return el.whatsapp.value.replace(/\D/g, '').length >= 9; },
+        function () { return el.age.value; },
+        function () { return el.city.value.trim(); },
+        function () { return el.consent.checked; }
+      ];
+    }, { secPer: 6 });
+
+    /* pelanggan lama: isi otomatis supaya tidak mengetik ulang */
+    function prefill(c) {
+      if (!c) return;
+      if (!el.name.value) el.name.value = c.name;
+      if (!el.whatsapp.value) el.whatsapp.value = c.whatsapp;
+      if (!el.age.value) el.age.value = c.child_age;
+      if (!el.city.value) el.city.value = c.city;
+      form.dispatchEvent(new Event('change'));   // perbarui meter
+    }
+    prefill(G.get());
+    G.onChange(prefill);
 
     form.addEventListener('focusin', function () {
       if (fieldsSeen) return;
       fieldsSeen = true;
-      logEvent('lead_form_view');
+      bfkTrack('lead_form_view', { event_name: 'lead_form_view', page: window.location.pathname });
       trackSession({ reached_form: true });
     });
 
-    /* ---- tangkap data yang sudah diisi walau belum klik submit (debounced on blur) ---- */
+    /* tangkap data yang sudah diisi walau belum klik submit (debounced) */
     var partialTimer = null;
-    ['lf-name', 'lf-whatsapp', 'lf-child-age', 'lf-city'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (!el) return;
+    [el.name, el.whatsapp, el.age, el.city].forEach(function (input) {
       var fire = function () {
         clearTimeout(partialTimer);
         partialTimer = setTimeout(function () {
-          var name = form.name.value.trim();
-          var whatsapp = form.whatsapp.value.trim();
-          // Kirim hanya kalau minimal ada nama ATAU nomor WA — hindari kirim baris kosong.
+          var name = el.name.value.trim(), whatsapp = el.whatsapp.value.trim();
           if (!name && !whatsapp) return;
-          trackPartialLead({
-            name: name, whatsapp: whatsapp,
-            child_age: form.child_age.value || '', city: form.city.value.trim() || ''
-          });
+          trackPartialLead({ name: name, whatsapp: whatsapp, child_age: el.age.value || '', city: el.city.value.trim() || '' });
         }, 600);
       };
-      el.addEventListener('blur', fire);
-      el.addEventListener('change', fire);
+      input.addEventListener('blur', fire);
+      input.addEventListener('change', fire);
     });
 
-    function logEvent(name) {
-      var payload = {
-        event_name: name,
-        page: window.location.pathname,
-        source: sessionStorage.getItem('utm_source') || null,
-        medium: sessionStorage.getItem('utm_medium') || null,
-        campaign: sessionStorage.getItem('utm_campaign') || null,
-        reseller_code: sessionStorage.getItem('last_reseller_code') || null
-      };
-      bfkTrack(name, payload);
-    }
+    function setError(fieldId, isError) { document.getElementById(fieldId).classList.toggle('error', isError); }
 
-    function setError(fieldId, isError) {
-      var field = document.getElementById(fieldId);
-      field.classList.toggle('error', isError);
-    }
-
-    function validate(data) {
+    function validate(d) {
       var valid = true;
-      if (!data.name.trim()) { setError('field-name', true); valid = false; } else setError('field-name', false);
-
-      var waDigits = data.whatsapp.replace(/\D/g, '');
-      if (waDigits.length < 9) { setError('field-whatsapp', true); valid = false; } else setError('field-whatsapp', false);
-
-      if (!data.child_age) { setError('field-child-age', true); valid = false; } else setError('field-child-age', false);
-      if (!data.city) { setError('field-city', true); valid = false; } else setError('field-city', false);
-
-      var consentBox = document.getElementById('lf-consent');
-      if (!consentBox.checked) {
-        document.getElementById('field-consent').style.outline = '2px solid var(--coral)';
-        document.getElementById('field-consent').style.borderRadius = '8px';
-        valid = false;
-      } else {
-        document.getElementById('field-consent').style.outline = 'none';
-      }
+      if (!d.name.trim()) { setError('field-name', true); valid = false; } else setError('field-name', false);
+      if (d.whatsapp.replace(/\D/g, '').length < 9) { setError('field-whatsapp', true); valid = false; } else setError('field-whatsapp', false);
+      if (!sel.length) { setError('field-services', true); valid = false; } else setError('field-services', false);
+      if (!d.child_age) { setError('field-child-age', true); valid = false; } else setError('field-child-age', false);
+      if (!d.city.trim()) { setError('field-city', true); valid = false; } else setError('field-city', false);
+      var box = document.getElementById('field-consent');
+      if (!d.consent) { box.style.outline = '2px solid var(--coral)'; box.style.borderRadius = '8px'; valid = false; }
+      else box.style.outline = 'none';
       return valid;
     }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var data = {
-        name: form.name.value,
-        whatsapp: form.whatsapp.value,
-        child_age: form.child_age.value,
-        city: form.city.value,
-        consent: document.getElementById('lf-consent').checked
-      };
+      var d = { name: el.name.value, whatsapp: el.whatsapp.value, child_age: el.age.value, city: el.city.value, consent: el.consent.checked };
+      if (!validate(d)) return;
 
-      if (!validate(data)) return;
+      var ids = sel.slice();
+      d.services = ids;
+      var c = G.commit(d, 'lead_section');
 
-      var lead = {
-        lead_id: 'lead_' + Date.now(),
-        created_at: new Date().toISOString(),
-        name: data.name.trim(),
-        whatsapp: data.whatsapp.replace(/\D/g, ''),
-        child_age: data.child_age,
-        city: data.city,
-        consent: data.consent,
-        source: sessionStorage.getItem('utm_source') || 'direct',
-        medium: sessionStorage.getItem('utm_medium') || null,
-        campaign: sessionStorage.getItem('utm_campaign') || null,
-        first_reseller_code: localStorage.getItem('first_reseller_code') || null,
-        last_reseller_code: sessionStorage.getItem('last_reseller_code') || null,
-        landing_page: window.location.pathname,
-        calculator_used: false,
-        session_id: BFK_SESSION_ID // dipakai backend untuk tandai partial lead sesi ini jadi CONVERTED
-      };
-
-      // Simpan ke Google Sheets (tab LEADS) lewat Apps Script — best-effort, tidak memblokir WA.
-      sendToSheet('lead', lead);
-      logEvent('lead_submit');
-      trackSession({ reached_submit: true });
-
-      var waMessage =
-        'Halo Bento for Kids,\n\n' +
-        'Saya ' + lead.name + '.\n\n' +
-        'Saya ingin mendapatkan katalog & rekomendasi bekal untuk anak usia ' + lead.child_age + ', domisili ' + lead.city + '.\n\n' +
-        'Mohon info lebih lanjut. Terima kasih!';
-
-      var waUrl = 'https://wa.me/' + BUSINESS_WA + '?text=' + encodeURIComponent(waMessage);
+      var waUrl = G.waUrl(G.compose('', c, ids));
       waBtn.href = waUrl;
-
       summaryEl.innerHTML =
-        '<div><b>Nama:</b> ' + lead.name + '</div>' +
-        '<div><b>WhatsApp:</b> ' + lead.whatsapp + '</div>' +
-        '<div><b>Usia Anak:</b> ' + lead.child_age + '</div>' +
-        '<div><b>Domisili:</b> ' + lead.city + '</div>';
+        '<div><b>Nama:</b> ' + G.esc(c.name) + '</div>' +
+        '<div><b>WhatsApp:</b> ' + G.esc(c.whatsapp) + '</div>' +
+        '<div><b>Usia Anak:</b> ' + G.esc(c.child_age) + '</div>' +
+        '<div><b>Domisili:</b> ' + G.esc(c.city) + '</div>' +
+        '<div><b>Minat:</b> ' + G.esc(G.labelsOf(ids).join(', ')) + '</div>';
 
       form.classList.add('hide');
       successEl.classList.add('show');
 
-      // Open WhatsApp automatically; button remains as fallback if popup is blocked.
+      // Buka WhatsApp otomatis; tombol tetap ada sebagai cadangan kalau pop-up diblokir.
       window.open(waUrl, '_blank', 'noopener');
     });
+  })();
+
+  /* =================================================================
+     COACH — bubble panduan kecil yang muncul saat pengunjung sampai di
+     section tertentu: menegaskan bahwa mengisi itu cepat & mudah.
+     Aturan ramah: tiap tip cuma sekali per kunjungan, maksimal 4 tip,
+     hilang sendiri ±11 detik, berhenti kalau ditutup 2 kali, dan tidak
+     muncul saat popup/keranjang terbuka.
+     ================================================================= */
+  (function () {
+    var el = document.getElementById('coach');
+    if (!el || !('IntersectionObserver' in window)) return;
+    var G = window.BFKGate;
+    var SEEN = 'bfk_coach_seen', DISMISS = 'bfk_coach_dismiss', MAX_TIPS = 4, SHOW_MS = 11000, DWELL_MS = 1300;
+    var current = null, hideTimer = null, dwell = {};
+
+    function seen() { try { return JSON.parse(sessionStorage.getItem(SEEN) || '[]'); } catch (e) { return []; } }
+    function markSeen(id) { var s = seen(); if (s.indexOf(id) === -1) s.push(id); try { sessionStorage.setItem(SEEN, JSON.stringify(s)); } catch (e) {} }
+    function dismissed() { return parseInt(sessionStorage.getItem(DISMISS) || '0', 10) || 0; }
+    function overlayOpen() {
+      return !!document.querySelector('.modal-backdrop.open, #cartBackdrop.open') ||
+        document.getElementById('cartReminder').classList.contains('show');
+    }
+    function openCalc() { if (window.BFKCalc) window.BFKCalc.open(); }
+    function focusLead() { var n = document.getElementById('lf-name'); if (n) { n.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { n.focus({ preventScroll: true }); }, 400); } }
+
+    var TIPS = {
+      kalkulator: { emoji: '🧮', title: 'Hitung gizi si kecil, cuma ±20 detik', text: 'Cukup 4 isian: jenis kelamin, usia, berat, tinggi. Tanpa daftar, hasilnya langsung muncul.', act: 'Coba sekarang', run: openCalc },
+      katalog: { emoji: '🍱', title: 'Pilih menu, tinggal tap +', text: 'Saat memesan, kami hanya minta 5 isian singkat (±30 detik), lalu langsung ke WhatsApp.', knownText: 'Tinggal tap +. Saat memesan, data Anda sudah tersimpan, jadi cukup 1 tap.' },
+      catering: { emoji: '🎂', title: 'Punya acara anak? Ceritakan saja', text: 'Isi form singkat ±30 detik, lalu kami lanjut ngobrol lewat WhatsApp.', knownText: 'Cukup 1 tap, data Anda sudah tersimpan.', act: 'Ceritakan acara', run: function () { G.start(['catering'], 'coach_catering'); } },
+      aktivitas: { emoji: '👩‍🍳', title: 'Penasaran cooking class?', text: 'Tap tombolnya, isi 5 kolom singkat (±30 detik), infonya kami kirim lewat WhatsApp.', knownText: 'Cukup 1 tap, infonya kami kirim lewat WhatsApp.', act: 'Tanya info kegiatan', run: function () { G.start(['kelas'], 'coach_kelas'); } },
+      edukasi: { emoji: '📚', title: 'Bingung mulai dari mana?', text: 'Mulai dari kalkulator gizi, ±20 detik, lalu dapatkan panduan menu bekal untuk usia anak Anda.', act: 'Hitung sekarang', run: openCalc },
+      komunitas: { emoji: '🤝', title: 'Gabung komunitas cuma ±30 detik', text: 'Isi 5 kolom singkat, langsung terhubung ke WhatsApp kami.', knownText: 'Cukup 1 tap, data Anda sudah tersimpan.', act: 'Gabung sekarang', run: function () { G.start(['komunitas'], 'coach_komunitas'); } },
+      'dapatkan-katalog': { emoji: '✍️', title: 'Cuma 5 isian, ±30 detik', text: 'Data tersimpan di perangkat ini, jadi lain kali Anda tidak perlu mengisi lagi.', knownText: 'Data Anda sudah terisi otomatis, tinggal pilih minat dan kirim.', act: 'Mulai isi', run: focusLead }
+    };
+
+    function hide() {
+      clearTimeout(hideTimer);
+      el.classList.remove('show');
+      current = null;
+    }
+    function show(id) {
+      var tip = TIPS[id];
+      if (!tip || current) return;
+      if (seen().indexOf(id) > -1 || seen().length >= MAX_TIPS || dismissed() >= 2 || overlayOpen()) return;
+      current = id;
+      markSeen(id);
+      document.getElementById('coachEmoji').textContent = tip.emoji;
+      document.getElementById('coachTitle').textContent = tip.title;
+      document.getElementById('coachText').textContent = (G.get() && tip.knownText) ? tip.knownText : tip.text;
+      var act = document.getElementById('coachAct');
+      act.textContent = tip.act || '';
+      act.onclick = function () { hide(); if (tip.run) tip.run(); };
+      el.classList.add('show');
+      bfkTrack('coach_tip', { event_name: 'coach_tip', tip: id, page: window.location.pathname });
+      hideTimer = setTimeout(hide, SHOW_MS);
+    }
+    document.getElementById('coachX').addEventListener('click', function () {
+      try { sessionStorage.setItem(DISMISS, String(dismissed() + 1)); } catch (e) {}
+      hide();
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var id = en.target.id;
+        if (en.isIntersecting) { dwell[id] = setTimeout(function () { show(id); }, DWELL_MS); }
+        else { clearTimeout(dwell[id]); if (current === id) hide(); }
+      });
+    }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+    Object.keys(TIPS).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+  })();
+
+  /* =================================================================
+     KALKULATOR GIZI ANAK (popup)
+     Sumber & metode:
+     - Protein, serat, air, vitamin & mineral: Permenkes RI No. 28 Tahun 2019
+       tentang Angka Kecukupan Gizi (AKG) yang dianjurkan untuk masyarakat Indonesia.
+     - Energi personal: persamaan EER anak & remaja — Institute of Medicine /
+       NASEM (2005), Dietary Reference Intakes for Energy, Carbohydrate, Fiber,
+       Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids.
+     - Rentang lemak & karbohidrat: AMDR (laporan DRI yang sama).
+     Rekomendasi menu memakai objek `nutrition` per produk (per kemasan) yang
+     nanti diisi dari kandungan gizi real food tiap menu (lewat admin.html).
+     ================================================================= */
+  (function () {
+    var backdrop = document.getElementById('calcBackdrop');
+    if (!backdrop) return;
+    var form = document.getElementById('calcForm');
+    var formView = document.getElementById('calcFormView');
+    var resultView = document.getElementById('calcResultView');
+    var resultBody = document.getElementById('calcResultBody');
+    var sheet = backdrop.querySelector('.calc-sheet');
+    var actWrap = document.getElementById('cc-activity');
+    var actNote = document.getElementById('cc-activity-note');
+    var prevOverflow = '';
+    var lastCombo = [];
+    var lastSummary = '';
+
+    /* ---- AKG 2019 (per orang per hari). bb/tb = berat & tinggi referensi AKG. ---- */
+    var AKG = [
+      { min: 1,  max: 3,  sex: '*', label: '1–3 tahun',              bb: 13, tb: 92,  kcal: 1350, protein: 20, fiber: 19, water: 1150, ca: 650,  fe: 7,  zn: 3,  vitA: 400, vitC: 40, vitD: 15 },
+      { min: 4,  max: 6,  sex: '*', label: '4–6 tahun',              bb: 19, tb: 113, kcal: 1400, protein: 25, fiber: 20, water: 1450, ca: 1000, fe: 10, zn: 5,  vitA: 450, vitC: 45, vitD: 15 },
+      { min: 7,  max: 9,  sex: '*', label: '7–9 tahun',              bb: 27, tb: 130, kcal: 1650, protein: 40, fiber: 23, water: 1650, ca: 1000, fe: 10, zn: 5,  vitA: 500, vitC: 45, vitD: 15 },
+      { min: 10, max: 12, sex: 'M', label: 'Laki-laki 10–12 tahun',  bb: 36, tb: 145, kcal: 2000, protein: 50, fiber: 28, water: 1850, ca: 1200, fe: 8,  zn: 8,  vitA: 600, vitC: 50, vitD: 15 },
+      { min: 10, max: 12, sex: 'F', label: 'Perempuan 10–12 tahun',  bb: 38, tb: 147, kcal: 1900, protein: 55, fiber: 27, water: 1850, ca: 1200, fe: 8,  zn: 8,  vitA: 600, vitC: 50, vitD: 15 },
+      { min: 13, max: 15, sex: 'M', label: 'Laki-laki 13–15 tahun',  bb: 50, tb: 163, kcal: 2400, protein: 70, fiber: 34, water: 2100, ca: 1200, fe: 11, zn: 11, vitA: 600, vitC: 75, vitD: 15 },
+      { min: 13, max: 15, sex: 'F', label: 'Perempuan 13–15 tahun',  bb: 48, tb: 156, kcal: 2050, protein: 65, fiber: 29, water: 2100, ca: 1200, fe: 15, zn: 9,  vitA: 600, vitC: 65, vitD: 15 },
+      { min: 16, max: 18, sex: 'M', label: 'Laki-laki 16–18 tahun',  bb: 60, tb: 168, kcal: 2650, protein: 75, fiber: 37, water: 2300, ca: 1200, fe: 11, zn: 11, vitA: 700, vitC: 90, vitD: 15 },
+      { min: 16, max: 18, sex: 'F', label: 'Perempuan 16–18 tahun',  bb: 52, tb: 159, kcal: 2100, protein: 65, fiber: 29, water: 2150, ca: 1200, fe: 15, zn: 9,  vitA: 600, vitC: 75, vitD: 15 }
+    ];
+    /* Koefisien aktivitas fisik anak 3–18 tahun (IOM 2005): sedentary, low active, active, very active */
+    var PA = { M: [1.00, 1.13, 1.26, 1.42], F: [1.00, 1.16, 1.31, 1.56] };
+    var ACT_LABEL = ['Santai', 'Cukup aktif', 'Aktif', 'Sangat aktif'];
+    var SEX_LABEL = { M: 'Laki-laki', F: 'Perempuan' };
+    var SHARE_LABEL = { '0.1': 'camilan', '0.25': 'sarapan/makan malam', '0.3': 'makan siang' };
+
+    /* Peta nutrisi produk → target bekal (untuk rekomendasi menu). */
+    var NUTRI_MAP = [
+      ['kcal', 'kcal', 'Energi'], ['protein_g', 'protein', 'Protein'], ['fiber_g', 'fiber', 'Serat'],
+      ['ca_mg', 'ca', 'Kalsium'], ['fe_mg', 'fe', 'Zat besi'], ['zn_mg', 'zn', 'Seng'],
+      ['vita_re', 'vitA', 'Vitamin A'], ['vitc_mg', 'vitC', 'Vitamin C']
+    ];
+    /* Asumsi: lauk dari menu Bento ≈ separuh energi bekal; sisanya dari nasi/sayur/buah pendamping. */
+    var LAUK_ENERGY_SHARE = 0.5;
+
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); }
+    function nf(n, d) { d = d || 0; return Number(n).toLocaleString('id-ID', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+    function rp(n) { return 'Rp' + Number(n).toLocaleString('id-ID'); }
+    function round10(n) { return Math.round(n / 10) * 10; }
+    function num(s) { var v = parseFloat(String(s || '').replace(',', '.')); return isNaN(v) ? NaN : v; }
+    function setError(id, on) { document.getElementById(id).classList.toggle('error', on); }
+
+    function findAkg(age, sex) {
+      for (var i = 0; i < AKG.length; i++) {
+        var g = AKG[i];
+        if (age >= g.min && age <= g.max && (g.sex === '*' || g.sex === sex)) return g;
+      }
+      return null;
+    }
+
+    /* EER (kkal/hari) — IOM 2005. Usia 1–2 th: persamaan 13–35 bulan (tanpa faktor aktivitas). */
+    function eer(inp) {
+      var htM = inp.height / 100;
+      if (inp.age < 3) return 89 * inp.weight - 100 + 20;
+      var pa = PA[inp.sex][inp.activity];
+      var grow = inp.age <= 8 ? 20 : 25;
+      if (inp.sex === 'M') return 88.5 - 61.9 * inp.age + pa * (26.7 * inp.weight + 903 * htM) + grow;
+      return 135.3 - 30.8 * inp.age + pa * (10.0 * inp.weight + 934 * htM) + grow;
+    }
+
+    function compute(inp) {
+      var g = findAkg(inp.age, inp.sex);
+      var kcal = round10(eer(inp));
+      var young = inp.age <= 3;                       // AMDR 1–3 th: lemak 30–40%; 4–18 th: 25–35%
+      var fatPct = young ? [0.30, 0.40] : [0.25, 0.35];
+      var carbPct = [0.45, 0.65];
+      var s = inp.share;
+      var res = {
+        g: g, inp: inp, kcal: kcal, share: s,
+        rows: [
+          { label: 'Energi', unit: 'kkal', d: kcal, b: round10(kcal * s), dec: 0, note: 'estimasi personal' },
+          { label: 'Protein', unit: 'g', d: g.protein, b: g.protein * s, dec: 0 },
+          { label: 'Lemak', unit: 'g', dr: [kcal * fatPct[0] / 9, kcal * fatPct[1] / 9], br: [kcal * fatPct[0] / 9 * s, kcal * fatPct[1] / 9 * s], dec: 0, note: Math.round(fatPct[0] * 100) + '–' + Math.round(fatPct[1] * 100) + '% energi' },
+          { label: 'Karbohidrat', unit: 'g', dr: [kcal * carbPct[0] / 4, kcal * carbPct[1] / 4], br: [kcal * carbPct[0] / 4 * s, kcal * carbPct[1] / 4 * s], dec: 0, note: '45–65% energi' },
+          { label: 'Serat', unit: 'g', d: g.fiber, b: g.fiber * s, dec: 0 },
+          { label: 'Kalsium', unit: 'mg', d: g.ca, b: g.ca * s, dec: 0 },
+          { label: 'Zat besi', unit: 'mg', d: g.fe, b: g.fe * s, dec: 1 },
+          { label: 'Seng', unit: 'mg', d: g.zn, b: g.zn * s, dec: 1 },
+          { label: 'Vitamin A', unit: 'mcg RE', d: g.vitA, b: g.vitA * s, dec: 0 },
+          { label: 'Vitamin C', unit: 'mg', d: g.vitC, b: g.vitC * s, dec: 0 },
+          { label: 'Vitamin D', unit: 'mcg', d: g.vitD, b: g.vitD * s, dec: 1 },
+          { label: 'Air minum', unit: 'ml', d: g.water, b: null, dec: 0 }
+        ],
+        target: { kcal: kcal * s, protein: g.protein * s, fiber: g.fiber * s, ca: g.ca * s, fe: g.fe * s, zn: g.zn * s, vitA: g.vitA * s, vitC: g.vitC * s }
+      };
+      return res;
+    }
+
+    function rowHtml(r) {
+      var d = r.dr ? nf(r.dr[0], r.dec) + '–' + nf(r.dr[1], r.dec) : nf(r.d, r.dec);
+      var b = r.b == null && !r.br ? '—' : (r.br ? nf(r.br[0], r.dec) + '–' + nf(r.br[1], r.dec) : nf(r.b, r.dec));
+      return '<tr><td>' + esc(r.label) + (r.note ? '<small>' + esc(r.note) + '</small>' : '') + '</td>' +
+        '<td class="n">' + d + ' <span class="u">' + esc(r.unit) + '</span></td>' +
+        '<td class="n">' + b + (r.b == null && !r.br ? '' : ' <span class="u">' + esc(r.unit) + '</span>') + '</td></tr>';
+    }
+
+    /* ---- rekomendasi menu dari kandungan gizi produk (real food). Kosong kalau datanya belum diisi. ---- */
+    function buildMenu(t) {
+      var products = (window.BFKCatalog && window.BFKCatalog.getProducts && window.BFKCatalog.getProducts()) || [];
+      var list = products.filter(function (p) { return p.nutrition && Number(p.nutrition.kcal) > 0; });
+      lastCombo = [];
+      lastNoData = !list.length;
+      if (!list.length) return '';
+      var keys = NUTRI_MAP.filter(function (m) {
+        return t[m[1]] > 0 && list.some(function (p) { return Number(p.nutrition[m[0]]) > 0; });
+      });
+      var gainKeys = keys.filter(function (m) { return m[0] !== 'kcal'; });
+      var totals = {}; keys.forEach(function (m) { totals[m[0]] = 0; });
+      var chosen = {};
+      var cap = t.kcal * LAUK_ENERGY_SHARE * 1.1;
+
+      for (var step = 0; step < 4; step++) {
+        var best = null, bestGain = 0;
+        list.forEach(function (p) {
+          if ((chosen[p.id] || 0) >= 2) return;
+          if (totals.kcal + Number(p.nutrition.kcal) > cap) return;
+          var gain = 0;
+          gainKeys.forEach(function (m) {
+            var add = Number(p.nutrition[m[0]]) || 0;
+            gain += Math.min(1, (totals[m[0]] + add) / t[m[1]]) - Math.min(1, totals[m[0]] / t[m[1]]);
+          });
+          if (gain > bestGain + 1e-9) { best = p; bestGain = gain; }
+        });
+        if (!best || bestGain < 0.03) break;
+        chosen[best.id] = (chosen[best.id] || 0) + 1;
+        keys.forEach(function (m) { totals[m[0]] += Number(best.nutrition[m[0]]) || 0; });
+      }
+
+      var ids = Object.keys(chosen);
+      if (!ids.length) {
+        return '<div class="res-card calc-soon"><h4>🥦 Rekomendasi menu dari real food</h4>' +
+          '<p style="margin:0;">Belum ada kombinasi menu yang pas dengan target bekal ini. Tim kami bisa membantu menyusunnya lewat WhatsApp.</p></div>';
+      }
+      var sum = 0;
+      var items = ids.map(function (id) {
+        var p = list.filter(function (x) { return x.id === id; })[0];
+        lastCombo.push({ id: id, qty: chosen[id] });
+        sum += p.price * chosen[id];
+        return '<li><span>' + chosen[id] + '× ' + esc(p.name) + '</span><span>' + rp(p.price * chosen[id]) + '</span></li>';
+      }).join('');
+      var bars = keys.map(function (m) {
+        var pct = Math.round(totals[m[0]] / t[m[1]] * 100);
+        return '<div class="cov-row"><div class="cov-top"><span>' + esc(m[2]) + '</span><span>' + pct + '% target bekal</span></div>' +
+          '<div class="cov-track"><div class="cov-fill" style="width:' + Math.min(100, pct) + '%"></div></div></div>';
+      }).join('');
+      return '<div class="res-card"><h4>Contoh susunan lauk dari menu kami</h4>' +
+        '<ul class="combo-list">' + items + '</ul>' +
+        '<div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px;"><span>Perkiraan harga</span><span style="color:var(--coral)">' + rp(sum) + '</span></div>' +
+        bars +
+        '<p class="calc-note">Dihitung dari data gizi tiap produk per kemasan dan diasumsikan menyumbang ± ' + Math.round(LAUK_ENERGY_SHARE * 100) +
+        '% energi bekal; nasi, sayur, dan buah pendamping belum termasuk. Ini contoh awal, bukan resep baku.</p>' +
+        '<button type="button" class="btn btn-primary" data-calc-add-combo style="margin-top:10px;">Tambahkan ke keranjang</button></div>';
+    }
+
+    /* ---- Panduan menu bekal (selalu tampil): Isi Piringku + fokus gizi + rotasi 5 hari dari katalog ---- */
+    var lastRotation = [];
+    var lastNoData = false;
+    var DAYS = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum'];
+
+    function planRotation(res) {
+      var g = res.g, age = res.inp.age;
+      var P = (window.BFKCatalog && window.BFKCatalog.getProducts && window.BFKCatalog.getProducts()) || [];
+      var byId = {};
+      P.forEach(function (p) { if (p.active !== false) byId[p.id] = p; });
+      var toddler = age < 4;                                    // hindari bentuk gigitan kecil utuh untuk balita
+      var ROLES = {
+        ayam: ['nugget-ayam', 'chicken-katsu', 'chicken-teriyaki', 'nugget-ayam-kampung', 'chicken-cordon-bleu'].concat(toddler ? [] : ['chicken-lolipop', 'chicken-popcorn']),
+        ikan: ['nugget-dori', 'eby-furay'],
+        sapi: ['nugget-sapi', 'rolade-sapi'],
+        hati: ['kremes-hati-ayam', 'kremes-hati-sapi'],
+        teri: ['kremes-teri-nasi'],
+        olahan: ['rolade-ayam', 'sosis-ayam', 'sosis-sapi']
+      };
+      var LABEL = { ayam: 'Protein ayam', ikan: 'Ikan / seafood', sapi: 'Daging sapi', hati: 'Hati, sumber zat besi', teri: 'Teri, sumber kalsium', olahan: 'Variasi olahan' };
+      var used = {};
+      function pick(role) {
+        var list = ROLES[role] || [];
+        for (var i = 0; i < list.length; i++) if (byId[list[i]] && !used[list[i]]) { used[list[i]] = 1; return byId[list[i]]; }
+        return null;
+      }
+      var ironHigh = g.fe >= 15;
+      var fifth = ironHigh ? 'hati' : (g.ca >= 1000 && ROLES.teri.some(function (id) { return byId[id]; }) ? 'teri' : 'ayam');
+      var slots = ['ayam', 'ikan', 'hati', 'sapi', fifth];
+      var fallback = ['ayam', 'ikan', 'sapi', 'hati', 'teri', 'olahan'];
+      var veg = byId['mix-vegie'] || null;
+      var out = [];
+      slots.forEach(function (role, i) {
+        var p = pick(role), r = role;
+        if (!p) for (var k = 0; k < fallback.length && !p; k++) { p = pick(fallback[k]); r = fallback[k]; }
+        if (p) out.push({ day: DAYS[i], main: p, veg: veg, label: LABEL[r] });
+      });
+      return out;
+    }
+
+    function buildGuide(res) {
+      var g = res.g, inp = res.inp, s = res.share;
+      var items = [];
+      items.push(['💪', 'Protein ' + nf(g.protein) + ' g per hari (± ' + nf(g.protein * s) + ' g per bekal). Sertakan lauk hewani atau nabati di setiap waktu makan.']);
+      if (g.fe >= 15) items.push(['🩸', 'Zat besi ' + nf(g.fe) + ' mg per hari tergolong tinggi. Sertakan hati atau daging merah beberapa kali seminggu, dan pasangkan dengan buah kaya vitamin C.']);
+      else items.push(['🩸', 'Zat besi ' + nf(g.fe, 1) + ' mg per hari. Hati ayam atau sapi termasuk sumber zat besi yang praktis.']);
+      if (g.ca >= 1000) items.push(['🦴', 'Kalsium ' + nf(g.ca) + ' mg per hari cukup besar dan sulit dipenuhi dari satu bekal saja. Lengkapi dengan susu, yoghurt, keju, tahu-tempe, atau ikan teri.']);
+      items.push(['🥦', 'Serat ' + nf(g.fiber) + ' g per hari. Sayur di setiap bekal dan buah setiap hari.']);
+      if (inp.age < 4) items.push(['⚠️', 'Untuk usia di bawah 4 tahun, potong kecil sesuai kemampuan mengunyah dan dampingi saat makan agar aman dari risiko tersedak.']);
+      else items.push(['🔄', 'Variasikan lauk tiap hari. Sosis dan rolade enak sebagai variasi sesekali, utamakan lauk utuh dan sayur.']);
+
+      lastRotation = planRotation(res);
+      var rotHtml = '';
+      if (lastRotation.length) {
+        var seen = {}, sum = 0;
+        lastRotation.forEach(function (d) {
+          [d.main, d.veg].forEach(function (p) { if (p && !seen[p.id]) { seen[p.id] = 1; sum += p.price; } });
+        });
+        rotHtml = '<h4 style="margin-top:14px;">Contoh rotasi bekal 5 hari</h4><ul class="rot-list">' +
+          lastRotation.map(function (d) {
+            return '<li><span class="rot-day">' + d.day + '</span><span class="rot-main"><b>' + esc(d.main.name) + (d.veg ? ' + ' + esc(d.veg.name) : '') + '</b><small>' + esc(d.label) + ' · tambah nasi/pokok dan buah</small></span></li>';
+          }).join('') + '</ul>' +
+          '<button type="button" class="btn btn-primary" data-calc-add-rotation>Tambahkan menu rotasi ke keranjang (± ' + rp(sum) + ')</button>' +
+          '<p class="calc-note">Masing-masing 1 kemasan. Anda bebas mengubah jumlahnya di keranjang.</p>';
+      }
+
+      return '<div class="res-card"><h4>Panduan menu bekal untuk anak Anda</h4>' +
+        '<p class="calc-note" style="margin:0 0 6px;">Susunan satu porsi (Isi Piringku, Kemenkes RI):</p>' +
+        '<div class="plate" aria-label="Pokok sepertiga, sayur sepertiga, lauk seperenam, buah seperenam">' +
+          '<span style="width:33%;background:#D99A2B">Pokok ⅓</span><span style="width:33%;background:#5E8A55">Sayur ⅓</span>' +
+          '<span style="width:17%;background:#E8735A">Lauk ⅙</span><span style="width:17%;background:#8B5FA8">Buah ⅙</span></div>' +
+        '<ul class="guide-list">' + items.map(function (it) { return '<li data-i="' + it[0] + '">' + esc(it[1]) + '</li>'; }).join('') + '</ul>' +
+        rotHtml +
+        (lastNoData ? '<p class="calc-note">Persentase pemenuhan gizi per menu akan muncul di sini setelah data gizi tiap produk (dari bahan real food) dilengkapi.</p>' : '') +
+        '<p class="calc-note">Panduan umum, bukan resep baku. Sesuaikan dengan alergi dan kondisi anak.</p></div>';
+    }
+
+    function warnHtml(res) {
+      var msgs = [];
+      var inp = res.inp, g = res.g;
+      if (inp.age < 3) msgs.push('Untuk usia 1–2 tahun, persamaan energi NASEM cenderung menghasilkan angka lebih rendah daripada AKG Indonesia. Anggap keduanya sebagai rentang acuan.');
+      else if (Math.abs(res.kcal / g.kcal - 1) > 0.3) msgs.push('Hasil personal berbeda cukup jauh dari angka rata-rata AKG (' + nf(g.kcal) + ' kkal). Periksa kembali berat, tinggi, dan aktivitas yang Anda isi.');
+      if (inp.weight < g.bb * 0.6 || inp.weight > g.bb * 1.6) msgs.push('Berat badan anak berbeda jauh dari rata-rata usianya (acuan AKG ± ' + g.bb + ' kg). Sebaiknya status gizi anak dicek ke Posyandu, dokter, atau ahli gizi.');
+      return msgs.map(function (m) { return '<div class="calc-warn">' + esc(m) + '</div>'; }).join('');
+    }
+
+    function renderResult(res) {
+      var inp = res.inp, g = res.g;
+      var shareLabel = SHARE_LABEL[String(inp.share)] || 'bekal';
+      var actText = inp.age < 3 ? '' : ', aktivitas ' + ACT_LABEL[inp.activity].toLowerCase();
+      lastSummary =
+        'Anak: ' + SEX_LABEL[inp.sex] + ', ' + inp.age + ' tahun, ' + nf(inp.weight, inp.weight % 1 ? 1 : 0) + ' kg, ' + nf(inp.height, inp.height % 1 ? 1 : 0) + ' cm' + actText + '.\n' +
+        'Hasil kalkulator: energi ± ' + nf(res.kcal) + ' kkal/hari (bekal ' + shareLabel + ' ± ' + nf(round10(res.target.kcal)) + ' kkal), protein ' + nf(g.protein) + ' g/hari.';
+
+      resultBody.innerHTML =
+        '<h3>Kebutuhan gizi anak ' + SEX_LABEL[inp.sex].toLowerCase() + ', ' + inp.age + ' tahun</h3>' +
+        warnHtml(res) +
+        '<div class="res-card res-hero">' +
+          '<div class="energy-num">≈ ' + nf(res.kcal) + ' <small>kkal / hari</small></div>' +
+          '<p class="res-meta">Untuk bekal ' + esc(shareLabel) + ' (± ' + Math.round(inp.share * 100) + '%): <b>≈ ' + nf(round10(res.target.kcal)) + ' kkal</b><br>' +
+          'Acuan AKG Indonesia untuk kelompok ' + esc(g.label) + ': ' + nf(g.kcal) + ' kkal / hari.</p>' +
+        '</div>' +
+        '<div class="res-card"><h4>Target zat gizi</h4>' +
+          '<table class="nut-table"><thead><tr><th>Zat gizi</th><th class="n">Per hari</th><th class="n">Per bekal</th></tr></thead><tbody>' +
+          res.rows.map(rowHtml).join('') + '</tbody></table>' +
+          '<p class="calc-note">Protein, serat, vitamin, mineral, dan air mengacu pada AKG kelompok ' + esc(g.label) + '. Lemak dan karbohidrat dihitung dari energi personal (rentang aman AMDR).</p>' +
+        '</div>' +
+        buildMenu(res.target) +
+        buildGuide(res) +
+        '<details class="res-card calc-src"><summary>Sumber &amp; catatan penting</summary><ul>' +
+          '<li>Protein, serat, air, vitamin, dan mineral: Permenkes RI No. 28 Tahun 2019 tentang Angka Kecukupan Gizi yang dianjurkan untuk masyarakat Indonesia.</li>' +
+          '<li>Energi personal: persamaan Estimated Energy Requirement (EER) anak dan remaja, Institute of Medicine / NASEM (2005), Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids.</li>' +
+          '<li>Rentang lemak dan karbohidrat: Acceptable Macronutrient Distribution Range (AMDR) dari laporan DRI yang sama.</li>' +
+          '<li>Susunan porsi (pokok, sayur, lauk, buah): Isi Piringku, Kementerian Kesehatan RI, mengacu pada Pedoman Gizi Seimbang (Permenkes RI No. 41 Tahun 2014).</li>' +
+          '<li>Pembagian porsi bekal (10% / 25% / 30%) dan contoh rotasi menu adalah asumsi umum, bukan angka baku.</li>' +
+          '<li>Rumus berlaku untuk anak dengan pertumbuhan normal. Anak dengan gizi kurang/lebih, alergi makanan, atau penyakit tertentu memerlukan penyesuaian dari dokter atau ahli gizi.</li>' +
+          '<li>Hasil ini adalah estimasi edukasi, bukan diagnosis medis.</li>' +
+        '</ul></details>' +
+        '<div class="calc-actions">' +
+          '<button type="button" class="btn btn-wa" data-calc-consult data-event="calculator_consult">Konsultasikan hasil via WhatsApp</button>' +
+          '<p class="calc-note" style="margin:-2px 0 2px;text-align:center;">Ringkasan hasil di atas akan ikut di pesan WhatsApp.</p>' +
+          '<button type="button" class="btn btn-ghost-calc" data-calc-again>Hitung ulang</button>' +
+        '</div>';
+      showResult();
+    }
+
+    function renderUnder1() {
+      lastSummary = 'Anak berusia kurang dari 1 tahun. Saya ingin bertanya seputar menu dan kebutuhan gizinya.';
+      resultBody.innerHTML =
+        '<h3>Bayi usia kurang dari 1 tahun</h3>' +
+        '<div class="res-card"><p style="margin:0 0 8px;">Kebutuhan gizi bayi di bawah 1 tahun sangat bergantung pada ASI/susu formula dan tahapan MPASI, sehingga kalkulator ini hanya melayani usia 1–18 tahun.</p>' +
+        '<p style="margin:0;">Silakan konsultasikan ke dokter anak atau ahli gizi. Tim kami juga bisa membantu menjelaskan menu yang sesuai untuk usia anak Anda.</p></div>' +
+        '<div class="calc-actions">' +
+          '<button type="button" class="btn btn-wa" data-calc-consult>Tanya tim via WhatsApp</button>' +
+          '<button type="button" class="btn btn-ghost-calc" data-calc-again>Kembali</button>' +
+        '</div>';
+      showResult();
+    }
+
+    function showResult() {
+      formView.style.display = 'none';
+      resultView.style.display = '';
+      sheet.scrollTop = 0;
+    }
+    function showForm() {
+      resultView.style.display = 'none';
+      formView.style.display = '';
+      sheet.scrollTop = 0;
+    }
+
+    function open() {
+      if (!backdrop.classList.contains('open')) {
+        prevOverflow = document.body.style.overflow;
+        backdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      showForm();
+      bfkTrack('calculator_open', { event_name: 'calculator_open', page: window.location.pathname });
+    }
+    function close() {
+      backdrop.classList.remove('open');
+      document.body.style.overflow = prevOverflow;
+    }
+
+    /* Aktivitas tidak dipakai untuk usia 1–2 tahun */
+    document.getElementById('cc-age-input').addEventListener('change', function () {
+      var a = this.value;
+      var toddler = a === '1' || a === '2';
+      actWrap.style.display = toddler ? 'none' : '';
+      actNote.style.display = toddler ? '' : 'none';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var sexEl = form.querySelector('input[name="sex"]:checked');
+      var actEl = form.querySelector('input[name="activity"]:checked');
+      var ageRaw = form.elements['age'].value;
+      var ok = true;
+      setError('cc-sex', !sexEl); if (!sexEl) ok = false;
+      setError('cc-age', !ageRaw); if (!ageRaw) ok = false;
+      if (!ok) return;
+
+      if (ageRaw === 'lt1') { window.__bfkCalcUsed = true; renderUnder1(); return; }
+
+      var weight = num(form.elements['weight'].value);
+      var height = num(form.elements['height'].value);
+      var wOk = weight >= 7 && weight <= 120;
+      var hOk = height >= 65 && height <= 200;
+      setError('cc-weight', !wOk); setError('cc-height', !hOk);
+      if (!wOk || !hOk) return;
+
+      var inp = {
+        sex: sexEl.value, age: parseInt(ageRaw, 10), weight: weight, height: height,
+        activity: actEl ? parseInt(actEl.value, 10) : 1,
+        share: parseFloat(form.elements['share'].value)
+      };
+      window.__bfkCalcUsed = true;
+      var res = compute(inp);
+      renderResult(res);
+      bfkTrack('calculator_result', { event_name: 'calculator_result', age_group: res.g.label, page: window.location.pathname });
+    });
+
+    /* aksi di dalam hasil */
+    resultBody.addEventListener('click', function (e) {
+      if (e.target.closest('[data-calc-again]')) { showForm(); return; }
+      if (e.target.closest('[data-calc-consult]')) {
+        var text = 'Halo Bento for Kids, saya sudah mencoba Kalkulator Gizi Anak.\n\n' + lastSummary + '\n\nMohon bantu rekomendasi menu bekal yang sesuai. Terima kasih!';
+        window.BFKGate.start(['gizi'], 'calculator', text);
+        return;
+      }
+      if (e.target.closest('[data-calc-add-rotation]')) {
+        if (!window.BFKCart) return;
+        var added = {};
+        lastRotation.forEach(function (d) {
+          [d.main, d.veg].forEach(function (p) { if (p && !added[p.id]) { added[p.id] = 1; window.BFKCart.add(p.id, 1); } });
+        });
+        close();
+        window.BFKCart.open();
+        return;
+      }
+      if (e.target.closest('[data-calc-add-combo]')) {
+        if (!window.BFKCart) return;
+        lastCombo.forEach(function (it) { window.BFKCart.add(it.id, it.qty); });
+        close();
+        window.BFKCart.open();
+      }
+    });
+
+    /* buka popup dari tombol/tautan mana pun ber-atribut data-open-calc */
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target.closest('[data-open-calc]') : null;
+      if (!t) return;
+      e.preventDefault();
+      open();
+    });
+    /* meter progres kalkulator: 4 isian */
+    window.BFKGate.attachMeter(document.getElementById('calcMeter'), form, function () {
+      var lt1 = function () { return form.elements['age'].value === 'lt1'; };
+      return [
+        function () { return !!form.querySelector('input[name="sex"]:checked'); },
+        function () { return !!form.elements['age'].value; },
+        function () { var w = num(form.elements['weight'].value); return lt1() || (w >= 7 && w <= 120); },
+        function () { var h = num(form.elements['height'].value); return lt1() || (h >= 65 && h <= 200); }
+      ];
+    });
+    window.BFKCalc = { open: open };
+    document.getElementById('calcClose').addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !e.defaultPrevented && backdrop.classList.contains('open')) close();
+    });
+
+    /* halaman link (links.html) mengarahkan tombol WhatsApp ke sini lewat ?lead=<layanan> → form leads terbuka otomatis */
+    (function () {
+      var m = /[?&]lead=([a-z]+)/.exec(window.location.search);
+      if (!m || !window.BFKGate || !BFK_SERVICES.some(function (x) { return x.id === m[1]; })) return;
+      setTimeout(function () { window.BFKGate.start([m[1]], 'links_page'); }, 600);
+      try { history.replaceState(null, '', window.location.pathname + window.location.search.replace(/([?&])lead=[a-z]+&?/, '$1').replace(/[?&]$/, '') + window.location.hash); } catch (e) {}
+    })();
+
+    /* tautan lama /kalkulator.html mengarah ke sini lewat ?calc=1 */
+    if (/[?&]calc=1(&|$)/.test(window.location.search) || window.location.hash === '#hitung') {
+      setTimeout(open, 350);
+    }
   })();
 
   /* ---- Interactive problem checklist ---- */
@@ -1302,7 +2599,7 @@
         return;
       }
       var labels = selected.map(function (c) { return c.getAttribute('data-label'); }).join(', ');
-      result.innerHTML = 'Cocok untuk Anda: ' + labels + ' — <a href="#dapatkan-katalog">lihat rekomendasi bekal →</a>';
+      result.innerHTML = 'Cocok untuk Anda: ' + labels + ' — <a href="#dapatkan-katalog">ngobrol dengan kami →</a>';
       result.classList.add('show');
     }
 
@@ -1435,7 +2732,7 @@
         var label = cart[p.id] ? '✓ ' + cart[p.id] + 'x' : '+ Keranjang';
         return '' +
           '<div class="p-card" data-id="' + p.id + '">' +
-            '<div class="p-img"><span class="p-cat-tag">' + CAT_LABEL[p.category] + '</span>' + productImageHtml(p) + '</div>' +
+            '<div class="p-img"><span class="p-cat-tag">' + (CAT_LABEL[p.category] || 'Menu') + '</span>' + productImageHtml(p) + '</div>' +
             '<div class="p-body">' +
               '<h4>' + p.name + '</h4>' +
               '<span class="p-price">' + fmt(p.price) + '</span>' +
@@ -1475,7 +2772,7 @@
       activeQty = 1;
       pmQtyEl.textContent = activeQty;
       document.getElementById('pmImg').innerHTML = productImageHtml(activeProduct);
-      document.getElementById('pmCat').textContent = CAT_LABEL[activeProduct.category];
+      document.getElementById('pmCat').textContent = CAT_LABEL[activeProduct.category] || 'Menu';
       document.getElementById('pmName').textContent = activeProduct.name;
       document.getElementById('pmDesc').textContent = activeProduct.desc;
       document.getElementById('pmPrice').textContent = fmt(activeProduct.price);
@@ -1753,7 +3050,32 @@
       if (act === 'minus') setQty(id, cart[id] - 1); // qty 1 → 0 removes the line (trash icon shown at qty 1)
     });
 
+    /* baris "Pesanan atas nama ..." + label tombol checkout mengikuti status data pelanggan */
+    var cartCustomerEl = document.getElementById('cartCustomer');
+    var checkoutBtnEl = document.getElementById('cartCheckoutBtn');
+    function updateCustomerLine() {
+      var c = window.BFKGate.get();
+      cartCustomerEl.textContent = '';
+      if (c) {
+        cartCustomerEl.appendChild(document.createTextNode('Pesanan atas nama '));
+        var b = document.createElement('b'); b.textContent = c.name; cartCustomerEl.appendChild(b);
+        cartCustomerEl.appendChild(document.createTextNode(' · '));
+        var ed = document.createElement('button'); ed.type = 'button'; ed.id = 'cartEditCustomer'; ed.textContent = 'ubah data';
+        cartCustomerEl.appendChild(ed);
+        checkoutBtnEl.textContent = 'Checkout via WhatsApp';
+      } else {
+        cartCustomerEl.textContent = 'Anda akan diminta mengisi data pemesan sebelum ke WhatsApp.';
+        checkoutBtnEl.textContent = 'Isi Data & Checkout via WhatsApp';
+      }
+    }
+    cartCustomerEl.addEventListener('click', function (e) {
+      if (e.target.closest('#cartEditCustomer')) window.BFKGate.open({ source: 'edit_customer', editOnly: true });
+    });
+    window.BFKGate.onChange(updateCustomerLine);
+    updateCustomerLine();
+
     function openCart() {
+      updateCustomerLine();
       renderCartItems();
       cartBackdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -1767,6 +3089,17 @@
     cartBackdrop.addEventListener('click', function (e) { if (e.target === cartBackdrop) closeCart(); });
 
     document.getElementById('cartCheckoutBtn').addEventListener('click', function () {
+      if (Object.keys(cart).length === 0) return;
+      // WAJIB isi data pelanggan dulu sebelum ke WhatsApp (form muncul otomatis kalau belum pernah diisi)
+      window.BFKGate.require({
+        source: 'cart_checkout', services: ['frozen'],
+        quickLead: 'Pesanan Anda sudah siap. Cek dulu minat Anda di bawah, lalu kami buka WhatsApp untuk konfirmasi.',
+        goLabel: 'Kirim Pesanan ke WhatsApp →'
+      }, doCheckout);
+    });
+
+    function doCheckout(customer, chosen) {
+      var svc = (chosen && chosen.length) ? chosen : ['frozen'];
       var ids = Object.keys(cart);
       if (ids.length === 0) return;
       var lines = ids.map(function (id) {
@@ -1803,19 +3136,24 @@
         total: total,
         program: activeProgram ? activeProgram.name : '',
         program_reached: activeProgram ? subtotal >= activeProgram.minSpend : false,
-        whatsapp_message: msg, // riwayat chat/nota persis yang dikirim ke WhatsApp
+        whatsapp_message: window.BFKGate.compose(msg, customer, svc), // riwayat chat/nota persis yang dikirim ke WhatsApp
         source: sessionStorage.getItem('utm_source') || 'direct',
         medium: sessionStorage.getItem('utm_medium') || null,
         campaign: sessionStorage.getItem('utm_campaign') || null,
         first_reseller_code: localStorage.getItem('first_reseller_code') || null,
-        last_reseller_code: sessionStorage.getItem('last_reseller_code') || null
+        last_reseller_code: sessionStorage.getItem('last_reseller_code') || null,
+        customer_name: customer.name,
+        customer_whatsapp: customer.whatsapp,
+        customer_child_age: customer.child_age,
+        customer_city: customer.city,
+        lead_id: customer.lead_id
       });
 
       logEvent('whatsapp_click', 'cart_checkout');
       reminderEl.classList.remove('show');
       clearTimeout(reminderTimer);
-      window.open('https://wa.me/' + BUSINESS_WA + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-    });
+      window.BFKGate.openWhatsApp(msg, customer, svc);
+    }
 
     /* ---------- program cards (minimum-spend model + computed badges) ---------- */
     var programGrid = document.getElementById('programGrid');
@@ -1873,10 +3211,21 @@
 
     // ESC closes whichever overlay is open
     document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape') return;
+      if (e.key !== 'Escape' || e.defaultPrevented) return;
       if (modalBackdrop.classList.contains('open')) closeModal();
       if (cartBackdrop.classList.contains('open')) closeCart();
     });
+
+    /* API untuk popup kalkulator (tambah paket rekomendasi ke keranjang & baca data gizi produk) */
+    window.BFKCart = {
+      add: function (id, qty) {
+        addToCart(id, qty);
+        var chip = document.querySelector('.filter-chip.active');
+        renderGrid(chip ? chip.getAttribute('data-cat') : 'all');
+      },
+      open: openCart
+    };
+    window.BFKCatalog = { getProducts: function () { return PRODUCTS; } };
 
     renderGrid('all');
     updateCartUI();
