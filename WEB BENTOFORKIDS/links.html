@@ -61,14 +61,27 @@
     position:absolute; top:-8px; right:14px; background:var(--marigold); color:#fff; font-size:10.5px; font-weight:800;
     padding:3px 9px; border-radius:999px; letter-spacing:.03em; text-transform:uppercase;
   }
-  a.link.featured{background:var(--coral); border-color:var(--coral); color:#fff; box-shadow:0 8px 20px rgba(232,115,92,.30);}
-  a.link.featured:hover{background:var(--coral-dark); border-color:var(--coral-dark);}
+  a.link.featured{background:#C8492F; border-color:#C8492F; color:#fff; box-shadow:0 8px 20px rgba(200,73,47,.30);}
+  a.link.featured:hover{background:#B03D26; border-color:#B03D26;}
   a.link.featured .l-desc, a.link.featured .l-arrow{color:#FFEDE8;}
   a.link.featured .l-icon{background:rgba(255,255,255,.22);}
   .skeleton{height:72px; border-radius:18px; background:linear-gradient(90deg,var(--cream-2),#FBF6EC,var(--cream-2)); background-size:200% 100%; animation:sk 1.2s linear infinite;}
   @keyframes sk{to{background-position:-200% 0}}
   footer{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:30px;}
   @media (prefers-reduced-motion: reduce){ a.link{transition:none;} .skeleton{animation:none;} }
+  /* ---- tema & gambar tombol (diatur dari admin → Link Bio) ---- */
+  :root{ --r:18px; --r-card:18px; --r-ico:13px; }
+  a.link{border-radius:var(--r);}
+  .l-icon{border-radius:var(--r-ico);}
+  a.link.custom .l-desc, a.link.custom .l-arrow{color:inherit; opacity:.86;}
+  a.link.custom.on-dark .l-icon{background:rgba(255,255,255,.22);}
+  a.link.custom.on-light .l-icon{background:rgba(0,0,0,.07);}
+  a.link.imgcard{display:block; padding:0; border-radius:var(--r-card);}
+  a.link.imgcard .l-banner{display:block; aspect-ratio:16/9; background:var(--cream-2); overflow:hidden; border-radius:var(--r-card) var(--r-card) 0 0;}
+  a.link.imgcard .l-banner img{width:100%; height:100%; object-fit:cover; display:block;}
+  a.link.imgcard .l-row{display:flex; align-items:center; gap:14px; padding:12px 16px;}
+  body.dark-bg h1{color:#fff;} body.dark-bg .tagline{color:#FFD3C7;} body.dark-bg .bio, body.dark-bg footer{color:rgba(255,255,255,.78);} body.dark-bg .group-title{color:#DCE7D8;}
+
 </style>
 </head>
 <body>
@@ -108,7 +121,8 @@ var DEFAULT_PROFILE = {
   tagline: 'Healthy food, healthy habits, happy kids',
   bio: 'Frozen food tanpa MSG & pengawet, aktivitas, dan edukasi untuk keluarga Indonesia. It starts when they are little ❤️',
   avatar_url: '',
-  footer: 'Healthy Lifestyle Brand for Kids · Bandar Lampung'
+  footer: 'Healthy Lifestyle Brand for Kids · Bandar Lampung',
+  bg_color: '', btn_color: '', btn_text_color: '', radius: 'rounded'
 };
 var DEFAULT_LINKS = [
   { id: 'katalog', group: 'Belanja & Layanan', title: 'Lihat Menu & Katalog Frozen Food', desc: 'Nugget, sosis, rolade, dan lainnya, tanpa MSG & pengawet', url: '/#katalog', icon: '🍱', style: 'featured', badge: '' },
@@ -157,6 +171,28 @@ function track(linkId, title, url) {
 
 function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
 
+/* ---------- warna & gambar ---------- */
+var HEX = /^#[0-9a-f]{6}$/i;
+function rgb(h) { return [parseInt(h.substr(1, 2), 16), parseInt(h.substr(3, 2), 16), parseInt(h.substr(5, 2), 16)]; }
+function lum(h) {
+  var c = rgb(h).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+function contrast(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+// teks putih atau gelap, mana yang lebih terbaca di atas warna latar
+function readableOn(bg) { return contrast(bg, '#ffffff') >= contrast(bg, '#263230') ? '#ffffff' : '#263230'; }
+
+var LH3 = /^https:\/\/lh3\.googleusercontent\.com\/d\/([A-Za-z0-9_-]+)/;
+// alamat gambar Drive diminta dalam ukuran yang pas (kecil = cepat); alamat lain dipakai apa adanya
+function imgUrl(url, kind, scale) {
+  var m = LH3.exec(url || ''); if (!m) return url;
+  var k = scale || 1;
+  if (kind === 'banner') return 'https://lh3.googleusercontent.com/d/' + m[1] + '=w' + 640 * k + '-h' + 360 * k + '-c';
+  if (kind === 'avatar') return 'https://lh3.googleusercontent.com/d/' + m[1] + '=s240-c';
+  return 'https://lh3.googleusercontent.com/d/' + m[1] + '=s128-c';
+}
+var RADII = { rounded: ['18px', '18px', '13px'], pill: ['999px', '22px', '50%'], square: ['6px', '6px', '6px'] };
+
 function renderProfile(p) {
   p = Object.assign({}, DEFAULT_PROFILE, p || {});
   document.getElementById('pTitle').textContent = p.title;
@@ -167,13 +203,30 @@ function renderProfile(p) {
   var av = document.getElementById('avatar');
   if (/^https?:\/\//i.test(p.avatar_url || '')) {
     av.textContent = '';
-    var img = document.createElement('img'); img.src = p.avatar_url; img.alt = ''; img.referrerPolicy = 'no-referrer';
+    var img = document.createElement('img'); img.src = imgUrl(p.avatar_url, 'avatar'); img.alt = ''; img.referrerPolicy = 'no-referrer';
     img.onerror = function () { av.textContent = '🍱'; };
     av.appendChild(img);
   }
+  // tema halaman
+  var bg = HEX.test(p.bg_color) ? p.bg_color : '';
+  document.body.style.background = bg || '';
+  document.body.classList.toggle('dark-bg', !!bg && lum(bg) < 0.3);
+  var r = RADII[p.radius] || RADII.rounded, root = document.documentElement.style;
+  root.setProperty('--r', r[0]); root.setProperty('--r-card', r[1]); root.setProperty('--r-ico', r[2]);
+  var meta = document.querySelector('meta[name="theme-color"]'); if (meta && bg) meta.setAttribute('content', bg);
 }
 
-function renderLinks(links) {
+function styleButton(a, l, profile) {
+  var bg = HEX.test(l.color) ? l.color : (l.style !== 'featured' && HEX.test(profile.btn_color) ? profile.btn_color : '');
+  var txt = HEX.test(l.text_color) ? l.text_color : (HEX.test(profile.btn_text_color) ? profile.btn_text_color : (bg ? readableOn(bg) : ''));
+  if (!bg && !txt) return;
+  a.classList.add('custom');
+  if (bg) { a.style.background = bg; a.style.borderColor = bg; }
+  if (txt) { a.style.color = txt; a.classList.add(lum(txt) > 0.5 ? 'on-dark' : 'on-light'); }
+}
+
+function renderLinks(links, profile) {
+  profile = Object.assign({}, DEFAULT_PROFILE, profile || {});
   var root = document.getElementById('linkList');
   root.textContent = '';
   var groups = [], byName = {};
@@ -189,17 +242,27 @@ function renderLinks(links) {
     if (g.name) root.appendChild(el('div', 'group-title', g.name));
     var wrap = el('div', 'links');
     g.items.forEach(function (it) {
-      var l = it.l;
-      var a = el('a', 'link' + (l.style === 'featured' ? ' featured' : ''));
+      var l = it.l, hasBanner = /^https:\/\//i.test(l.image || '');
+      var a = el('a', 'link' + (l.style === 'featured' ? ' featured' : '') + (hasBanner ? ' imgcard' : ''));
       a.href = it.href;
       if (isExternal(it.href)) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      styleButton(a, l, profile);
+      var host = a;
+      if (hasBanner) {
+        var bn = el('span', 'l-banner'), im = document.createElement('img');
+        im.src = imgUrl(l.image, 'banner'); im.alt = ''; im.loading = 'lazy'; im.decoding = 'async'; im.width = 640; im.height = 360; im.referrerPolicy = 'no-referrer';
+        if (LH3.test(l.image)) { im.srcset = imgUrl(l.image, 'banner', 1) + ' 640w, ' + imgUrl(l.image, 'banner', 1.5) + ' 960w'; im.sizes = '(max-width:520px) calc(100vw - 36px), 480px'; }
+        im.onerror = function () { bn.remove(); };
+        bn.appendChild(im); a.appendChild(bn);
+        host = el('span', 'l-row'); a.appendChild(host);
+      }
       var ic = el('span', 'l-icon');
-      if (/^https?:\/\//i.test(l.icon || '')) { var im = document.createElement('img'); im.src = l.icon; im.alt = ''; im.referrerPolicy = 'no-referrer'; ic.appendChild(im); }
+      if (/^https?:\/\//i.test(l.icon || '')) { var i2 = document.createElement('img'); i2.src = imgUrl(l.icon, 'icon'); i2.alt = ''; i2.loading = 'lazy'; i2.referrerPolicy = 'no-referrer'; i2.onerror = function () { ic.textContent = '🔗'; }; ic.appendChild(i2); }
       else ic.textContent = l.icon || '🔗';
       var tx = el('span', 'l-text');
       tx.appendChild(el('span', 'l-title', l.title));
       if (l.desc) tx.appendChild(el('span', 'l-desc', l.desc));
-      a.appendChild(ic); a.appendChild(tx); a.appendChild(el('span', 'l-arrow', '›'));
+      host.appendChild(ic); host.appendChild(tx); host.appendChild(el('span', 'l-arrow', '›'));
       if (l.badge) a.appendChild(el('span', 'badge', l.badge));
       a.addEventListener('click', function () { track(l.id || l.title, l.title, l.url); });
       wrap.appendChild(a);
@@ -212,7 +275,7 @@ function renderLinks(links) {
 var cached = null;
 try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); } catch (e) {}
 var current = { links: (cached && cached.links && cached.links.length) ? cached.links : DEFAULT_LINKS, profile: cached ? cached.profile : null };
-renderProfile(current.profile); renderLinks(current.links);
+renderProfile(current.profile); renderLinks(current.links, current.profile);
 track('__view__', 'Kunjungan halaman link', location.pathname);
 
 (function fetchFromSheet() {
@@ -225,7 +288,7 @@ track('__view__', 'Kunjungan halaman link', location.pathname);
       clearTimeout(timer);
       if (!res || !res.ok || !Array.isArray(res.links)) return;
       var next = { links: res.links.length ? res.links : DEFAULT_LINKS, profile: res.profile || null };
-      if (JSON.stringify(next) !== JSON.stringify(current)) { current = next; renderProfile(next.profile); renderLinks(next.links); }
+      if (JSON.stringify(next) !== JSON.stringify(current)) { current = next; renderProfile(next.profile); renderLinks(next.links, next.profile); }
       try { localStorage.setItem(CACHE_KEY, JSON.stringify(next)); } catch (e) {}
     })
     .catch(function () { clearTimeout(timer); /* tetap pakai data bawaan/cache */ });
