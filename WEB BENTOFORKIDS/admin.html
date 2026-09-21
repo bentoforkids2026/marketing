@@ -292,7 +292,10 @@
     <div class="tab-panel" id="tab-links">
       <div class="card">
         <h3>🔗 Halaman Link (mirip Linktree)</h3>
-        <p class="eos-hint">Halaman publik: <a href="links.html" target="_blank" rel="noopener">links.html</a>. Isinya bisa diedit di sini atau langsung di tab <b>LINKS</b> pada Google Sheets. Cara menulis kolom alamat: <code>https://…</code> (link luar), <code>/#katalog</code> (bagian di web), atau <code>wa:catering</code> (tombol WhatsApp yang membuka <b>form leads</b> dulu). Pilihan layanan: tanya, frozen, catering, kelas, gizi, komunitas, affiliate, mitra.</p>
+        <div id="linkOldBackend" style="display:none; background:#FFF4E0; border:1px solid #F1D9A8; border-radius:12px; padding:10px 12px; font-size:13px; color:#7A5A16; margin-bottom:12px;">
+          <b>Apps Script Anda belum versi terbaru.</b> Yang tampil di bawah adalah link bawaan yang sama dengan yang terlihat di halaman link, supaya Anda bisa melihatnya. Agar bisa <b>disimpan</b> ke Google Sheets: tempel <code>Code.gs</code> terbaru di Apps Script, lalu <b>Deploy → Manage deployments → New version</b>, dan muat ulang halaman admin ini.
+        </div>
+        <p class="eos-hint">Halaman publik: <a href="links.html" target="_blank" rel="noopener">links.html</a>. Link bawaan sudah terisi otomatis di sini dan di tab <b>LINKS</b> pada Google Sheets, dan bisa diedit di salah satunya. Cara menulis kolom alamat: <code>https://…</code> (link luar), <code>/#katalog</code> (bagian di web), atau <code>wa:catering</code> (tombol WhatsApp yang membuka <b>form leads</b> dulu). Pilihan layanan: tanya, frozen, catering, kelas, gizi, komunitas, affiliate, mitra.</p>
         <div class="promo-grid">
           <div class="promo-field"><label>Judul</label><input type="text" id="lp-title"></div>
           <div class="promo-field"><label>Tagline</label><input type="text" id="lp-tagline"></div>
@@ -872,12 +875,31 @@
   }
 
   /* ---------- LINK BIO ---------- */
+  // Link bawaan = yang tampil di halaman link. Dipakai hanya bila Apps Script belum versi terbaru
+  // (versi terbaru mengisinya otomatis ke tab LINKS saat admin pertama kali dibuka).
+  var DEFAULT_LINKS_ADMIN = [
+    { id: 'katalog', group: 'Belanja & Layanan', title: 'Lihat Menu & Katalog Frozen Food', desc: 'Nugget, sosis, rolade, dan lainnya, tanpa MSG & pengawet', url: '/#katalog', icon: '🍱', style: 'featured', badge: '', active: true },
+    { id: 'pesan-wa', group: 'Belanja & Layanan', title: 'Pesan / Tanya via WhatsApp', desc: 'Isi form singkat ±30 detik, lalu langsung ke WhatsApp', url: 'wa:tanya', icon: '💬', style: 'normal', badge: '', active: true },
+    { id: 'catering', group: 'Belanja & Layanan', title: 'Catering Acara Anak', desc: 'Ulang tahun, acara sekolah, seminar anak', url: 'wa:catering', icon: '🎂', style: 'normal', badge: '', active: true },
+    { id: 'shopee', group: 'Belanja & Layanan', title: 'Belanja di Shopee', desc: 'Isi alamat toko Shopee Anda di kolom url', url: '', icon: '🛍️', style: 'normal', badge: '', active: false },
+    { id: 'kalkulator', group: 'Belajar & Komunitas', title: 'Hitung Kebutuhan Gizi Anak', desc: 'Cuma ±20 detik, sesuai AKG Kemenkes RI', url: '/?calc=1', icon: '🧮', style: 'normal', badge: 'Baru', active: true },
+    { id: 'kelas', group: 'Belajar & Komunitas', title: 'Cooking Class & Food Education', desc: 'Anak belajar sehat lewat bermain', url: 'wa:kelas', icon: '👩‍🍳', style: 'normal', badge: '', active: true },
+    { id: 'komunitas', group: 'Belajar & Komunitas', title: 'Gabung Komunitas Orang Tua', desc: 'Tumbuh bersama, berbagi pengalaman', url: 'wa:komunitas', icon: '🤝', style: 'normal', badge: '', active: true },
+    { id: 'affiliate', group: 'Belajar & Komunitas', title: 'Jadi Affiliate / Reseller', desc: 'Bergabung sebagai mitra Bento for Kids', url: 'wa:affiliate', icon: '💼', style: 'normal', badge: '', active: true },
+    { id: 'instagram', group: 'Ikuti Kami', title: 'Instagram @bento.forkids', desc: 'Tips bekal, ide menu, dan kegiatan', url: 'https://instagram.com/bento.forkids', icon: '📸', style: 'normal', badge: '', active: true },
+    { id: 'tiktok', group: 'Ikuti Kami', title: 'TikTok', desc: 'Isi alamat TikTok Anda di kolom url', url: '', icon: '🎵', style: 'normal', badge: '', active: false },
+    { id: 'facebook', group: 'Ikuti Kami', title: 'Facebook', desc: 'Isi alamat Facebook Anda di kolom url', url: '', icon: '👍', style: 'normal', badge: '', active: false }
+  ];
+  var DEFAULT_PROFILE_ADMIN = { title: 'Bento for Kids', tagline: 'Healthy food, healthy habits, happy kids', bio: 'Frozen food tanpa MSG & pengawet, aktivitas, dan edukasi untuk keluarga Indonesia. It starts when they are little ❤️', avatar_url: '', footer: 'Healthy Lifestyle Brand for Kids · Bandar Lampung' };
   var linksEdit = [];
   function linksLoad() {
-    linksEdit = (DATA.links || []).map(function (l) {
+    var serverHasLinks = Array.isArray(DATA.links);
+    var src = serverHasLinks ? DATA.links : DEFAULT_LINKS_ADMIN;
+    document.getElementById('linkOldBackend').style.display = serverHasLinks ? 'none' : '';
+    linksEdit = src.map(function (l) {
       return { id: l.id, title: l.title, desc: l.desc, url: l.url, icon: l.icon, style: l.style, badge: l.badge, group: l.group, active: l.active !== false };
     });
-    var p = DATA.links_profile || {};
+    var p = DATA.links_profile || DEFAULT_PROFILE_ADMIN;
     document.getElementById('lp-title').value = p.title || '';
     document.getElementById('lp-tagline').value = p.tagline || '';
     document.getElementById('lp-avatar').value = p.avatar_url || '';
@@ -959,7 +981,7 @@
       body: JSON.stringify({ type: 'links_save', password: password, links: linksEdit, profile: profile })
     }).then(function (r) { return r.json(); }).then(function (res) {
       if (res.ok) { DATA.links = linksEdit.map(function (l) { return Object.assign({}, l); }); DATA.links_profile = profile; }
-      msg.textContent = res.ok ? 'Tersimpan ✓ (tampil di halaman link dalam beberapa detik)' : 'Gagal: ' + (res.error || 'coba lagi');
+      msg.textContent = res.ok ? 'Tersimpan ✓ (tampil di halaman link dalam beberapa detik)' : (/tidak dikenali/i.test(res.error || '') ? 'Gagal: Code.gs di Apps Script belum versi terbaru. Tempel Code.gs baru lalu Deploy → New version.' : 'Gagal: ' + (res.error || 'coba lagi'));
     }).catch(function () { msg.textContent = 'Gagal terhubung ke Apps Script'; });
   });
 
