@@ -155,6 +155,45 @@
   .pick-tile img{width:100%; height:100%; object-fit:cover; display:block;}
   .pick-tile span{display:block; font-size:11px; font-weight:600; margin-top:4px; word-break:break-all; line-height:1.25;}
   .pick-tile small{font-size:10.5px; color:var(--ink-soft);}
+
+  /* ---- Warna & gambar tombol (Link Bio) ---- */
+  .theme-grid{display:grid; grid-template-columns:1fr; gap:18px;}
+  @media(min-width:980px){ .theme-grid{grid-template-columns:1fr 330px;} }
+  .tm-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 12px;}
+  .tm-row > .lk-lab{width:130px; flex:none;}
+  .swb{width:24px; height:24px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1px var(--line); cursor:pointer; padding:0; flex:none;}
+  .swb.on{box-shadow:0 0 0 2.5px var(--coral);}
+  .swb.none{background:linear-gradient(135deg,#fff 44%,#c0392b 45%,#c0392b 55%,#fff 56%);}
+  .lk-native input{width:30px; height:26px; padding:0; border:1px solid var(--line); border-radius:6px; background:none; cursor:pointer;}
+  .lk-hex{font-size:11px; color:var(--ink-soft); font-family:monospace;}
+  .lk-lab{font-size:11.5px; font-weight:700; color:var(--ink-soft);}
+  #tmBtnText{max-width:260px;}
+  .tm-row .mini{padding:5px 10px; font-size:12px;}
+  .seg3{display:inline-grid; grid-template-columns:repeat(3,auto); gap:6px;}
+  .seg3 button{background:var(--cream-2); color:var(--moss-dark); padding:6px 12px; font-size:12.5px;}
+  .seg3 button.on{background:var(--moss); color:#fff;}
+  .link-row .r3{grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; padding-top:8px; border-top:1px dashed var(--line);}
+  .lk-col{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+  .lk-col button.mini{padding:4px 8px; font-size:11.5px; background:var(--cream-2); color:var(--moss-dark);}
+  .lk-thumb{width:34px; height:34px; border-radius:8px; object-fit:cover; background:var(--cream-2); display:block;}
+  .lk-thumb.wide{width:60px; height:34px;}
+  .lk-warn{color:#B03A2E; font-size:11.5px; font-weight:700;}
+  .r3 select{font-size:12px; padding:4px 6px;}
+  .pv-wrap{position:sticky; top:12px; align-self:start;}
+  .pv{border:6px solid #263230; border-radius:26px; padding:14px 12px 16px; max-height:600px; overflow:auto; background:#FBF6EC; font-family:'Plus Jakarta Sans',system-ui,sans-serif;}
+  .pv-av{width:56px; height:56px; border-radius:50%; margin:0 auto 6px; background:#fff; display:grid; place-items:center; font-size:26px; overflow:hidden; box-shadow:0 3px 10px rgba(0,0,0,.15);}
+  .pv-av img{width:100%; height:100%; object-fit:cover;}
+  .pv h4{margin:0; text-align:center; font-family:'Baloo 2',sans-serif; font-size:17px; color:#41593C;}
+  .pv .pv-tag{text-align:center; font-size:11.5px; color:#C8492F; font-weight:700; margin:0 0 8px;}
+  .pv .pv-g{font-size:9.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#5E7F58; margin:10px 2px 5px;}
+  .pv.dark h4{color:#fff;} .pv.dark .pv-g{color:#DCE7D8;} .pv.dark .pv-tag{color:#FFD3C7;}
+  .pvl{border:1.5px solid #E4DCC8; background:#fff; color:#263230; display:flex; align-items:center; gap:8px; padding:8px 10px; margin-bottom:6px; font-size:12px; font-weight:700; position:relative;}
+  .pvl small{display:block; font-weight:500; opacity:.8; font-size:10.5px;}
+  .pvl .pi{width:28px; height:28px; border-radius:8px; background:rgba(127,127,127,.15); display:grid; place-items:center; font-size:15px; overflow:hidden; flex:none;}
+  .pvl .pi img{width:100%; height:100%; object-fit:cover;}
+  .pvl.img{display:block; padding:0;}
+  .pvl.img .bn{aspect-ratio:16/9; background:#F3ECD9; overflow:hidden;} .pvl.img .bn img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pvl.img .bd{display:flex; align-items:center; gap:8px; padding:8px 10px;}
 </style>
 </head>
 <body>
@@ -303,6 +342,27 @@
           <div class="promo-field"><label>Teks footer</label><input type="text" id="lp-footer"></div>
         </div>
         <div class="promo-field" style="margin-top:12px;"><label>Bio singkat</label><textarea id="lp-bio" rows="2"></textarea></div>
+      </div>
+
+      <div class="card">
+        <h3>🎨 Tampilan halaman link</h3>
+        <p class="eos-hint">Atur warna latar, warna dasar tombol, bentuk tombol, dan foto profil. Warna khusus per tombol, ikon gambar, dan banner diatur di daftar link di bawah. Pratinjau di kanan langsung berubah (belum tersimpan sampai Anda klik <b>Simpan semua</b>).</p>
+        <div class="theme-grid">
+          <div>
+            <div class="tm-row"><span class="lk-lab">Warna latar halaman</span><span id="tmBgSw"></span><label class="lk-native" title="Warna lain"><input type="color" id="tmBg" value="#fbf6ec"></label><span class="lk-hex" id="tmBgHex"></span></div>
+            <div class="tm-row"><span class="lk-lab">Warna dasar tombol</span><span id="tmBtnSw"></span><label class="lk-native" title="Warna lain"><input type="color" id="tmBtn" value="#41593c"></label><span class="lk-hex" id="tmBtnHex"></span></div>
+            <div class="tm-row"><span class="lk-lab">Warna teks tombol</span>
+              <select id="tmBtnText"><option value="">Otomatis (paling terbaca)</option><option value="#ffffff">Putih</option><option value="#263230">Gelap</option></select></div>
+            <div class="tm-row"><span class="lk-lab">Bentuk tombol</span>
+              <span class="seg3" id="tmRadius"><button type="button" data-rad="rounded">Membulat</button><button type="button" data-rad="pill">Pil</button><button type="button" data-rad="square">Kotak</button></span></div>
+            <div class="tm-row"><span class="lk-lab">Foto profil (1:1)</span>
+              <img id="avThumb" class="lk-thumb" alt="" style="border-radius:50%;display:none;">
+              <button type="button" class="mini btn-ghost" id="avUp">Unggah</button><button type="button" class="mini btn-ghost" id="avPick">Dari Drive</button><button type="button" class="mini btn-ghost" id="avClear" title="Lepas foto">✕</button>
+              <input type="file" accept="image/*" hidden id="avFile"><span class="ph-msg" id="avMsg"></span></div>
+            <p class="eos-hint" style="margin-top:4px;">Tombol yang tidak diberi warna khusus mengikuti "Warna dasar tombol". Tombol bergaya <i>Sorot</i> tetap berwarna coral kecuali diberi warna sendiri. Teks otomatis dipilih putih atau gelap agar mudah dibaca.</p>
+          </div>
+          <div class="pv-wrap"><div class="lk-lab" style="margin-bottom:6px;">Pratinjau</div><div class="pv" id="lkPreview"></div></div>
+        </div>
       </div>
 
       <div class="card">
@@ -546,10 +606,15 @@
     if (btn) saveProductRow(btn);
   });
 
-  /* ---------- FOTO PRODUK: unggah ke Google Drive (dipotong 1:1, WebP ringan) ---------- */
-  var OUT_SIZES = [800, 640];        // ukuran sisi foto (px); 640 dipakai bila 800 masih > batas
-  var MAX_KB = 130;                  // target ukuran akhir
-  var PREV = 720;                    // resolusi kanvas pratinjau
+  /* ---------- UNGGAH GAMBAR ke Google Drive (dipotong sesuai rasio, WebP ringan) ----------
+     Dipakai untuk: foto produk (1:1), ikon tombol link (1:1), banner tombol link (16:9), foto profil (1:1). */
+  var UPLOAD_TARGETS = {
+    product: { ratio: 1,      outs: [[800, 800], [640, 640]],   maxKB: 130, title: 'Atur foto produk (kotak 1:1)',        pick: '1:1' },
+    icon:    { ratio: 1,      outs: [[320, 320], [256, 256]],   maxKB: 40,  title: 'Atur foto ikon tombol (kotak 1:1)',   pick: 'icon' },
+    banner:  { ratio: 16 / 9, outs: [[960, 540], [800, 450]],   maxKB: 110, title: 'Atur gambar banner tombol (16:9)',    pick: '16:9' },
+    avatar:  { ratio: 1,      outs: [[400, 400], [320, 320]],   maxKB: 50,  title: 'Atur foto profil (kotak 1:1)',        pick: '1:1' }
+  };
+  var PREV = 720;                    // lebar kanvas pratinjau (px)
   var PH_LH3 = /^https:\/\/lh3\.googleusercontent\.com\/d\/([A-Za-z0-9_-]+)/;
   var crop = null;
 
@@ -584,41 +649,48 @@
     });
   }
 
-  function cropBase(S) { return crop.mode === 'cover' ? Math.max(S / crop.iw, S / crop.ih) : Math.min(S / crop.iw, S / crop.ih); }
+  function cropBase(W, H) { return crop.mode === 'cover' ? Math.max(W / crop.iw, H / crop.ih) : Math.min(W / crop.iw, H / crop.ih); }
   function clampCrop() {
-    var sc = cropBase(PREV) * crop.z, w = crop.iw * sc, h = crop.ih * sc;
-    var mx = Math.max(0, (w - PREV) / 2), my = Math.max(0, (h - PREV) / 2);
+    var sc = cropBase(crop.pw, crop.ph) * crop.z, w = crop.iw * sc, h = crop.ih * sc;
+    var mx = Math.max(0, (w - crop.pw) / 2), my = Math.max(0, (h - crop.ph) / 2);
     crop.ox = Math.max(-mx, Math.min(mx, crop.ox)); crop.oy = Math.max(-my, Math.min(my, crop.oy));
   }
-  function drawCrop(ctx, S, guides) {
-    var k = S / PREV, sc = cropBase(S) * crop.z, w = crop.iw * sc, h = crop.ih * sc;
-    ctx.fillStyle = '#F3ECD9'; ctx.fillRect(0, 0, S, S);
+  function drawCrop(ctx, W, H, guides) {
+    var k = W / crop.pw, sc = cropBase(W, H) * crop.z, w = crop.iw * sc, h = crop.ih * sc;
+    ctx.fillStyle = '#F3ECD9'; ctx.fillRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(crop.img, (S - w) / 2 + crop.ox * k, (S - h) / 2 + crop.oy * k, w, h);
+    ctx.drawImage(crop.img, (W - w) / 2 + crop.ox * k, (H - h) / 2 + crop.oy * k, w, h);
     if (guides) {
       ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = 1.5; ctx.beginPath();
-      [1, 2].forEach(function (i) { ctx.moveTo(S * i / 3, 0); ctx.lineTo(S * i / 3, S); ctx.moveTo(0, S * i / 3); ctx.lineTo(S, S * i / 3); });
+      [1, 2].forEach(function (i) { ctx.moveTo(W * i / 3, 0); ctx.lineTo(W * i / 3, H); ctx.moveTo(0, H * i / 3); ctx.lineTo(W, H * i / 3); });
       ctx.stroke();
     }
   }
   function renderCrop() {
-    clampCrop(); drawCrop(document.getElementById('cropCanvas').getContext('2d'), PREV, true);
+    clampCrop(); drawCrop(document.getElementById('cropCanvas').getContext('2d'), crop.pw, crop.ph, true);
   }
-  function openCrop(file, row) {
+
+  /* ctx: { target:'product|icon|banner|avatar', nameHint, replaceUrl, msg(text, cls), onDone(url, result, serverRes) } */
+  function openCrop(file, ctx) {
+    var cfg = UPLOAD_TARGETS[ctx.target];
     var msg = document.getElementById('cropMsg'); msg.textContent = ''; msg.className = 'ph-msg';
-    if (!file || !/^image\//.test(file.type || '')) { phMsg(row, 'Pilih berkas gambar (JPG, PNG, atau WebP).', 'err'); return; }
-    if (file.size > 25 * 1048576) { phMsg(row, 'Berkas terlalu besar (maks 25 MB).', 'err'); return; }
-    phMsg(row, 'Membuka foto...', '');
+    if (!file || !/^image\//.test(file.type || '')) { ctx.msg('Pilih berkas gambar (JPG, PNG, atau WebP).', 'err'); return; }
+    if (file.size > 25 * 1048576) { ctx.msg('Berkas terlalu besar (maks 25 MB).', 'err'); return; }
+    ctx.msg('Membuka foto...', '');
     loadImage(file).then(function (im) {
-      crop = { img: im.img, iw: im.w, ih: im.h, mode: 'cover', z: 1, ox: 0, oy: 0, row: row, size: file.size };
+      var cv = document.getElementById('cropCanvas');
+      crop = { img: im.img, iw: im.w, ih: im.h, mode: 'cover', z: 1, ox: 0, oy: 0, ctx: ctx, cfg: cfg, pw: PREV, ph: Math.round(PREV / cfg.ratio) };
+      cv.width = crop.pw; cv.height = crop.ph;
+      document.querySelector('.crop-stage').style.aspectRatio = String(cfg.ratio);
+      document.getElementById('cropTitle').textContent = cfg.title;
       document.getElementById('cropZoom').value = 1;
       document.getElementById('cropModeCover').className = 'on'; document.getElementById('cropModeContain').className = '';
       document.getElementById('cropInfo').textContent = 'Foto asli ' + im.w + '×' + im.h + ' px (' + fmtKB(file.size) + '). Geser foto untuk mengatur posisi, geser slider untuk memperbesar.';
-      document.getElementById('cropEst').textContent = 'Hasil akhir: kotak ' + OUT_SIZES[0] + '×' + OUT_SIZES[0] + ' px, format WebP, target ≤ ' + MAX_KB + ' KB.';
+      document.getElementById('cropEst').textContent = 'Hasil akhir: ' + cfg.outs[0][0] + '×' + cfg.outs[0][1] + ' px, format WebP, target ≤ ' + cfg.maxKB + ' KB.';
       document.getElementById('cropUse').disabled = false;
       document.getElementById('cropBackdrop').classList.add('open');
-      renderCrop(); phMsg(row, '', '');
-    }).catch(function (e) { phMsg(row, e.message, 'err'); });
+      renderCrop(); ctx.msg('', '');
+    }).catch(function (e) { ctx.msg(e.message, 'err'); });
   }
   function closeCrop() { document.getElementById('cropBackdrop').classList.remove('open'); crop = null; }
 
@@ -627,7 +699,7 @@
     cv.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, ox: crop.ox, oy: crop.oy }; cv.setPointerCapture(e.pointerId); });
     cv.addEventListener('pointermove', function (e) {
       if (!drag || !crop) return;
-      var f = PREV / cv.clientWidth; crop.ox = drag.ox + (e.clientX - drag.x) * f; crop.oy = drag.oy + (e.clientY - drag.y) * f; renderCrop();
+      var f = crop.pw / cv.clientWidth; crop.ox = drag.ox + (e.clientX - drag.x) * f; crop.oy = drag.oy + (e.clientY - drag.y) * f; renderCrop();
     });
     ['pointerup', 'pointercancel'].forEach(function (t) { cv.addEventListener(t, function () { drag = null; }); });
     cv.addEventListener('wheel', function (e) {
@@ -648,22 +720,22 @@
   })();
 
   function toBlob(canvas, type, q) { return new Promise(function (res) { canvas.toBlob(res, type, q); }); }
-  // Coba WebP dulu, turunkan kualitas/ukuran sampai ≤ MAX_KB. Safari lama tak bisa WebP → otomatis JPEG.
-  function encodeBest(canvas0) {
-    var best = null, steps = [['image/webp', 0.82], ['image/webp', 0.72], ['image/webp', 0.62], ['image/jpeg', 0.82], ['image/jpeg', 0.7]];
+  // Coba WebP dulu, turunkan kualitas/ukuran sampai ≤ target. Safari lama tak bisa WebP → otomatis JPEG.
+  function encodeBest() {
+    var best = null, maxB = crop.cfg.maxKB * 1024, steps = [['image/webp', 0.82], ['image/webp', 0.72], ['image/webp', 0.62], ['image/jpeg', 0.82], ['image/jpeg', 0.7]];
     var chain = Promise.resolve(null);
-    OUT_SIZES.forEach(function (S) {
+    crop.cfg.outs.forEach(function (o) {
       chain = chain.then(function (done) {
         if (done) return done;
-        var c = document.createElement('canvas'); c.width = S; c.height = S; drawCrop(c.getContext('2d'), S, false);
+        var c = document.createElement('canvas'); c.width = o[0]; c.height = o[1]; drawCrop(c.getContext('2d'), o[0], o[1], false);
         var p = Promise.resolve(null);
         steps.forEach(function (st) {
           p = p.then(function (ok) {
             if (ok) return ok;
             return toBlob(c, st[0], st[1]).then(function (b) {
               if (!b || b.type !== st[0]) return null;             // format tidak didukung browser
-              if (!best || b.size < best.blob.size) best = { blob: b, size: S };
-              return b.size <= MAX_KB * 1024 ? { blob: b, size: S } : null;
+              if (!best || b.size < best.blob.size) best = { blob: b, w: o[0], h: o[1] };
+              return b.size <= maxB ? { blob: b, w: o[0], h: o[1] } : null;
             });
           });
         });
@@ -686,32 +758,33 @@
 
   function optimizeAndUpload() {
     if (!crop) return;
-    var c = crop, row = c.row, msg = document.getElementById('cropMsg'), useBtn = document.getElementById('cropUse');
-    var idx = Number(row.getAttribute('data-idx')), p = DATA.products[idx] || {};
-    useBtn.disabled = true; msg.className = 'ph-msg'; msg.textContent = 'Mengoptimalkan foto...';
+    var c = crop, ctx = c.ctx, msg = document.getElementById('cropMsg'), useBtn = document.getElementById('cropUse');
+    useBtn.disabled = true; msg.className = 'ph-msg'; msg.textContent = 'Mengoptimalkan gambar...';
     encodeBest().then(function (r) {
-      if (!r) throw new Error('Browser tidak bisa mengompres foto ini. Coba foto lain.');
+      if (!r) throw new Error('Browser tidak bisa mengompres gambar ini. Coba gambar lain.');
       msg.textContent = 'Mengunggah ' + fmtKB(r.blob.size) + ' ke Google Drive...';
       return blobToB64(r.blob).then(function (b64) {
-        return post({ type: 'image_upload', password: password, product_id: p.id || 'produk', mime: r.blob.type, data: b64, replace_url: row.querySelector('input[data-f="image"]').value.trim() })
+        return post({ type: 'image_upload', password: password, product_id: ctx.nameHint || 'gambar', mime: r.blob.type, data: b64, replace_url: ctx.replaceUrl || '' })
           .then(function (res) { return { res: res, r: r }; });
       });
     }).then(function (o) {
       if (!o.res.ok) throw new Error(o.res.error || 'Gagal mengunggah.');
       closeCrop();
-      applyPhoto(row, o.res.url);
-      phMsg(row, o.res.warning ? o.res.warning : 'Terunggah: ' + o.r.size + '×' + o.r.size + ' px, ' + fmtKB(o.r.blob.size) + ' (' + o.r.blob.type.replace('image/', '').toUpperCase() + ').', o.res.warning ? 'err' : 'ok');
+      ctx.onDone(o.res.url, o.r, o.res);
     }).catch(function (e) {
       useBtn.disabled = false; msg.className = 'ph-msg err'; msg.textContent = e.message || 'Gagal terhubung ke Apps Script.';
     });
   }
+  function doneText(r, res) {
+    return res.warning ? res.warning : 'Terunggah: ' + r.w + '×' + r.h + ' px, ' + fmtKB(r.blob.size) + ' (' + r.blob.type.replace('image/', '').toUpperCase() + ').';
+  }
 
-  /* ---- pilih dari folder Drive ---- */
+  /* ---- pilih dari folder Drive: ctx = { ratio:'1:1|icon|16:9', onPick(url,res), msg(text,cls) } ---- */
   function fmtBytes(n) { return n ? fmtKB(n) : ''; }
-  function openPicker(row) {
+  function openPicker(ctx) {
     var back = document.getElementById('pickBackdrop'), grid = document.getElementById('pickGrid'), msg = document.getElementById('pickMsg');
     back.classList.add('open'); grid.innerHTML = ''; msg.className = 'ph-msg'; msg.textContent = 'Memuat daftar foto...';
-    back._row = row;
+    back._ctx = ctx;
     post({ type: 'images_list', password: password }).then(function (res) {
       if (!res.ok) { msg.className = 'ph-msg err'; msg.textContent = res.error || 'Gagal memuat.'; return; }
       msg.textContent = res.files.length ? 'Menampilkan ' + res.files.length + ' foto terbaru dari ' + res.total + '. Klik untuk memilih.' : 'Folder belum berisi foto. Gunakan tombol "Unggah".';
@@ -731,27 +804,37 @@
   document.getElementById('pickBackdrop').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
   document.getElementById('pickGrid').addEventListener('click', function (e) {
     var t = e.target.closest('.pick-tile'); if (!t) return;
-    var back = document.getElementById('pickBackdrop'), row = back._row, msg = document.getElementById('pickMsg');
+    var back = document.getElementById('pickBackdrop'), ctx = back._ctx, msg = document.getElementById('pickMsg');
     msg.className = 'ph-msg'; msg.textContent = 'Memilih foto...';
-    post({ type: 'image_pick', password: password, file_id: t.getAttribute('data-fid') }).then(function (res) {
+    post({ type: 'image_pick', password: password, file_id: t.getAttribute('data-fid'), ratio: ctx.ratio }).then(function (res) {
       if (!res.ok) { msg.className = 'ph-msg err'; msg.textContent = res.error || 'Gagal memilih.'; return; }
-      back.classList.remove('open'); applyPhoto(row, res.url);
-      phMsg(row, res.warning || 'Foto dipilih dan dipotong 1:1 di tengah.', res.warning ? 'err' : 'ok');
+      back.classList.remove('open'); ctx.onPick(res.url, res);
     }).catch(function () { msg.className = 'ph-msg err'; msg.textContent = 'Gagal terhubung ke Apps Script.'; });
   });
 
   /* ---- interaksi di baris produk ---- */
+  function productCtx(row) {
+    var idx = Number(row.getAttribute('data-idx')), p = DATA.products[idx] || {};
+    return {
+      target: 'product', nameHint: p.id || 'produk', replaceUrl: row.querySelector('input[data-f="image"]').value.trim(),
+      msg: function (t, c) { phMsg(row, t, c); },
+      onDone: function (url, r, res) { applyPhoto(row, url); phMsg(row, doneText(r, res), res.warning ? 'err' : 'ok'); }
+    };
+  }
   (function bindPhotoRow() {
     var list = document.getElementById('productList');
     list.addEventListener('click', function (e) {
       var row = e.target.closest('.p-wrap'); if (!row) return;
       if (e.target.closest('[data-ph-open]') || e.target.closest('.ph-box')) { row.querySelector('[data-ph-file]').click(); return; }
-      if (e.target.closest('[data-ph-pick]')) { openPicker(row); return; }
+      if (e.target.closest('[data-ph-pick]')) {
+        openPicker({ ratio: '1:1', msg: function (t, c) { phMsg(row, t, c); }, onPick: function (url, res) { applyPhoto(row, url); phMsg(row, res.warning || 'Foto dipilih dan dipotong 1:1 di tengah.', res.warning ? 'err' : 'ok'); } });
+        return;
+      }
       if (e.target.closest('[data-ph-clear]')) { row.querySelector('input[data-f="image"]').value = ''; phRefresh(row); phMsg(row, 'Foto dilepas. Klik Simpan untuk menerapkan.', ''); }
     });
     list.addEventListener('change', function (e) {
       var row = e.target.closest('.p-wrap'); if (!row) return;
-      if (e.target.matches('[data-ph-file]')) { var f = e.target.files[0]; e.target.value = ''; openCrop(f, row); }
+      if (e.target.matches('[data-ph-file]')) { var f = e.target.files[0]; e.target.value = ''; openCrop(f, productCtx(row)); }
       else if (e.target.matches('input[data-f="image"]')) phRefresh(row);
     });
     ['dragover', 'dragleave', 'drop'].forEach(function (t) {
@@ -759,7 +842,7 @@
         var box = e.target.closest('.ph-box'); if (!box) return;
         e.preventDefault();
         if (t === 'dragover') box.classList.add('drag'); else box.classList.remove('drag');
-        if (t === 'drop' && e.dataTransfer.files[0]) openCrop(e.dataTransfer.files[0], box.closest('.p-wrap'));
+        if (t === 'drop' && e.dataTransfer.files[0]) openCrop(e.dataTransfer.files[0], productCtx(box.closest('.p-wrap')));
       });
     });
   })();
@@ -890,14 +973,91 @@
     { id: 'tiktok', group: 'Ikuti Kami', title: 'TikTok', desc: 'Isi alamat TikTok Anda di kolom url', url: '', icon: '🎵', style: 'normal', badge: '', active: false },
     { id: 'facebook', group: 'Ikuti Kami', title: 'Facebook', desc: 'Isi alamat Facebook Anda di kolom url', url: '', icon: '👍', style: 'normal', badge: '', active: false }
   ];
-  var DEFAULT_PROFILE_ADMIN = { title: 'Bento for Kids', tagline: 'Healthy food, healthy habits, happy kids', bio: 'Frozen food tanpa MSG & pengawet, aktivitas, dan edukasi untuk keluarga Indonesia. It starts when they are little ❤️', avatar_url: '', footer: 'Healthy Lifestyle Brand for Kids · Bandar Lampung' };
+  var DEFAULT_PROFILE_ADMIN = { title: 'Bento for Kids', tagline: 'Healthy food, healthy habits, happy kids', bio: 'Frozen food tanpa MSG & pengawet, aktivitas, dan edukasi untuk keluarga Indonesia. It starts when they are little ❤️', avatar_url: '', footer: 'Healthy Lifestyle Brand for Kids · Bandar Lampung', bg_color: '', btn_color: '', btn_text_color: '', radius: 'rounded' };
+  var HEXRE = /^#[0-9a-f]{6}$/i;
+  function lumH(h) {
+    var c = [1, 3, 5].map(function (i) { var v = parseInt(h.substr(i, 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function contrastH(a, b) { var x = lumH(a), y = lumH(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function readableOnH(bg) { return contrastH(bg, '#ffffff') >= contrastH(bg, '#263230') ? '#ffffff' : '#263230'; }
+  var PALETTE = [['#c8492f', 'Coral'], ['#15803d', 'Hijau WhatsApp'], ['#41593c', 'Moss'], ['#e8a33d', 'Kuning'], ['#2f6da6', 'Biru'], ['#7a4fa3', 'Ungu'], ['#263230', 'Gelap'], ['#ffffff', 'Putih']];
+  var BG_PALETTE = [['#fbf6ec', 'Krem'], ['#ffffff', 'Putih'], ['#ffe9e2', 'Coral muda'], ['#eaf2e6', 'Hijau muda'], ['#41593c', 'Moss'], ['#263230', 'Gelap']];
+  var linksProfile = { bg_color: '', btn_color: '', btn_text_color: '', radius: 'rounded' };
+
+  function swatchHtml(current, palette) {
+    var cur = String(current || '').toLowerCase();
+    return '<button type="button" class="swb none' + (cur ? '' : ' on') + '" data-sw="" title="Bawaan"></button>' + palette.map(function (c) {
+      return '<button type="button" class="swb' + (cur === c[0] ? ' on' : '') + '" data-sw="' + c[0] + '" style="background:' + c[0] + '" title="' + c[1] + '"></button>';
+    }).join('');
+  }
+  function effColors(l) {
+    var p = linksProfile;
+    var bg = HEXRE.test(l.color) ? l.color : (l.style !== 'featured' && HEXRE.test(p.btn_color) ? p.btn_color : '');
+    var txt = HEXRE.test(l.text_color) ? l.text_color : (HEXRE.test(p.btn_text_color) ? p.btn_text_color : (bg ? readableOnH(bg) : (l.style === 'featured' ? '#ffffff' : '#263230')));
+    return { bg: bg || (l.style === 'featured' ? '#c8492f' : '#ffffff'), txt: txt, custom: !!bg };
+  }
+  function varUrl(url, kind) {
+    var m = PH_LH3.exec(url || ''); if (!m) return url;
+    var id = m[1];
+    return 'https://lh3.googleusercontent.com/d/' + id + (kind === 'banner' ? '=w400-h225-c' : (kind === 'avatar' ? '=s120-c' : '=s96-c'));
+  }
+
+  function renderTheme() {
+    var p = linksProfile;
+    document.getElementById('tmBgSw').innerHTML = swatchHtml(p.bg_color, BG_PALETTE);
+    document.getElementById('tmBtnSw').innerHTML = swatchHtml(p.btn_color, PALETTE);
+    if (HEXRE.test(p.bg_color)) document.getElementById('tmBg').value = p.bg_color;
+    if (HEXRE.test(p.btn_color)) document.getElementById('tmBtn').value = p.btn_color;
+    document.getElementById('tmBgHex').textContent = p.bg_color || 'bawaan (krem)';
+    document.getElementById('tmBtnHex').textContent = p.btn_color || 'bawaan (putih)';
+    var sel = document.getElementById('tmBtnText');
+    if (p.btn_text_color && ![].some.call(sel.options, function (o) { return o.value === p.btn_text_color; })) { var o = document.createElement('option'); o.value = p.btn_text_color; o.textContent = p.btn_text_color; sel.appendChild(o); }
+    sel.value = p.btn_text_color || '';
+    [].forEach.call(document.querySelectorAll('#tmRadius button'), function (b) { b.className = b.getAttribute('data-rad') === (p.radius || 'rounded') ? 'on' : ''; });
+    var av = document.getElementById('lp-avatar').value.trim(), th = document.getElementById('avThumb');
+    if (av) { th.style.display = ''; th.onerror = function () { th.style.display = 'none'; }; th.src = varUrl(av, 'avatar'); } else th.style.display = 'none';
+  }
+
+  var pvTimer = null;
+  function pvSoon() { clearTimeout(pvTimer); pvTimer = setTimeout(renderLinkPreview, 60); }
+  function renderLinkPreview() {
+    var box = document.getElementById('lkPreview'); if (!box) return;
+    var p = linksProfile, bg = HEXRE.test(p.bg_color) ? p.bg_color : '#fbf6ec';
+    box.style.background = bg; box.className = 'pv' + (lumH(bg) < 0.3 ? ' dark' : '');
+    var rad = { rounded: [14, 14, 8], pill: [999, 16, '50%'], square: [4, 4, 4] }[p.radius || 'rounded'];
+    var title = document.getElementById('lp-title').value || 'Bento for Kids', tag = document.getElementById('lp-tagline').value;
+    var av = document.getElementById('lp-avatar').value.trim();
+    var html = '<div class="pv-av">' + (av ? '<img alt="" src="' + esc(varUrl(av, 'avatar')) + '" onerror="this.parentNode.textContent=\'🍱\'">' : '🍱') + '</div><h4>' + esc(title) + '</h4><p class="pv-tag">' + esc(tag) + '</p>';
+    var lastG = null;
+    linksEdit.filter(function (l) { return l.active && l.title && l.url; }).forEach(function (l) {
+      if ((l.group || '') !== lastG) { lastG = l.group || ''; if (lastG) html += '<div class="pv-g">' + esc(lastG) + '</div>'; }
+      var c = effColors(l), hasBn = /^https:\/\//i.test(l.image || '');
+      var style = 'background:' + c.bg + ';color:' + c.txt + ';border-color:' + (c.custom || l.style === 'featured' ? c.bg : '#E4DCC8') + ';border-radius:' + (hasBn ? rad[1] : rad[0]) + (typeof rad[0] === 'number' ? 'px' : '');
+      var icon = /^https?:\/\//i.test(l.icon || '') ? '<img alt="" src="' + esc(varUrl(l.icon, 'icon')) + '">' : esc(l.icon || '🔗');
+      var inner = '<span class="pi" style="border-radius:' + rad[2] + (typeof rad[2] === 'number' ? 'px' : '') + '">' + icon + '</span><span>' + esc(l.title) + (l.desc ? '<small>' + esc(l.desc) + '</small>' : '') + '</span>';
+      html += hasBn
+        ? '<div class="pvl img" style="' + style + '"><div class="bn" style="border-radius:' + rad[1] + 'px ' + rad[1] + 'px 0 0"><img alt="" src="' + esc(varUrl(l.image, 'banner')) + '" onerror="this.remove()"></div><div class="bd">' + inner + '</div></div>'
+        : '<div class="pvl" style="' + style + '">' + inner + '</div>';
+    });
+    box.innerHTML = html;
+  }
+
+  function rowWarn(row) {
+    var l = linksEdit[Number(row.getAttribute('data-i'))], w = row.querySelector('[data-warn]'); if (!l || !w) return;
+    var c = effColors(l), cr = contrastH(c.bg, c.txt);
+    w.textContent = cr < 4.5 ? '⚠ Kontras rendah (' + cr.toFixed(1).replace('.', ',') + ':1): teks sulit dibaca, ubah warna teks atau tombol.' : '';
+  }
+  function lkMsg(row, t, cls) { var m = row.querySelector('[data-lk-msg]'); if (m) { m.textContent = t || ''; m.className = 'ph-msg ' + (cls || ''); } }
+
   var linksEdit = [];
   function linksLoad() {
     var serverHasLinks = Array.isArray(DATA.links);
     var src = serverHasLinks ? DATA.links : DEFAULT_LINKS_ADMIN;
     document.getElementById('linkOldBackend').style.display = serverHasLinks ? 'none' : '';
     linksEdit = src.map(function (l) {
-      return { id: l.id, title: l.title, desc: l.desc, url: l.url, icon: l.icon, style: l.style, badge: l.badge, group: l.group, active: l.active !== false };
+      return { id: l.id, title: l.title, desc: l.desc, url: l.url, icon: l.icon, style: l.style, badge: l.badge, group: l.group, active: l.active !== false,
+               color: l.color || '', text_color: l.text_color || '', image: l.image || '' };
     });
     var p = DATA.links_profile || DEFAULT_PROFILE_ADMIN;
     document.getElementById('lp-title').value = p.title || '';
@@ -905,12 +1065,15 @@
     document.getElementById('lp-avatar').value = p.avatar_url || '';
     document.getElementById('lp-footer').value = p.footer || '';
     document.getElementById('lp-bio').value = p.bio || '';
-    renderLinkRows(); renderLinkStats();
+    linksProfile = { bg_color: HEXRE.test(p.bg_color) ? p.bg_color : '', btn_color: HEXRE.test(p.btn_color) ? p.btn_color : '', btn_text_color: HEXRE.test(p.btn_text_color) ? p.btn_text_color : '', radius: ['rounded', 'pill', 'square'].indexOf(p.radius) > -1 ? p.radius : 'rounded' };
+    renderTheme(); renderLinkRows(); renderLinkStats(); renderLinkPreview();
   }
   function renderLinkRows() {
     document.getElementById('linkRows').innerHTML = linksEdit.length ? linksEdit.map(function (l, i) {
+      var tcOpts = [['', 'Otomatis'], ['#ffffff', 'Putih'], ['#263230', 'Gelap']];
+      if (l.text_color && !tcOpts.some(function (o) { return o[0] === l.text_color; })) tcOpts.push([l.text_color, l.text_color]);
       return '<div class="link-row' + (l.active ? '' : ' off') + '" data-i="' + i + '">' +
-        '<input class="ic" type="text" data-f="icon" value="' + esc(l.icon) + '" placeholder="🔗" title="Emoji atau URL gambar">' +
+        '<input class="ic" type="text" data-f="icon" value="' + esc(l.icon) + '" placeholder="🔗" title="Emoji, atau alamat gambar ikon">' +
         '<input type="text" data-f="title" value="' + esc(l.title) + '" placeholder="Judul tombol">' +
         '<input type="text" data-f="url" value="' + esc(l.url) + '" placeholder="https://… atau wa:catering">' +
         '<div class="r2">' +
@@ -920,8 +1083,20 @@
           '<input type="text" data-f="badge" value="' + esc(l.badge) + '" placeholder="Label (Baru)">' +
           '<label class="lk-act"><input type="checkbox" data-f="active"' + (l.active ? ' checked' : '') + '> Tampil</label>' +
           '<span class="lk-ctrl"><button type="button" data-mv="-1" aria-label="Naik">▲</button><button type="button" data-mv="1" aria-label="Turun">▼</button><button type="button" class="eos-del" data-del="1" aria-label="Hapus">✕</button></span>' +
+        '</div>' +
+        '<div class="r3">' +
+          '<div class="lk-col"><span class="lk-lab">Warna tombol</span><span data-swrow>' + swatchHtml(l.color, PALETTE) + '</span>' +
+            '<label class="lk-native" title="Warna lain"><input type="color" data-lk-native value="' + (HEXRE.test(l.color) ? l.color : '#41593c') + '"></label><span class="lk-hex">' + esc(l.color || 'bawaan') + '</span></div>' +
+          '<div class="lk-col"><span class="lk-lab">Teks</span><select data-f="text_color">' + tcOpts.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === (l.text_color || '') ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></div>' +
+          '<div class="lk-col"><span class="lk-lab">Ikon gambar</span>' + (/^https?:\/\//i.test(l.icon || '') ? '<img class="lk-thumb" alt="" src="' + esc(varUrl(l.icon, 'icon')) + '">' : '') +
+            '<button type="button" class="mini btn-ghost" data-lk-up="icon">Unggah</button><button type="button" class="mini btn-ghost" data-lk-pick="icon">Drive</button></div>' +
+          '<div class="lk-col"><span class="lk-lab">Banner (16:9)</span>' + (l.image ? '<img class="lk-thumb wide" alt="" src="' + esc(varUrl(l.image, 'banner')) + '">' : '') +
+            '<button type="button" class="mini btn-ghost" data-lk-up="banner">Unggah</button><button type="button" class="mini btn-ghost" data-lk-pick="banner">Drive</button>' + (l.image ? '<button type="button" class="mini btn-ghost" data-lk-clear="banner" title="Lepas banner">✕</button>' : '') + '</div>' +
+          '<input type="file" accept="image/*" hidden data-lk-file="icon"><input type="file" accept="image/*" hidden data-lk-file="banner">' +
+          '<span class="lk-warn" data-warn></span><span class="ph-msg" data-lk-msg></span>' +
         '</div></div>';
     }).join('') : '<p class="eos-hint">Belum ada link. Klik "+ Tambah link".</p>';
+    [].forEach.call(document.querySelectorAll('#linkRows .link-row'), rowWarn);
   }
   function renderLinkStats() {
     var clicks = DATA.link_clicks || [], now = Date.now(), wk = now - 7 * 864e5;
@@ -948,6 +1123,7 @@
     if (!l || !f) return;
     l[f] = ev.target.type === 'checkbox' ? ev.target.checked : ev.target.value;
     if (f === 'active') row.classList.toggle('off', !l.active);
+    rowWarn(row); pvSoon();
   });
   document.getElementById('linkRows').addEventListener('click', function (ev) {
     var row = ev.target.closest('.link-row'); if (!row) return;
@@ -956,15 +1132,75 @@
       var j = i + Number(mv.getAttribute('data-mv'));
       if (j < 0 || j >= linksEdit.length) return;
       var tmp = linksEdit[i]; linksEdit[i] = linksEdit[j]; linksEdit[j] = tmp;
-      setTimeout(renderLinkRows, 0);
+      setTimeout(function () { renderLinkRows(); pvSoon(); }, 0);
     } else if (ev.target.closest('[data-del]')) {
-      linksEdit.splice(i, 1); setTimeout(function () { renderLinkRows(); renderLinkStats(); }, 0);
+      linksEdit.splice(i, 1); setTimeout(function () { renderLinkRows(); renderLinkStats(); pvSoon(); }, 0);
     }
   });
+  /* ---- pengaturan tema (warna latar, warna dasar tombol, bentuk, foto profil) ---- */
+  (function bindTheme() {
+    function upd() { renderTheme(); [].forEach.call(document.querySelectorAll('#linkRows .link-row'), rowWarn); pvSoon(); }
+    document.getElementById('tmBgSw').addEventListener('click', function (e) { var b = e.target.closest('[data-sw]'); if (!b) return; linksProfile.bg_color = b.getAttribute('data-sw'); upd(); });
+    document.getElementById('tmBtnSw').addEventListener('click', function (e) { var b = e.target.closest('[data-sw]'); if (!b) return; linksProfile.btn_color = b.getAttribute('data-sw'); upd(); });
+    document.getElementById('tmBg').addEventListener('input', function () { linksProfile.bg_color = this.value; upd(); });
+    document.getElementById('tmBtn').addEventListener('input', function () { linksProfile.btn_color = this.value; upd(); });
+    document.getElementById('tmBtnText').addEventListener('change', function () { linksProfile.btn_text_color = this.value; upd(); });
+    document.getElementById('tmRadius').addEventListener('click', function (e) { var b = e.target.closest('[data-rad]'); if (!b) return; linksProfile.radius = b.getAttribute('data-rad'); upd(); });
+    ['lp-title', 'lp-tagline', 'lp-avatar'].forEach(function (id) { document.getElementById(id).addEventListener('input', function () { if (id === 'lp-avatar') renderTheme(); pvSoon(); }); });
+    var msg = function (t, c) { var m = document.getElementById('avMsg'); m.textContent = t || ''; m.className = 'ph-msg ' + (c || ''); };
+    document.getElementById('avUp').addEventListener('click', function () { document.getElementById('avFile').click(); });
+    document.getElementById('avFile').addEventListener('change', function () {
+      var f = this.files[0]; this.value = '';
+      openCrop(f, { target: 'avatar', nameHint: 'profil-avatar', replaceUrl: document.getElementById('lp-avatar').value.trim(), msg: msg,
+        onDone: function (url, r, res) { document.getElementById('lp-avatar').value = url; renderTheme(); pvSoon(); msg(doneText(r, res) + ' Klik "Simpan semua" untuk menerapkan.', res.warning ? 'err' : 'ok'); } });
+    });
+    document.getElementById('avPick').addEventListener('click', function () {
+      openPicker({ ratio: '1:1', msg: msg, onPick: function (url, res) { document.getElementById('lp-avatar').value = url; renderTheme(); pvSoon(); msg(res.warning || 'Foto dipilih. Klik "Simpan semua" untuk menerapkan.', res.warning ? 'err' : 'ok'); } });
+    });
+    document.getElementById('avClear').addEventListener('click', function () { document.getElementById('lp-avatar').value = ''; renderTheme(); pvSoon(); msg('Foto profil dilepas. Klik "Simpan semua" untuk menerapkan.', ''); });
+  })();
+
+  /* ---- warna & gambar per tombol ---- */
+  function linkImgCtx(row, kind) {
+    var l = linksEdit[Number(row.getAttribute('data-i'))];
+    return {
+      target: kind, nameHint: 'link-' + (l.id || 'x') + '-' + kind, replaceUrl: kind === 'icon' ? (/^https:/i.test(l.icon || '') ? l.icon : '') : (l.image || ''),
+      msg: function (t, c) { lkMsg(row, t, c); },
+      onDone: function (url, r, res) { if (kind === 'icon') l.icon = url; else l.image = url; renderLinkRows(); pvSoon(); var nr = document.querySelector('#linkRows .link-row[data-i="' + linksEdit.indexOf(l) + '"]'); if (nr) lkMsg(nr, doneText(r, res) + ' Klik "Simpan semua" untuk menerapkan.', res.warning ? 'err' : 'ok'); }
+    };
+  }
+  document.getElementById('linkRows').addEventListener('click', function (ev) {
+    var row = ev.target.closest('.link-row'); if (!row) return;
+    var l = linksEdit[Number(row.getAttribute('data-i'))]; if (!l) return;
+    var sw = ev.target.closest('[data-sw]');
+    if (sw) { l.color = sw.getAttribute('data-sw'); renderLinkRows(); pvSoon(); ev.stopPropagation(); return; }
+    var up = ev.target.closest('[data-lk-up]');
+    if (up) { row.querySelector('[data-lk-file="' + up.getAttribute('data-lk-up') + '"]').click(); ev.stopPropagation(); return; }
+    var pk = ev.target.closest('[data-lk-pick]');
+    if (pk) {
+      var kind = pk.getAttribute('data-lk-pick');
+      openPicker({ ratio: kind === 'banner' ? '16:9' : 'icon', msg: function (t, c) { lkMsg(row, t, c); },
+        onPick: function (url) { if (kind === 'icon') l.icon = url; else l.image = url; renderLinkRows(); pvSoon(); } });
+      ev.stopPropagation(); return;
+    }
+    if (ev.target.closest('[data-lk-clear]')) { l.image = ''; renderLinkRows(); pvSoon(); ev.stopPropagation(); }
+  }, true);
+  document.getElementById('linkRows').addEventListener('change', function (ev) {
+    var row = ev.target.closest('.link-row'); if (!row) return;
+    if (ev.target.matches('[data-lk-file]')) { var f = ev.target.files[0], kind = ev.target.getAttribute('data-lk-file'); ev.target.value = ''; openCrop(f, linkImgCtx(row, kind)); }
+  });
+  document.getElementById('linkRows').addEventListener('input', function (ev) {
+    if (!ev.target.matches('[data-lk-native]')) return;
+    var row = ev.target.closest('.link-row'), l = linksEdit[Number(row.getAttribute('data-i'))];
+    l.color = ev.target.value; row.querySelector('.lk-hex').textContent = l.color;
+    [].forEach.call(row.querySelectorAll('[data-swrow] .swb'), function (b) { b.classList.toggle('on', b.getAttribute('data-sw') === l.color); });
+    rowWarn(row); pvSoon();
+  });
+
   document.getElementById('linkAdd').addEventListener('click', function () {
     var last = linksEdit.length ? linksEdit[linksEdit.length - 1].group : '';
-    linksEdit.push({ id: 'l' + Date.now().toString(36), title: '', desc: '', url: '', icon: '🔗', style: 'normal', badge: '', group: last, active: true });
-    renderLinkRows();
+    linksEdit.push({ id: 'l' + Date.now().toString(36), title: '', desc: '', url: '', icon: '🔗', style: 'normal', badge: '', group: last, active: true, color: '', text_color: '', image: '' });
+    renderLinkRows(); pvSoon();
   });
   document.getElementById('linkSave').addEventListener('click', function () {
     var msg = document.getElementById('linkSaveMsg');
@@ -974,7 +1210,8 @@
     var profile = {
       title: document.getElementById('lp-title').value, tagline: document.getElementById('lp-tagline').value,
       avatar_url: document.getElementById('lp-avatar').value.trim(), footer: document.getElementById('lp-footer').value,
-      bio: document.getElementById('lp-bio').value
+      bio: document.getElementById('lp-bio').value,
+      bg_color: linksProfile.bg_color, btn_color: linksProfile.btn_color, btn_text_color: linksProfile.btn_text_color, radius: linksProfile.radius
     };
     fetch(APPS_SCRIPT_URL, {
       method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
