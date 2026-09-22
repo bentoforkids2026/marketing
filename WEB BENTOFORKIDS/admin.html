@@ -194,6 +194,17 @@
   .pvl.img{display:block; padding:0;}
   .pvl.img .bn{aspect-ratio:16/9; background:#F3ECD9; overflow:hidden;} .pvl.img .bn img{width:100%; height:100%; object-fit:cover; display:block;}
   .pvl.img .bd{display:flex; align-items:center; gap:8px; padding:8px 10px;}
+
+  /* ---- Mitra & Referral ---- */
+  .mitra-row{display:grid; grid-template-columns:1fr 1.3fr 1fr .7fr auto auto; gap:8px; align-items:center; padding:10px 0; border-bottom:1px solid var(--line);}
+  .mitra-row.off{opacity:.55;}
+  .mitra-row input[type=checkbox]{width:18px; height:18px;}
+  @media(max-width:900px){ .mitra-row{grid-template-columns:1fr 1fr;} }
+  .mitra-links{grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding-top:8px; border-top:1px dashed var(--line);}
+  .mitra-links .mini{padding:5px 10px; font-size:11.5px; background:var(--cream-2); color:var(--moss-dark);}
+  .mitra-links .mini.copied{background:var(--moss); color:#fff;}
+  .mitra-stats{grid-column:1 / -1; font-size:12px; color:var(--ink-soft); padding-top:6px;}
+  .mitra-stats b{color:var(--moss-dark);}
 </style>
 </head>
 <body>
@@ -223,6 +234,7 @@
       <button class="tab-btn" data-tab="promo">Promo &amp; Diskon</button>
       <button class="tab-btn" data-tab="analitik">Analitik</button>
       <button class="tab-btn" data-tab="links">Link Bio</button>
+      <button class="tab-btn" data-tab="mitra">Mitra &amp; Referral</button>
     </div>
 
     <!-- ===== TAB PRODUK ===== -->
@@ -328,6 +340,19 @@
     </div>
 
     <!-- ===== TAB ANALITIK ===== -->
+    <div class="tab-panel" id="tab-mitra">
+      <div class="card">
+        <h3>🤝 Mitra &amp; Referral</h3>
+        <p class="eos-hint">Setiap mitra punya <b>kode unik</b>. Bagikan link bertanda kodenya (di bawah tiap baris); saat orang mengunjungi lewat link itu, kodenya otomatis tersimpan dan ikut tercatat di lead dan checkout yang dihasilkan. Estimasi komisi = total nilai checkout × persen komisi. Rekap dihitung dari kunjungan pertama (bukan yang terakhir), supaya adil untuk mitra yang mengenalkan pertama kali.</p>
+        <div id="mitraRows"></div>
+        <div style="margin-top:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <button type="button" class="btn-ghost" id="mitraAdd">+ Tambah Mitra</button>
+          <button type="button" class="btn-primary" id="mitraSave">Simpan semua</button>
+          <span class="save-msg" id="mitraSaveMsg"></span>
+        </div>
+      </div>
+    </div>
+
     <div class="tab-panel" id="tab-links">
       <div class="card">
         <h3>🔗 Halaman Link (mirip Linktree)</h3>
@@ -464,7 +489,7 @@
   // Samakan dengan CONFIG.APPS_SCRIPT_URL di index.html
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz94KoVYS7YGz2DxN9pVyGRaeq6BtsZm3OzVuR7p_K5DQvlETZ9rcOuMmQecmYLkSrW/exec';
   var password = '';   // diisi dari kolom login; JANGAN menulis password di sini (file ini bisa dilihat publik)
-  var DATA = { products: [], promos: {}, sessions: [], partial_leads: [], leads: [], lead_events: [], orders: [], eos: {}, links: [], links_profile: {}, link_clicks: [] };
+  var DATA = { products: [], promos: {}, sessions: [], partial_leads: [], leads: [], lead_events: [], orders: [], eos: {}, links: [], links_profile: {}, link_clicks: [], mitra: [], mitra_report: {} };
 
   function fmt(n) { n = Number(n) || 0; return 'Rp' + n.toLocaleString('id-ID'); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -514,6 +539,7 @@
   });
 
   function renderAll() {
+    mitraLoad();
     linksLoad();
     renderEos();
     renderProducts();
@@ -1220,6 +1246,82 @@
       if (res.ok) { DATA.links = linksEdit.map(function (l) { return Object.assign({}, l); }); DATA.links_profile = profile; }
       msg.textContent = res.ok ? 'Tersimpan ✓ (tampil di halaman link dalam beberapa detik)' : (/tidak dikenali/i.test(res.error || '') ? 'Gagal: Code.gs di Apps Script belum versi terbaru. Tempel Code.gs baru lalu Deploy → New version.' : 'Gagal: ' + (res.error || 'coba lagi'));
     }).catch(function () { msg.textContent = 'Gagal terhubung ke Apps Script'; });
+  });
+
+  /* ---------- MITRA & REFERRAL ---------- */
+  var mitraEdit = [];
+  var MITRA_LINK_TARGETS = [
+    ['Beranda', function (code) { return location.origin + '/?ref=' + encodeURIComponent(code) + '&utm_source=mitra&utm_medium=referral'; }],
+    ['Katalog', function (code) { return location.origin + '/?ref=' + encodeURIComponent(code) + '&utm_source=mitra&utm_medium=referral#katalog'; }],
+    ['Halaman Link', function (code) { return location.origin + '/links.html?ref=' + encodeURIComponent(code) + '&utm_source=mitra&utm_medium=referral'; }]
+  ];
+  function mitraLoad() {
+    mitraEdit = (DATA.mitra || []).map(function (m) { return { code: m.code, name: m.name, whatsapp: m.whatsapp, commission_pct: m.commission_pct, notes: m.notes, active: m.active !== false }; });
+    renderMitraRows();
+  }
+  function mitraStatsHtml(code) {
+    var r = (DATA.mitra_report || {})[code];
+    if (!r) return 'Belum ada lead atau checkout tercatat dari kode ini.';
+    var mitra = mitraEdit.filter(function (m) { return m.code === code; })[0];
+    var komisi = r.revenue * ((mitra && mitra.commission_pct) || 0) / 100;
+    return '<b>' + r.leads + '</b> lead · <b>' + r.orders + '</b> checkout · nilai <b>' + fmt(r.revenue) + '</b> · estimasi komisi <b>' + fmt(komisi) + '</b>';
+  }
+  function renderMitraRows() {
+    document.getElementById('mitraRows').innerHTML = mitraEdit.length ? mitraEdit.map(function (m, i) {
+      return '<div class="mitra-row' + (m.active ? '' : ' off') + '" data-i="' + i + '">' +
+        '<input type="text" data-f="code" value="' + esc(m.code) + '" placeholder="Kode (mis. SARI01)">' +
+        '<input type="text" data-f="name" value="' + esc(m.name) + '" placeholder="Nama mitra">' +
+        '<input type="text" data-f="whatsapp" value="' + esc(m.whatsapp) + '" placeholder="Nomor WhatsApp">' +
+        '<input type="number" step="any" min="0" max="100" data-f="commission_pct" value="' + (m.commission_pct || 0) + '" placeholder="Komisi %">' +
+        '<label class="lk-act"><input type="checkbox" data-f="active"' + (m.active ? ' checked' : '') + '> Aktif</label>' +
+        '<button type="button" class="eos-del" data-del="1" aria-label="Hapus">✕</button>' +
+        '<input type="text" data-f="notes" value="' + esc(m.notes) + '" placeholder="Catatan (opsional)" style="grid-column:1/-1;">' +
+        '<div class="mitra-links">' + (m.code ? MITRA_LINK_TARGETS.map(function (t) {
+          return '<button type="button" class="mini" data-copy="' + esc(t[1](m.code)) + '">Salin link ' + t[0] + '</button>';
+        }).join('') : '<span class="eos-hint">Isi kode dulu untuk membuat link.</span>') + '</div>' +
+        '<div class="mitra-stats">' + mitraStatsHtml(m.code) + '</div>' +
+      '</div>';
+    }).join('') : '<p class="eos-hint">Belum ada mitra. Klik "+ Tambah Mitra".</p>';
+  }
+  document.getElementById('mitraRows').addEventListener('change', function (e) {
+    var row = e.target.closest('.mitra-row'); if (!row) return;
+    var m = mitraEdit[Number(row.getAttribute('data-i'))], f = e.target.getAttribute('data-f'); if (!m || !f) return;
+    m[f] = f === 'active' ? e.target.checked : (f === 'commission_pct' ? Number(e.target.value) : e.target.value);
+    if (f === 'code' || f === 'active') setTimeout(renderMitraRows, 0);
+  });
+  document.getElementById('mitraRows').addEventListener('click', function (e) {
+    var copy = e.target.closest('[data-copy]');
+    if (copy) {
+      var text = copy.getAttribute('data-copy');
+      (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
+        copy.classList.add('copied'); var old = copy.textContent; copy.textContent = 'Tersalin ✓';
+        setTimeout(function () { copy.classList.remove('copied'); copy.textContent = old; }, 1500);
+      }, function () { window.prompt('Salin link ini:', text); });
+      return;
+    }
+    if (e.target.closest('[data-del]')) {
+      var row = e.target.closest('.mitra-row'); mitraEdit.splice(Number(row.getAttribute('data-i')), 1); renderMitraRows();
+    }
+  });
+  document.getElementById('mitraAdd').addEventListener('click', function () {
+    mitraEdit.push({ code: '', name: '', whatsapp: '', commission_pct: 0, notes: '', active: true }); renderMitraRows();
+  });
+  document.getElementById('mitraSave').addEventListener('click', function () {
+    var msg = document.getElementById('mitraSaveMsg');
+    var codes = {}, bad = null;
+    for (var i = 0; i < mitraEdit.length; i++) {
+      var c = (mitraEdit[i].code || '').trim();
+      if (!c) { bad = 'Setiap mitra wajib diisi kode.'; break; }
+      if (!/^[A-Za-z0-9_-]{2,30}$/.test(c)) { bad = 'Kode "' + c + '" tidak valid. Pakai huruf, angka, - atau _ (2-30 karakter, tanpa spasi).'; break; }
+      var k = c.toLowerCase(); if (codes[k]) { bad = 'Kode "' + c + '" dipakai lebih dari sekali.'; break; } codes[k] = 1;
+    }
+    if (bad) { msg.textContent = bad; msg.style.color = '#B03A2E'; return; }
+    msg.style.color = ''; msg.textContent = 'Menyimpan...';
+    fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ type: 'mitra_save', password: password, mitra: mitraEdit }) })
+      .then(function (r) { return r.json(); }).then(function (res) {
+        if (res.ok) DATA.mitra = mitraEdit.map(function (m) { return Object.assign({}, m); });
+        msg.textContent = res.ok ? 'Tersimpan ✓' : 'Gagal: ' + (res.error || 'coba lagi');
+      }).catch(function () { msg.textContent = 'Gagal terhubung ke Apps Script.'; });
   });
 
   /* ---------- RINGKASAN MINGGUAN (EOS) ---------- */

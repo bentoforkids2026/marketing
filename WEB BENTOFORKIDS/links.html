@@ -150,7 +150,7 @@ function resolveHref(link) {
     // link internal: bawa UTM supaya sumber kunjungan (mis. Instagram bio) tetap tercatat
     try {
       var u = new URL(url, window.location.origin);
-      ['utm_source', 'utm_medium', 'utm_campaign', 'ref'].forEach(function (k) { if (qs.get(k) && !u.searchParams.get(k)) u.searchParams.set(k, qs.get(k)); });
+      ['utm_source', 'utm_medium', 'utm_campaign', 'ref', 'reseller'].forEach(function (k) { if (qs.get(k) && !u.searchParams.get(k)) u.searchParams.set(k, qs.get(k)); });
       if (!u.searchParams.get('utm_source')) { u.searchParams.set('utm_source', 'linkpage'); if (!u.searchParams.get('utm_medium')) u.searchParams.set('utm_medium', 'link'); }
       return u.pathname + u.search + u.hash;
     } catch (e) { return url; }
