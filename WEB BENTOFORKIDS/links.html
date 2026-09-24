@@ -164,7 +164,8 @@ function track(linkId, title, url) {
     fetch(APPS_SCRIPT_URL, {
       method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ type: 'link_click', link_id: linkId, title: title || '', url: url || '',
-        source: qs.get('utm_source') || 'direct', medium: qs.get('utm_medium') || '', campaign: qs.get('utm_campaign') || '' })
+        source: qs.get('utm_source') || 'direct', medium: qs.get('utm_medium') || '', campaign: qs.get('utm_campaign') || '',
+        reseller_code: qs.get('reseller') || qs.get('ref') || '', content: qs.get('utm_content') || '' })
     }).catch(function () {});
   } catch (e) {}
 }
