@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bento for Kids | Healthy Lifestyle Brand for Kids, Bandar Lampung</title>
 <meta name="description" content="Healthy food, healthy habits, happy kids. Bento for Kids menemani orang tua membangun kebiasaan hidup sehat sejak kecil: frozen food tanpa MSG dan pengawet, cooking class, edukasi, dan komunitas.">
+<link rel="preconnect" href="https://lh3.googleusercontent.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -342,7 +343,11 @@
     position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%;
     background:var(--white); border:1px solid var(--line); font-size:16px; cursor:pointer; z-index:2;
   }
-  .modal-img{aspect-ratio:16/10; background:var(--cream-2); display:grid; place-items:center; font-size:64px;}
+  /* foto produk 1:1: di kartu memenuhi kotak (cover); di detail ditampilkan utuh (contain) agar tidak terpotong */
+  .modal-img{height:min(86vw,46vh); background:var(--cream-2); display:grid; place-items:center; font-size:64px; overflow:hidden;}
+  .modal-img img{width:100%; height:100%; object-fit:contain; display:block;}
+  .p-card .p-img img{width:100%; height:100%; object-fit:cover; display:block;}
+  .cart-line .ci-img img{width:100%; height:100%; object-fit:cover; display:block;}
   .modal-body{padding:22px 24px 26px;}
   .modal-cat{font-size:12px; font-weight:700; color:var(--moss); text-transform:uppercase; letter-spacing:.03em;}
   .modal-price{font-family:'Baloo 2',sans-serif; font-weight:800; color:var(--coral); font-size:24px; margin:6px 0 18px;}
@@ -1577,7 +1582,8 @@
       medium: sessionStorage.getItem('utm_medium') || '',
       campaign: sessionStorage.getItem('utm_campaign') || '',
       reseller_code: sessionStorage.getItem('last_reseller_code') || '',
-      landing_page: window.location.pathname
+      landing_page: window.location.pathname,
+      content: sessionStorage.getItem('utm_content') || ''
     }, patch || {});
     sendToSheet('session_event', body);
   }
@@ -2755,10 +2761,34 @@
         .catch(function (err) { console.warn('[catalog] gagal ambil data dari Sheets, pakai data bawaan.', err); });
     }
 
-    /* ---------- helper tampilkan gambar produk (foto asli kalau ada, else emoji kategori) ---------- */
-    function productImageHtml(p, sizeClass) {
-      if (p.image) return '<img src="' + p.image + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;">';
-      return CAT_EMOJI[p.category] || '🍱';
+    /* ---------- helper tampilkan gambar produk ----------
+       Foto dari Google Drive (URL lh3.googleusercontent.com/d/<id>=...) disajikan lewat CDN gambar Google dengan
+       beberapa ukuran (srcset) supaya HP memuat yang kecil saja, di-lazy-load, dan kotaknya 1:1 sejak awal
+       (tanpa loncatan layout). Kalau CDN gagal → thumbnail Drive → tautan langsung → emoji kategori. */
+    var LH3 = /^https:\/\/lh3\.googleusercontent\.com\/d\/([A-Za-z0-9_-]+)(=[^\s"']*)?$/;
+    function escAttr(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); }
+    function lh3Variant(id, crop, w) { return 'https://lh3.googleusercontent.com/d/' + id + (crop ? '=w' + w + '-h' + w + '-c' : '=s' + w); }
+    var IMG_CTX = {
+      card:  { widths: [320, 480, 720], def: 480, sizes: '(max-width:639px) calc(50vw - 20px), (max-width:959px) calc(33vw - 24px), 260px' },
+      modal: { widths: [480, 720, 960], def: 720, sizes: '(max-width:560px) 100vw, 520px' },
+      cart:  { widths: [120], def: 120, sizes: '52px' }
+    };
+    window.bfkImgErr = function (img) {
+      var id = img.getAttribute('data-drive'), step = Number(img.getAttribute('data-step') || 0);
+      if (id && step === 0) { img.setAttribute('data-step', '1'); img.removeAttribute('srcset'); img.src = 'https://drive.google.com/thumbnail?id=' + id + '&sz=w800'; return; }
+      if (id && step === 1) { img.setAttribute('data-step', '2'); img.src = 'https://drive.google.com/uc?export=view&id=' + id; return; }
+      img.onerror = null;
+      img.replaceWith(document.createTextNode(img.getAttribute('data-emoji') || '🍱'));
+    };
+    function productImageHtml(p, ctx) {
+      var emoji = CAT_EMOJI[p.category] || '🍱';
+      if (!p.image) return emoji;
+      var c = IMG_CTX[ctx || 'card'], m = LH3.exec(p.image), name = escAttr(p.name);
+      var common = ' alt="' + name + '" width="400" height="400" decoding="async"' + (ctx === 'modal' ? '' : ' loading="lazy"') + ' data-emoji="' + emoji + '" onerror="bfkImgErr(this)"';
+      if (!m) return '<img src="' + escAttr(p.image) + '"' + common + '>';
+      var id = m[1], crop = /-c(\b|$)/.test(m[2] || '');
+      var srcset = c.widths.length > 1 ? ' srcset="' + c.widths.map(function (w) { return lh3Variant(id, crop, w) + ' ' + w + 'w'; }).join(', ') + '" sizes="' + c.sizes + '"' : '';
+      return '<img src="' + lh3Variant(id, crop, c.def) + '"' + srcset + common + ' data-drive="' + id + '">';
     }
 
     /* ---------- render product grid ---------- */
@@ -2809,7 +2839,7 @@
       if (!activeProduct) return;
       activeQty = 1;
       pmQtyEl.textContent = activeQty;
-      document.getElementById('pmImg').innerHTML = productImageHtml(activeProduct);
+      document.getElementById('pmImg').innerHTML = productImageHtml(activeProduct, 'modal');
       document.getElementById('pmCat').textContent = CAT_LABEL[activeProduct.category] || 'Menu';
       document.getElementById('pmName').textContent = activeProduct.name;
       document.getElementById('pmDesc').textContent = activeProduct.desc;
@@ -3065,7 +3095,7 @@
         var minusLabel = qty === 1 ? 'Hapus' : 'Kurangi';
         return '' +
           '<div class="cart-line" data-id="' + id + '">' +
-            '<div class="ci-img">' + productImageHtml(p) + '</div>' +
+            '<div class="ci-img">' + productImageHtml(p, 'cart') + '</div>' +
             '<div class="ci-body"><h5>' + p.name + '</h5><span class="ci-price">' + fmt(p.price) + ' / pack · ' + fmt(p.price * qty) + '</span></div>' +
             '<div class="ci-controls">' +
               '<div class="qty-stepper">' +
