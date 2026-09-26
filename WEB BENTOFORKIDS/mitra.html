@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dashboard Mitra — Bento for Kids</title>
+<meta name="description" content="Daftar jadi mitra Bento for Kids dan pantau performa link referral Anda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EC; --cream-2:#F3ECD9; --moss:#5E7F58; --moss-dark:#41593C;
+    --marigold:#E8A33D; --coral:#C8492F; --coral-dark:#B03D26; --wa:#15803D; --wa-dark:#166534;
+    --ink:#263230; --ink-soft:#5B6864; --line:#E4DCC8; --white:#FFFFFF; --radius:22px;
+    --bad:#B03D26; --bad-bg:#FBEAE5; --pending-bg:#FCF1DB; --pending-fg:#8A5A12; --ok-bg:#E6EFE3; --ok-fg:#2F5A2A;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:var(--ink); background:var(--cream); line-height:1.55;}
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+  header{padding:18px 0;}
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);}
+  .brand .logo{width:38px; height:38px; border-radius:11px; background:var(--marigold); display:grid; place-items:center; font-size:19px;}
+  .brand b{font-family:'Baloo 2',sans-serif; font-size:18px;}
+  .hero{padding:18px 0 6px;}
+  .kicker{display:inline-block; font-size:12px; font-weight:700; color:var(--moss); text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px;}
+  h1{font-family:'Baloo 2',sans-serif; font-size:clamp(24px,5vw,34px); line-height:1.15; margin:0 0 10px; color:var(--moss-dark);}
+  .sub{font-size:15.5px; color:var(--ink-soft); max-width:56ch; margin:0 0 18px;}
+
+  .tabs{display:flex; gap:8px; margin:18px 0 20px; background:var(--cream-2); border-radius:999px; padding:4px;}
+  .tab-btn{flex:1; border:none; background:transparent; padding:10px 14px; border-radius:999px; font-weight:700; font-size:14px; color:var(--ink-soft); cursor:pointer; font-family:inherit;}
+  .tab-btn.active{background:var(--white); color:var(--moss-dark); box-shadow:0 1px 3px rgba(0,0,0,.08);}
+
+  .card{background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin:14px 0;}
+  label{display:block; font-size:13px; font-weight:700; color:var(--ink); margin:14px 0 6px;}
+  label:first-child{margin-top:0;}
+  input[type=text], input[type=tel]{width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; font-size:15px; font-family:inherit; background:var(--cream); color:var(--ink);}
+  input:focus{outline:none; border-color:var(--moss);}
+  .hint{font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-weight:700; font-size:15px; padding:13px 22px; border-radius:999px; border:1.5px solid transparent; cursor:pointer; width:100%; font-family:inherit;}
+  .btn-primary{background:var(--moss-dark); color:#fff;}
+  .btn-primary:hover{background:#354b31;}
+  .btn-primary:disabled{opacity:.6; cursor:default;}
+  .btn-ghost{background:transparent; color:var(--moss-dark); border-color:var(--moss-dark); width:auto; padding:9px 16px; font-size:13.5px;}
+  .btn-wa{background:var(--wa); color:#fff;}
+  .btn-wa:hover{background:var(--wa-dark);}
+  .msg{font-size:13.5px; border-radius:12px; padding:10px 14px; margin-top:12px; display:none;}
+  .msg.err{display:block; background:var(--bad-bg); color:var(--bad);}
+  .msg.ok{display:block; background:var(--ok-bg); color:var(--ok-fg);}
+
+  .badge{display:inline-block; font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px;}
+  .badge.pending{background:var(--pending-bg); color:var(--pending-fg);}
+  .badge.approved{background:var(--ok-bg); color:var(--ok-fg);}
+
+  .dash-head{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:4px;}
+  .dash-head h2{font-family:'Baloo 2',sans-serif; font-size:20px; color:var(--moss-dark); margin:0;}
+
+  .stats{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:16px 0;}
+  @media(min-width:560px){ .stats{grid-template-columns:repeat(4,1fr);} }
+  .stat{background:var(--cream-2); border-radius:16px; padding:14px 14px;}
+  .stat .num{font-family:'Baloo 2',sans-serif; font-size:22px; color:var(--moss-dark); line-height:1.1;}
+  .stat .lbl{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+
+  h3{font-family:'Baloo 2',sans-serif; font-size:16.5px; color:var(--ink); margin:22px 0 10px;}
+  .link-row{display:flex; align-items:center; gap:10px; background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:10px; flex-wrap:wrap;}
+  .link-row .info{flex:1; min-width:180px;}
+  .link-row .info b{display:block; font-size:14px;}
+  .link-row .info span{font-size:12px; color:var(--ink-soft); word-break:break-all;}
+  .link-row .copy{flex:none; background:var(--white); border:1.5px solid var(--moss-dark); color:var(--moss-dark); font-weight:700; font-size:12.5px; padding:8px 14px; border-radius:999px; cursor:pointer; font-family:inherit;}
+  .link-row .copy.copied{background:var(--moss-dark); color:#fff;}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:6px;}
+  th, td{text-align:left; padding:9px 8px; border-bottom:1px solid var(--line);}
+  th{color:var(--ink-soft); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em;}
+  .empty{color:var(--ink-soft); font-size:13.5px; padding:10px 0;}
+
+  .logout{background:transparent; border:none; color:var(--ink-soft); font-size:13px; text-decoration:underline; cursor:pointer; font-family:inherit; padding:0;}
+  footer{padding:26px 0 40px; font-size:12.5px; color:var(--ink-soft); text-align:center;}
+  footer a{color:var(--ink-soft);}
+  .spin{display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <a href="/" class="brand"><span class="logo">🍱</span><b>Bento for Kids</b></a>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="kicker">Dashboard Mitra</span>
+    <h1 id="pageTitle">Daftar &amp; pantau performa referral Anda</h1>
+    <p class="sub" id="pageSub">Daftar sekali sebagai mitra, lalu login kapan saja dengan kode &amp; nomor WhatsApp Anda untuk melihat jumlah lead, pesanan, dan estimasi komisi dari link Anda.</p>
+  </section>
+
+  <!-- ===== AUTH VIEW ===== -->
+  <div id="authView">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLoginBtn" onclick="showAuthTab('login')">Login Mitra</button>
+      <button class="tab-btn" id="tabRegisterBtn" onclick="showAuthTab('register')">Daftar Mitra Baru</button>
+    </div>
+
+    <div class="card" id="loginCard">
+      <label for="loginCode">Kode Mitra</label>
+      <input type="text" id="loginCode" placeholder="mis. sinta">
+      <label for="loginWa">Nomor WhatsApp Terdaftar</label>
+      <input type="tel" id="loginWa" placeholder="08xxxxxxxxxx">
+      <button class="btn btn-primary" id="loginSubmit" style="margin-top:18px" onclick="doLogin()">Masuk ke Dashboard</button>
+      <div class="msg" id="loginMsg"></div>
+      <p class="hint">Lupa kode Anda? Hubungi tim kami via <a href="#" id="loginWaHelp">WhatsApp</a>.</p>
+    </div>
+
+    <div class="card" id="registerCard" style="display:none">
+      <label for="regName">Nama Lengkap</label>
+      <input type="text" id="regName" placeholder="Nama Anda">
+      <label for="regWa">Nomor WhatsApp</label>
+      <input type="tel" id="regWa" placeholder="08xxxxxxxxxx">
+      <label for="regCode">Kode Referral Pilihan <span style="font-weight:500;color:var(--ink-soft)">(opsional)</span></label>
+      <input type="text" id="regCode" placeholder="mis. sinta — huruf/angka, tanpa spasi">
+      <p class="hint" style="margin-top:-2px">Kosongkan agar dibuatkan otomatis dari nama Anda. Ini akan jadi bagian dari link referral Anda.</p>
+      <label for="regNotes">Catatan <span style="font-weight:500;color:var(--ink-soft)">(opsional)</span></label>
+      <input type="text" id="regNotes" placeholder="mis. komunitas / sekolah / area Anda">
+      <button class="btn btn-primary" id="regSubmit" style="margin-top:18px" onclick="doRegister()">Daftar Sekarang</button>
+      <div class="msg" id="regMsg"></div>
+      <p class="hint">Setelah daftar, akun Anda berstatus <b>menunggu persetujuan</b> — tim kami akan mengatur persentase komisi Anda. Link referral bisa langsung dipakai dan tercatat sejak sekarang.</p>
+    </div>
+  </div>
+
+  <!-- ===== DASHBOARD VIEW ===== -->
+  <div id="dashView" style="display:none">
+    <div class="dash-head">
+      <h2 id="dashName">Halo!</h2>
+      <button class="logout" onclick="doLogout()">Keluar</button>
+    </div>
+    <span class="badge" id="statusBadge">—</span>
+
+    <div class="stats">
+      <div class="stat"><div class="num" id="statLeads">0</div><div class="lbl">Lead masuk</div></div>
+      <div class="stat"><div class="num" id="statOrders">0</div><div class="lbl">Pesanan</div></div>
+      <div class="stat"><div class="num" id="statRevenue">Rp0</div><div class="lbl">Omzet dari Anda</div></div>
+      <div class="stat"><div class="num" id="statCommission">Rp0</div><div class="lbl">Estimasi komisi (<span id="commissionPct">0</span>%)</div></div>
+    </div>
+
+    <h3>Link referral Anda</h3>
+    <p class="hint" style="margin-top:-4px">Bagikan salah satu link ini ke orang tua yang Anda kenal. Semua kunjungan &amp; pesanan lewat link ini tercatat otomatis atas nama Anda.</p>
+    <div id="linkList"></div>
+
+    <h3>Performa per jenis link</h3>
+    <table id="linkTable">
+      <thead><tr><th>Jenis Link</th><th>Kunjungan</th></tr></thead>
+      <tbody id="linkTableBody"></tbody>
+    </table>
+    <p class="empty" id="linkTableEmpty" style="display:none">Belum ada data kunjungan dari link Anda.</p>
+
+    <div class="card" style="margin-top:24px; text-align:center;">
+      <p style="margin:0 0 14px; font-size:14px;">Ada pertanyaan soal komisi atau pembayaran?</p>
+      <a class="btn btn-wa" id="dashWaHelp" href="#" target="_blank" rel="noopener">Hubungi Tim via WhatsApp</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Bento for Kids — Healthy Lifestyle Brand for Kids · Bandar Lampung · <a href="/">Kembali ke beranda</a></p>
+</footer>
+
+<script>
+  // Samakan dengan CONFIG.APPS_SCRIPT_URL di index.html / admin.html
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz94KoVYS7YGz2DxN9pVyGRaeq6BtsZm3OzVuR7p_K5DQvlETZ9rcOuMmQecmYLkSrW/exec';
+  var SITE_ORIGIN = window.location.origin;
+  var WA_NUMBER = '6281234567890'; // ganti dengan nomor WhatsApp tim Bento for Kids
+
+  function callApi(obj) {
+    return fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(obj) })
+      .then(function (r) { return r.json(); });
+  }
+  function fmtIDR(n) { return 'Rp' + Math.round(Number(n) || 0).toLocaleString('id-ID'); }
+  function setMsg(el, text, ok) {
+    el.textContent = text; el.className = 'msg ' + (ok ? 'ok' : 'err');
+  }
+  function clearMsg(el) { el.textContent = ''; el.className = 'msg'; }
+
+  document.getElementById('loginWaHelp').href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent('Halo, saya lupa kode mitra Bento for Kids saya.');
+
+  function showAuthTab(which) {
+    var isLogin = which === 'login';
+    document.getElementById('tabLoginBtn').classList.toggle('active', isLogin);
+    document.getElementById('tabRegisterBtn').classList.toggle('active', !isLogin);
+    document.getElementById('loginCard').style.display = isLogin ? 'block' : 'none';
+    document.getElementById('registerCard').style.display = isLogin ? 'none' : 'block';
+  }
+
+  function doRegister() {
+    var name = document.getElementById('regName').value.trim();
+    var wa = document.getElementById('regWa').value.trim();
+    var code = document.getElementById('regCode').value.trim();
+    var notes = document.getElementById('regNotes').value.trim();
+    var msgEl = document.getElementById('regMsg');
+    clearMsg(msgEl);
+    if (!name || !wa) { setMsg(msgEl, 'Nama dan nomor WhatsApp wajib diisi.', false); return; }
+
+    var btn = document.getElementById('regSubmit');
+    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Mendaftarkan...';
+    callApi({ type: 'mitra_register', name: name, whatsapp: wa, code: code, notes: notes })
+      .then(function (res) {
+        btn.disabled = false; btn.textContent = 'Daftar Sekarang';
+        if (!res.ok) { setMsg(msgEl, res.error || 'Gagal mendaftar.', false); return; }
+        setMsg(msgEl, 'Berhasil! Kode mitra Anda: ' + res.code + '. Simpan baik-baik, lalu masuk lewat tab Login.', true);
+        document.getElementById('loginCode').value = res.code;
+        document.getElementById('loginWa').value = wa;
+        setTimeout(function () { showAuthTab('login'); }, 1400);
+      })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Daftar Sekarang'; setMsg(msgEl, 'Terjadi kesalahan jaringan. Coba lagi.', false); });
+  }
+
+  function doLogin() {
+    var code = document.getElementById('loginCode').value.trim();
+    var wa = document.getElementById('loginWa').value.trim();
+    var msgEl = document.getElementById('loginMsg');
+    clearMsg(msgEl);
+    if (!code || !wa) { setMsg(msgEl, 'Kode dan nomor WhatsApp wajib diisi.', false); return; }
+
+    var btn = document.getElementById('loginSubmit');
+    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Memeriksa...';
+    callApi({ type: 'mitra_login', code: code, whatsapp: wa })
+      .then(function (res) {
+        btn.disabled = false; btn.textContent = 'Masuk ke Dashboard';
+        if (!res.ok) { setMsg(msgEl, res.error || 'Gagal masuk.', false); return; }
+        try { localStorage.setItem('bfk_mitra_auth', JSON.stringify({ code: code, whatsapp: wa })); } catch (e) {}
+        renderDashboard(res.mitra, res.report);
+      })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Masuk ke Dashboard'; setMsg(msgEl, 'Terjadi kesalahan jaringan. Coba lagi.', false); });
+  }
+
+  function doLogout() {
+    try { localStorage.removeItem('bfk_mitra_auth'); } catch (e) {}
+    document.getElementById('dashView').style.display = 'none';
+    document.getElementById('authView').style.display = 'block';
+    document.getElementById('pageTitle').textContent = 'Daftar & pantau performa referral Anda';
+  }
+
+  var LINK_VARIANTS = [
+    { key: 'home', label: 'Link Beranda', desc: 'Membuka halaman utama — cocok dibagikan di story/chat', path: '/' },
+    { key: 'katalog', label: 'Link Katalog', desc: 'Langsung ke daftar menu frozen food', path: '/#katalog' },
+    { key: 'linkbio', label: 'Link Halaman Link', desc: 'Satu link untuk semua (link-in-bio Instagram)', path: '/links.html' }
+  ];
+
+  // path bisa mengandung '#katalog' di akhir; query harus ditaruh SEBELUM hash agar tetap terbaca.
+  function buildLinkClean(v, code) {
+    var hashIdx = v.path.indexOf('#');
+    var base = hashIdx > -1 ? v.path.slice(0, hashIdx) : v.path;
+    var hash = hashIdx > -1 ? v.path.slice(hashIdx) : '';
+    var sep = base.indexOf('?') > -1 ? '&' : '?';
+    return SITE_ORIGIN + base + sep + 'ref=' + encodeURIComponent(code)
+      + '&utm_source=mitra&utm_medium=referral&utm_content=' + v.key + hash;
+  }
+
+  function renderLinks(code) {
+    var wrap = document.getElementById('linkList');
+    wrap.innerHTML = '';
+    LINK_VARIANTS.forEach(function (v, i) {
+      var url = buildLinkClean(v, code);
+      var row = document.createElement('div');
+      row.className = 'link-row';
+      row.innerHTML = '<div class="info"><b>' + v.label + '</b><span>' + url + '</span></div>' +
+        '<button class="copy" data-i="' + i + '">Salin</button>';
+      wrap.appendChild(row);
+      row.querySelector('.copy').addEventListener('click', function (ev) {
+        var b = ev.currentTarget;
+        navigator.clipboard.writeText(url).then(function () {
+          b.textContent = 'Tersalin!'; b.classList.add('copied');
+          setTimeout(function () { b.textContent = 'Salin'; b.classList.remove('copied'); }, 1600);
+        }).catch(function () {});
+      });
+    });
+  }
+
+  function renderLinkTable(links) {
+    var tbody = document.getElementById('linkTableBody');
+    var emptyEl = document.getElementById('linkTableEmpty');
+    tbody.innerHTML = '';
+    var labelMap = {}; LINK_VARIANTS.forEach(function (v) { labelMap[v.key] = v.label; });
+    var keys = Object.keys(links || {});
+    if (!keys.length) { emptyEl.style.display = 'block'; return; }
+    emptyEl.style.display = 'none';
+    keys.sort(function (a, b) { return (links[b] || 0) - (links[a] || 0); });
+    keys.forEach(function (k) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + (labelMap[k] || k) + '</td><td>' + (links[k] || 0) + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderDashboard(mitra, report) {
+    document.getElementById('authView').style.display = 'none';
+    document.getElementById('dashView').style.display = 'block';
+    document.getElementById('pageTitle').textContent = 'Dashboard Mitra';
+    document.getElementById('pageSub').textContent = 'Ringkasan performa link referral Anda, terbarukan otomatis.';
+
+    document.getElementById('dashName').textContent = 'Halo, ' + (mitra.name || mitra.code) + '!';
+    var badge = document.getElementById('statusBadge');
+    if (mitra.status === 'PENDING') { badge.textContent = 'Menunggu Persetujuan'; badge.className = 'badge pending'; }
+    else { badge.textContent = 'Aktif'; badge.className = 'badge approved'; }
+
+    document.getElementById('statLeads').textContent = report.leads || 0;
+    document.getElementById('statOrders').textContent = report.orders || 0;
+    document.getElementById('statRevenue').textContent = fmtIDR(report.revenue || 0);
+    document.getElementById('statCommission').textContent = fmtIDR(report.est_commission || 0);
+    document.getElementById('commissionPct').textContent = mitra.commission_pct || 0;
+
+    renderLinks(mitra.code);
+    renderLinkTable(report.links);
+
+    document.getElementById('dashWaHelp').href = 'https://wa.me/' + WA_NUMBER + '?text=' +
+      encodeURIComponent('Halo, saya mitra Bento for Kids (kode: ' + mitra.code + '). Saya ingin bertanya soal komisi.');
+  }
+
+  // Auto-login bila ada sesi tersimpan di browser ini.
+  (function tryAutoLogin() {
+    var saved;
+    try { saved = JSON.parse(localStorage.getItem('bfk_mitra_auth') || 'null'); } catch (e) { saved = null; }
+    if (!saved || !saved.code || !saved.whatsapp) return;
+    callApi({ type: 'mitra_login', code: saved.code, whatsapp: saved.whatsapp })
+      .then(function (res) { if (res.ok) renderDashboard(res.mitra, res.report); else { try { localStorage.removeItem('bfk_mitra_auth'); } catch (e) {} } })
+      .catch(function () {});
+  })();
+
+  // Prefill kode referral dari query ?ref= bila datang dari link lain
+  (function prefillFromQuery() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('ref')) document.getElementById('loginCode').value = params.get('ref');
+  })();
+</script>
+</body>
+</html>
