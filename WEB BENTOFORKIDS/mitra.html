@@ -35,8 +35,9 @@
   .card{background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin:14px 0;}
   label{display:block; font-size:13px; font-weight:700; color:var(--ink); margin:14px 0 6px;}
   label:first-child{margin-top:0;}
-  input[type=text], input[type=tel]{width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; font-size:15px; font-family:inherit; background:var(--cream); color:var(--ink);}
-  input:focus{outline:none; border-color:var(--moss);}
+  input[type=text], input[type=tel], select{width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; font-size:15px; font-family:inherit; background:var(--cream); color:var(--ink);}
+  select{appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%235B6864'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;}
+  input:focus, select:focus{outline:none; border-color:var(--moss);}
   .hint{font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
   .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-weight:700; font-size:15px; padding:13px 22px; border-radius:999px; border:1.5px solid transparent; cursor:pointer; width:100%; font-family:inherit;}
   .btn-primary{background:var(--moss-dark); color:#fff;}
@@ -52,6 +53,23 @@
   .badge{display:inline-block; font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px;}
   .badge.pending{background:var(--pending-bg); color:var(--pending-fg);}
   .badge.approved{background:var(--ok-bg); color:var(--ok-fg);}
+
+  .achieve-card{background:linear-gradient(135deg, var(--moss-dark), var(--moss)); border-radius:var(--radius); padding:20px; margin:16px 0; color:#fff;}
+  .achieve-top{display:flex; align-items:center; gap:12px;}
+  .achieve-emoji{font-size:34px; line-height:1;}
+  .achieve-top b{font-family:'Baloo 2',sans-serif; font-size:17px; display:block;}
+  .achieve-top span{font-size:12.5px; opacity:.85;}
+  .progress-track{background:rgba(255,255,255,.25); border-radius:999px; height:9px; margin-top:14px; overflow:hidden;}
+  .progress-fill{background:#fff; height:100%; border-radius:999px;}
+  .achieve-note{font-size:12.5px; margin-top:8px; opacity:.9;}
+
+  .target-card{background:var(--cream-2); border-radius:var(--radius); padding:18px 20px; margin:14px 0;}
+  .target-card .progress-track{background:var(--line);}
+  .target-card .progress-fill{background:var(--marigold);}
+  .target-card .achieve-note{color:var(--ink-soft); opacity:1;}
+
+  .profile-info{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 4px;}
+  .profile-info span{font-size:12px; background:var(--cream-2); color:var(--ink-soft); padding:5px 11px; border-radius:999px;}
 
   .dash-head{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:4px;}
   .dash-head h2{font-family:'Baloo 2',sans-serif; font-size:20px; color:var(--moss-dark); margin:0;}
@@ -116,6 +134,18 @@
       <input type="text" id="regName" placeholder="Nama Anda">
       <label for="regWa">Nomor WhatsApp</label>
       <input type="tel" id="regWa" placeholder="08xxxxxxxxxx">
+      <label for="regDomisili">Domisili (Kota/Kecamatan)</label>
+      <input type="text" id="regDomisili" placeholder="mis. Bandar Lampung, Kedaton">
+      <label for="regTokoNama">Nama Toko <span style="font-weight:500;color:var(--ink-soft)">(kalau ada)</span></label>
+      <input type="text" id="regTokoNama" placeholder="mis. Toko Sinta Frozen">
+      <label for="regPunyaToko">Apakah Anda punya toko fisik?</label>
+      <select id="regPunyaToko"><option value="0">Belum, jual dari rumah/online</option><option value="1">Ya, punya toko</option></select>
+      <label for="regPunyaFreezer">Apakah Anda punya freezer sendiri?</label>
+      <select id="regPunyaFreezer"><option value="0">Belum punya</option><option value="1">Ya, punya freezer</option></select>
+      <label for="regPernahJual">Pernah titip jual/jual produk frozen food sebelumnya?</label>
+      <select id="regPernahJual"><option value="0">Belum pernah</option><option value="1">Pernah/sedang berjalan</option></select>
+      <label for="regTarget">Target Penjualan Anda per Bulan <span style="font-weight:500;color:var(--ink-soft)">(opsional, dalam Rupiah)</span></label>
+      <input type="text" inputmode="numeric" id="regTarget" placeholder="mis. 1000000">
       <label for="regCode">Kode Referral Pilihan <span style="font-weight:500;color:var(--ink-soft)">(opsional)</span></label>
       <input type="text" id="regCode" placeholder="mis. sinta — huruf/angka, tanpa spasi">
       <p class="hint" style="margin-top:-2px">Kosongkan agar dibuatkan otomatis dari nama Anda. Ini akan jadi bagian dari link referral Anda.</p>
@@ -123,7 +153,7 @@
       <input type="text" id="regNotes" placeholder="mis. komunitas / sekolah / area Anda">
       <button class="btn btn-primary" id="regSubmit" style="margin-top:18px" onclick="doRegister()">Daftar Sekarang</button>
       <div class="msg" id="regMsg"></div>
-      <p class="hint">Setelah daftar, akun Anda berstatus <b>menunggu persetujuan</b> — tim kami akan mengatur persentase komisi Anda. Link referral bisa langsung dipakai dan tercatat sejak sekarang.</p>
+      <p class="hint">Akun Anda langsung <b>aktif dengan komisi 5%</b> dan link referral bisa langsung dipakai. Data toko/freezer di atas membantu tim kami menyiapkan dukungan yang paling pas untuk Anda.</p>
     </div>
   </div>
 
@@ -134,12 +164,28 @@
       <button class="logout" onclick="doLogout()">Keluar</button>
     </div>
     <span class="badge" id="statusBadge">—</span>
+    <div class="profile-info" id="profileInfo"></div>
 
     <div class="stats">
       <div class="stat"><div class="num" id="statLeads">0</div><div class="lbl">Lead masuk</div></div>
       <div class="stat"><div class="num" id="statOrders">0</div><div class="lbl">Pesanan</div></div>
       <div class="stat"><div class="num" id="statRevenue">Rp0</div><div class="lbl">Omzet dari Anda</div></div>
       <div class="stat"><div class="num" id="statCommission">Rp0</div><div class="lbl">Estimasi komisi (<span id="commissionPct">0</span>%)</div></div>
+    </div>
+
+    <div class="achieve-card" id="achieveCard">
+      <div class="achieve-top">
+        <div class="achieve-emoji" id="achieveEmoji">🌱</div>
+        <div><b id="achieveLabel">Mitra Baru</b><span id="achieveSub">Mulai bagikan link Anda!</span></div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="achieveProgressFill" style="width:0%"></div></div>
+      <p class="achieve-note" id="achieveNote"></p>
+    </div>
+
+    <div class="target-card" id="targetCard" style="display:none">
+      <b style="font-family:'Baloo 2',sans-serif; font-size:15px; color:var(--ink);">🎯 Target Bulanan Anda</b>
+      <div class="progress-track"><div class="progress-fill" id="targetProgressFill" style="width:0%"></div></div>
+      <p class="achieve-note" id="targetNote"></p>
     </div>
 
     <h3>Link referral Anda</h3>
@@ -193,15 +239,26 @@
   function doRegister() {
     var name = document.getElementById('regName').value.trim();
     var wa = document.getElementById('regWa').value.trim();
+    var domisili = document.getElementById('regDomisili').value.trim();
+    var namaToko = document.getElementById('regTokoNama').value.trim();
+    var punyaToko = document.getElementById('regPunyaToko').value === '1';
+    var punyaFreezer = document.getElementById('regPunyaFreezer').value === '1';
+    var pernahJual = document.getElementById('regPernahJual').value === '1';
+    var target = document.getElementById('regTarget').value.replace(/\D/g, '');
     var code = document.getElementById('regCode').value.trim();
     var notes = document.getElementById('regNotes').value.trim();
     var msgEl = document.getElementById('regMsg');
     clearMsg(msgEl);
     if (!name || !wa) { setMsg(msgEl, 'Nama dan nomor WhatsApp wajib diisi.', false); return; }
+    if (!domisili) { setMsg(msgEl, 'Domisili wajib diisi.', false); return; }
 
     var btn = document.getElementById('regSubmit');
     btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Mendaftarkan...';
-    callApi({ type: 'mitra_register', name: name, whatsapp: wa, code: code, notes: notes })
+    callApi({
+      type: 'mitra_register', name: name, whatsapp: wa, code: code, notes: notes,
+      domisili: domisili, nama_toko: namaToko, punya_toko: punyaToko, punya_freezer: punyaFreezer,
+      pernah_jual_frozen: pernahJual, target_penjualan: target ? Number(target) : 0
+    })
       .then(function (res) {
         btn.disabled = false; btn.textContent = 'Daftar Sekarang';
         if (!res.ok) { setMsg(msgEl, res.error || 'Gagal mendaftar.', false); return; }
@@ -291,6 +348,60 @@
     });
   }
 
+  var BADGE_TIERS = [
+    { min: 0, label: 'Mitra Baru', emoji: '🌱' },
+    { min: 500000, label: 'Starter', emoji: '🥉' },
+    { min: 1500000, label: 'Rising Star', emoji: '🥈' },
+    { min: 3000000, label: 'Top Seller', emoji: '🥇' },
+    { min: 5000000, label: 'Elite Partner', emoji: '💎' }
+  ];
+
+  function renderAchievement(revenue) {
+    revenue = Number(revenue) || 0;
+    var current = BADGE_TIERS[0], next = null;
+    for (var i = 0; i < BADGE_TIERS.length; i++) {
+      if (revenue >= BADGE_TIERS[i].min) current = BADGE_TIERS[i];
+      else { next = BADGE_TIERS[i]; break; }
+    }
+    document.getElementById('achieveEmoji').textContent = current.emoji;
+    document.getElementById('achieveLabel').textContent = current.label;
+    document.getElementById('achieveSub').textContent = 'Anda saat ini mencapai ' + fmtIDR(revenue) + ' total penjualan referral';
+
+    var fill = document.getElementById('achieveProgressFill');
+    var note = document.getElementById('achieveNote');
+    if (next) {
+      var pct = Math.min(100, Math.round((revenue - current.min) / (next.min - current.min) * 100));
+      fill.style.width = pct + '%';
+      note.textContent = fmtIDR(next.min - revenue) + ' lagi menuju badge ' + next.emoji + ' ' + next.label + ' (' + fmtIDR(next.min) + ')';
+    } else {
+      fill.style.width = '100%';
+      note.textContent = 'Anda sudah mencapai level tertinggi kami saat ini. Terima kasih atas kontribusinya! 🎉';
+    }
+  }
+
+  function renderTarget(revenue, target) {
+    var card = document.getElementById('targetCard');
+    target = Number(target) || 0;
+    if (!target) { card.style.display = 'none'; return; }
+    card.style.display = 'block';
+    var pct = Math.min(100, Math.round((Number(revenue) || 0) / target * 100));
+    document.getElementById('targetProgressFill').style.width = pct + '%';
+    document.getElementById('targetNote').textContent =
+      'Anda sudah mencapai ' + fmtIDR(revenue) + ' dari target ' + fmtIDR(target) + ' Anda (' + pct + '%)';
+  }
+
+  function renderProfileInfo(mitra) {
+    var wrap = document.getElementById('profileInfo');
+    wrap.innerHTML = '';
+    var chips = [];
+    if (mitra.domisili) chips.push('📍 ' + mitra.domisili);
+    if (mitra.nama_toko) chips.push('🏪 ' + mitra.nama_toko);
+    if (mitra.punya_toko) chips.push('✅ Punya toko fisik');
+    if (mitra.punya_freezer) chips.push('❄️ Punya freezer');
+    if (mitra.pernah_jual_frozen) chips.push('📦 Pernah jual frozen food');
+    chips.forEach(function (c) { var s = document.createElement('span'); s.textContent = c; wrap.appendChild(s); });
+  }
+
   function renderDashboard(mitra, report) {
     document.getElementById('authView').style.display = 'none';
     document.getElementById('dashView').style.display = 'block';
@@ -301,12 +412,16 @@
     var badge = document.getElementById('statusBadge');
     if (mitra.status === 'PENDING') { badge.textContent = 'Menunggu Persetujuan'; badge.className = 'badge pending'; }
     else { badge.textContent = 'Aktif'; badge.className = 'badge approved'; }
+    renderProfileInfo(mitra);
 
     document.getElementById('statLeads').textContent = report.leads || 0;
     document.getElementById('statOrders').textContent = report.orders || 0;
     document.getElementById('statRevenue').textContent = fmtIDR(report.revenue || 0);
     document.getElementById('statCommission').textContent = fmtIDR(report.est_commission || 0);
     document.getElementById('commissionPct').textContent = mitra.commission_pct || 0;
+
+    renderAchievement(report.revenue || 0);
+    renderTarget(report.revenue || 0, mitra.target_penjualan);
 
     renderLinks(mitra.code);
     renderLinkTable(report.links);
