@@ -262,6 +262,27 @@
   .kasir-void td{text-decoration:line-through; opacity:.55;}
   .kasir-void{opacity:.55;}
   @media(max-width:640px){ .rtable tr.kasir-void{opacity:.6;} }
+
+  /* ---- Catat Penjualan (kasir: produk + pelanggan + diskon otomatis) ---- */
+  .sale-form{display:grid; gap:12px;}
+  .sale-row{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .sale-row .full{grid-column:1/-1;}
+  .sale-row label{font-size:11.5px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:3px;}
+  .sale-row input, .sale-row select{width:100%;}
+  .sale-items{display:grid; gap:8px;}
+  .sale-item{display:grid; grid-template-columns:2fr 64px 92px auto; gap:8px; align-items:center;}
+  .sale-item .si-sub{font-size:12.5px; font-weight:700; text-align:right; white-space:nowrap;}
+  .sale-item .si-del{background:none; color:var(--coral); padding:4px 8px; font-size:15px;}
+  .sale-summary{background:var(--cream-2); border-radius:12px; padding:12px 14px; display:grid; gap:7px;}
+  .sale-summary .sr{display:flex; justify-content:space-between; align-items:center; font-size:13px; gap:10px;}
+  .sale-summary .sr b{font-variant-numeric:tabular-nums;}
+  .sale-summary .sr.total{font-size:16.5px; font-weight:800; color:var(--moss-dark); border-top:1px dashed var(--line); padding-top:7px; margin-top:1px;}
+  .sale-summary .sr input[type=number]{width:76px; text-align:right;}
+  #slUseSuggest{background:none; border:none; color:var(--moss-dark); font-weight:700; text-decoration:underline; cursor:pointer; font-size:11px; padding:0; margin-left:6px;}
+  @media(max-width:600px){
+    .sale-row{grid-template-columns:1fr;}
+    .sale-item{grid-template-columns:1fr 52px 74px auto;}
+  }
 </style>
 </head>
 <body>
@@ -400,8 +421,46 @@
     <!-- ===== TAB ANALITIK ===== -->
     <div class="tab-panel" id="tab-kasir">
       <div class="card">
-        <h3>💵 Kasir (Buku Kas)</h3>
-        <p class="eos-hint">Catat semua uang masuk dan keluar di sini — penjualan tunai, transfer, belanja bahan, dan pengeluaran lain — supaya ada satu catatan rapi yang bisa Anda unduh dan berikan ke pembukuan/akuntan. Ini <b>buku kas sederhana</b>, bukan sistem akuntansi lengkap (tidak menghitung pajak atau akun ganda).</p>
+        <h3>🧾 Catat Penjualan</h3>
+        <p class="eos-hint">Untuk transaksi jual-beli produk (order lewat WhatsApp, tunai di tempat, dll). Pilih produk dan (opsional) pelanggan dari Leads; diskon dihitung otomatis sesuai promo tapi bisa Anda ubah. Tersimpan sekaligus sebagai <b>Order</b> (status Dibayar) dan baris <b>Kasir</b> (Masuk).</p>
+        <div class="sale-form">
+          <div class="sale-row">
+            <div><label>Tanggal</label><input type="date" id="sl-tanggal"></div>
+            <div><label>Metode</label><select id="sl-metode"><option>Tunai</option><option>Transfer</option><option>QRIS</option><option>Lainnya</option></select></div>
+          </div>
+          <div class="sale-row">
+            <div class="full">
+              <label>Cari pelanggan dari Leads (opsional)</label>
+              <input type="text" id="sl-cust-search" list="sl-lead-list" placeholder="Ketik nama pelanggan yang sudah pernah menghubungi...">
+              <datalist id="sl-lead-list"></datalist>
+            </div>
+          </div>
+          <div class="sale-row">
+            <div><label>Nama Pelanggan</label><input type="text" id="sl-cust-name" placeholder="Nama"></div>
+            <div><label>WhatsApp</label><input type="text" id="sl-cust-wa" placeholder="08xxxxxxxxxx"></div>
+          </div>
+          <p class="eos-hint" id="sl-lead-linked" style="display:none; margin:-4px 0 0;"></p>
+
+          <div>
+            <label class="lk-lab" style="display:block; margin-bottom:6px;">Produk yang dibeli</label>
+            <div class="sale-items" id="slItems"></div>
+            <button type="button" class="btn-ghost" id="slAddItem" style="margin-top:8px;">+ Tambah Produk</button>
+          </div>
+
+          <div class="sale-summary">
+            <div class="sr"><span>Subtotal</span><b id="slSubtotal">Rp0</b></div>
+            <div class="sr"><span>Diskon (%)<button type="button" id="slUseSuggest"></button></span><input type="number" min="0" max="100" step="0.1" id="sl-diskon" value="0"></div>
+            <div class="sr"><span>Potongan</span><b id="slDiskonRp">Rp0</b></div>
+            <div class="sr total"><span>Total</span><b id="slTotal">Rp0</b></div>
+          </div>
+          <button type="button" class="btn-primary" id="slSaveBtn" style="width:100%;">Simpan Penjualan</button>
+          <span class="save-msg" id="slMsg"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>💵 Transaksi Lain (Buku Kas)</h3>
+        <p class="eos-hint">Untuk pemasukan/pengeluaran <b>selain</b> penjualan produk — belanja bahan, operasional, gaji, komisi mitra, dll. (Penjualan produk dicatat lewat kartu <b>Catat Penjualan</b> di atas, supaya tertaut ke produk dan pelanggan.) Semua transaksi di sini dan di atas muncul bersama pada tabel Riwayat Transaksi di bawah, dan bisa diunduh sebagai CSV untuk pembukuan/akuntan. Ini <b>buku kas sederhana</b>, bukan sistem akuntansi lengkap (tidak menghitung pajak atau akun ganda).</p>
         <div class="kasir-summary" id="kasirSummary"></div>
         <div class="kasir-form" id="kasirForm">
           <div><label>Tanggal</label><input type="date" id="ks-tanggal"></div>
@@ -632,6 +691,8 @@
   });
 
   function renderAll() {
+    saleLeadOptionsRefresh();
+    renderSaleItems();
     renderKasir();
     mitraLoad();
     linksLoad();
@@ -1463,6 +1524,144 @@
         if (res.ok) DATA.mitra = mitraEdit.map(function (m) { return Object.assign({}, m); });
         msg.textContent = res.ok ? 'Tersimpan ✓' : 'Gagal: ' + (res.error || 'coba lagi');
       }).catch(function () { msg.textContent = 'Gagal terhubung ke Apps Script.'; });
+  });
+
+  /* ---------- CATAT PENJUALAN (produk + lead + diskon otomatis) ---------- */
+  var saleItems = [{ product_id: '', name: '', price: 0, qty: 1 }];
+  var saleLeadId = '';
+  document.getElementById('sl-tanggal').value = todayISO();
+
+  function saleActiveProducts() { return (DATA.products || []).filter(function (p) { return p.active !== false; }); }
+  // Meniru aturan diskon bertingkat yang sama dengan keranjang di situs (lihat index.html): makin besar
+  // subtotal, makin besar persen yang disarankan. Admin tetap bebas mengubah angkanya secara manual.
+  function suggestDiscountPct(subtotal) {
+    var pr = DATA.promos || {};
+    var tiers = [
+      { min: Number(pr.tier3_min) || Infinity, rate: Number(pr.tier3_rate) || 0 },
+      { min: Number(pr.tier2_min) || Infinity, rate: Number(pr.tier2_rate) || 0 },
+      { min: Number(pr.tier1_min) || Infinity, rate: Number(pr.tier1_rate) || 0 }
+    ];
+    for (var i = 0; i < tiers.length; i++) if (subtotal >= tiers[i].min) return Math.round(tiers[i].rate * 1000) / 10;
+    return 0;
+  }
+  function saleSubtotal() { return saleItems.reduce(function (s, it) { return s + (Number(it.qty) || 0) * (Number(it.price) || 0); }, 0); }
+
+  function renderSaleItems() {
+    var prods = saleActiveProducts();
+    document.getElementById('slItems').innerHTML = saleItems.map(function (it, i) {
+      return '<div class="sale-item" data-i="' + i + '">' +
+        '<select class="si-prod" data-i="' + i + '"><option value="">Pilih produk...</option>' +
+        prods.map(function (p) { return '<option value="' + esc(p.id) + '"' + (p.id === it.product_id ? ' selected' : '') + '>' + esc(p.name) + ' — ' + fmt(p.price) + '</option>'; }).join('') +
+        '</select>' +
+        '<input type="number" class="si-qty" data-i="' + i + '" min="1" value="' + (Number(it.qty) || 1) + '">' +
+        '<span class="si-sub">' + fmt((Number(it.qty) || 0) * (Number(it.price) || 0)) + '</span>' +
+        '<button type="button" class="si-del" data-i="' + i + '" aria-label="Hapus baris">✕</button>' +
+        '</div>';
+    }).join('');
+    renderSaleSummary();
+  }
+  function renderSaleSummary() {
+    var subtotal = saleSubtotal();
+    document.getElementById('slSubtotal').textContent = fmt(subtotal);
+    var pct = Number(document.getElementById('sl-diskon').value) || 0;
+    var diskonRp = Math.round(subtotal * pct / 100);
+    document.getElementById('slDiskonRp').textContent = fmt(diskonRp);
+    document.getElementById('slTotal').textContent = fmt(subtotal - diskonRp);
+    var sug = suggestDiscountPct(subtotal), btn = document.getElementById('slUseSuggest');
+    btn.textContent = sug > 0 ? ' (saran ' + sug + '% — pakai)' : '';
+    btn.style.display = sug > 0 ? '' : 'none';
+  }
+  // Sengaja TIDAK menggambar ulang seluruh baris saat mengetik qty / memilih produk (hanya memperbarui
+  // angka subtotal baris itu + ringkasan) — kalau seluruh <select>/<input> digambar ulang tiap ketikan,
+  // fokus ketikan pengguna akan terputus di tengah jalan. Gambar ulang penuh hanya saat baris
+  // ditambah/dihapus (lihat renderSaleItems / tombol +Tambah Produk / tombol hapus baris).
+  function updateSaleLine(i) {
+    var el = document.querySelector('.sale-item[data-i="' + i + '"] .si-sub');
+    if (el) el.textContent = fmt((Number(saleItems[i].qty) || 0) * (Number(saleItems[i].price) || 0));
+    renderSaleSummary();
+  }
+  function saleItemFieldHandler(e) {
+    var i = Number(e.target.getAttribute('data-i')); if (isNaN(i)) return;
+    if (e.target.classList.contains('si-prod')) {
+      var p = saleActiveProducts().filter(function (x) { return x.id === e.target.value; })[0];
+      saleItems[i].product_id = p ? p.id : ''; saleItems[i].name = p ? p.name : ''; saleItems[i].price = p ? p.price : 0;
+    } else if (e.target.classList.contains('si-qty')) {
+      saleItems[i].qty = Math.max(1, Number(e.target.value) || 1);
+    } else return;
+    updateSaleLine(i);
+  }
+  // "input" menangkap ketikan langsung DAN pengisian terprogram (mis. lewat automasi/testing);
+  // "change" tetap dipasang sebagai cadangan untuk browser yang hanya mengirim salah satunya.
+  document.getElementById('slItems').addEventListener('input', saleItemFieldHandler);
+  document.getElementById('slItems').addEventListener('change', saleItemFieldHandler);
+  document.getElementById('slItems').addEventListener('click', function (e) {
+    var b = e.target.closest('.si-del'); if (!b) return;
+    var i = Number(b.getAttribute('data-i'));
+    if (saleItems.length <= 1) saleItems[i] = { product_id: '', name: '', price: 0, qty: 1 };
+    else saleItems.splice(i, 1);
+    renderSaleItems();
+  });
+  document.getElementById('slAddItem').addEventListener('click', function () {
+    saleItems.push({ product_id: '', name: '', price: 0, qty: 1 }); renderSaleItems();
+  });
+  document.getElementById('sl-diskon').addEventListener('input', renderSaleSummary);
+  document.getElementById('slUseSuggest').addEventListener('click', function () {
+    document.getElementById('sl-diskon').value = suggestDiscountPct(saleSubtotal()); renderSaleSummary();
+  });
+
+  function saleLeadOptionsRefresh() {
+    document.getElementById('sl-lead-list').innerHTML = (DATA.leads || []).filter(function (l) { return l.name; })
+      .map(function (l) { return '<option value="' + esc(l.name) + ' — ' + esc(l.whatsapp) + '">'; }).join('');
+  }
+  document.getElementById('sl-cust-search').addEventListener('input', function () {
+    var v = this.value, hint = document.getElementById('sl-lead-linked');
+    var match = (DATA.leads || []).filter(function (l) { return (l.name + ' — ' + l.whatsapp) === v; })[0];
+    if (match) {
+      saleLeadId = match.lead_id;
+      document.getElementById('sl-cust-name').value = match.name;
+      document.getElementById('sl-cust-wa').value = match.whatsapp;
+      hint.style.display = ''; hint.textContent = 'Tertaut ke lead: ' + match.name + (match.service_interest ? ' · minat: ' + match.service_interest : '');
+    } else {
+      saleLeadId = ''; hint.style.display = 'none';
+      document.getElementById('sl-cust-name').value = v;
+    }
+  });
+
+  function saleReset() {
+    saleItems = [{ product_id: '', name: '', price: 0, qty: 1 }]; saleLeadId = '';
+    document.getElementById('sl-cust-search').value = ''; document.getElementById('sl-cust-name').value = ''; document.getElementById('sl-cust-wa').value = '';
+    document.getElementById('sl-diskon').value = 0; document.getElementById('sl-lead-linked').style.display = 'none';
+    renderSaleItems();
+  }
+  document.getElementById('slSaveBtn').addEventListener('click', function () {
+    var msg = document.getElementById('slMsg');
+    var items = saleItems.filter(function (it) { return it.product_id && Number(it.qty) > 0; });
+    if (!items.length) { msg.style.color = '#B03A2E'; msg.textContent = 'Pilih minimal satu produk.'; return; }
+    var tanggal = document.getElementById('sl-tanggal').value;
+    if (!tanggal) { msg.style.color = '#B03A2E'; msg.textContent = 'Isi tanggal.'; return; }
+    msg.style.color = ''; msg.textContent = 'Menyimpan...';
+    var payload = {
+      type: 'kasir_add_sale', password: password, tanggal: tanggal, metode: document.getElementById('sl-metode').value,
+      customer_name: document.getElementById('sl-cust-name').value.trim(), customer_whatsapp: document.getElementById('sl-cust-wa').value.trim(),
+      lead_id: saleLeadId, discount_pct: Number(document.getElementById('sl-diskon').value) || 0,
+      items: items.map(function (it) { return { product_id: it.product_id, name: it.name, price: it.price, qty: it.qty }; })
+    };
+    fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json(); }).then(function (res) {
+        if (!res.ok) { msg.style.color = '#B03A2E'; msg.textContent = 'Gagal: ' + (res.error || 'coba lagi'); return; }
+        var o = res.order;
+        msg.style.color = ''; msg.textContent = 'Tersimpan ✓ Total ' + fmt(o.total);
+        DATA.orders = DATA.orders || []; DATA.orders.push({
+          order_id: o.order_id, created_at: new Date().toISOString(), items_summary: o.items_summary,
+          total: o.total, discount_pct: o.discount_pct, program: '', status: 'DIBAYAR',
+          customer_name: payload.customer_name, customer_whatsapp: payload.customer_whatsapp, customer_city: '', lead_id: payload.lead_id
+        });
+        DATA.kasir = DATA.kasir || []; DATA.kasir.push({
+          id: o.kasir_id, created_at: new Date().toISOString(), tanggal: tanggal, tipe: 'Masuk', kategori: 'Penjualan',
+          keterangan: o.items_summary, metode: payload.metode, jumlah: o.total, ref_order_id: o.order_id, void: 'NO'
+        });
+        saleReset(); renderKasir(); renderAnalytics();
+      }).catch(function () { msg.style.color = '#B03A2E'; msg.textContent = 'Gagal terhubung ke Apps Script.'; });
   });
 
   /* ---------- KASIR (buku kas) ---------- */
