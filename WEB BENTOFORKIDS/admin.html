@@ -283,6 +283,33 @@
     .sale-row{grid-template-columns:1fr;}
     .sale-item{grid-template-columns:1fr 52px 74px auto;}
   }
+
+  /* ---- Pelanggan ---- */
+  .pel-toolbar{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+  .pel-toolbar input{flex:1; min-width:180px; width:auto;} .pel-toolbar select{width:auto;}
+  .pel-form{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px;}
+  .pel-form label{font-size:11.5px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:3px;}
+  .pel-form .full{grid-column:1/-1;}
+  .pel-hist{list-style:none; margin:8px 0 0; padding:0; font-size:13px;}
+  .pel-hist li{padding:7px 0; border-bottom:1px solid var(--line);}
+  .pel-hist small{color:var(--ink-soft);}
+  .pel-cols{display:grid; grid-template-columns:1fr; gap:16px; margin-top:14px;}
+  @media(min-width:800px){ .pel-cols{grid-template-columns:1fr 1fr;} }
+
+  /* ---- Follow-up ---- */
+  .fu-seg{display:flex; flex-wrap:wrap; gap:8px;}
+  .fu-chip{background:var(--cream-2); color:var(--moss-dark); display:flex; gap:8px; align-items:center; padding:8px 12px; font-size:13px;}
+  .fu-chip b{background:var(--white); color:var(--coral); border-radius:999px; padding:1px 8px; font-size:12px;}
+  .fu-chip.on{background:var(--moss); color:#fff;}
+  .fu-opts{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+  .fu-opt{background:var(--cream-2); color:var(--moss-dark); padding:6px 12px; font-size:12.5px;}
+  .fu-opt.on{background:var(--marigold); color:#fff;}
+  .fu-tools{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:8px;}
+  .fu-tools label{display:flex; align-items:center; gap:6px;} .fu-tools input{width:120px;}
+  .fu-vars{font-size:11.5px; color:var(--ink-soft); margin:8px 0 0; word-break:break-word;}
+  .fu-toolbar{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px;}
+  .fu-toolbar input[type=text]{flex:1; min-width:180px; width:auto;} .fu-toolbar select{width:auto;}
+  .fu-ctx{font-size:12px; color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -314,9 +341,11 @@
       <button class="tab-btn" data-tab="links">Link Bio</button>
       <button class="tab-btn" data-tab="mitra">Mitra &amp; Referral</button>
       <button class="tab-btn" data-tab="kasir">Kasir</button>
+      <button class="tab-btn" data-tab="pelanggan">Pelanggan</button>
+      <button class="tab-btn" data-tab="followup">Follow-up</button>
     </div>
 
-    <!-- ===== TAB PRODUK ===== -->
+    <!-- ===== TAB RINGKASAN MINGGUAN ===== -->
     <div class="tab-panel active" id="tab-eos">
       <div class="eos-nav">
         <button type="button" class="btn-ghost" id="eosPrev">← Minggu lalu</button>
@@ -376,6 +405,7 @@
       </div>
     </div>
 
+    <!-- ===== TAB PRODUK ===== -->
     <div class="tab-panel" id="tab-produk">
       <div class="card">
         <h3>Kelola Produk</h3>
@@ -418,11 +448,11 @@
       <span class="save-msg" id="promoSaveMsg"></span>
     </div>
 
-    <!-- ===== TAB ANALITIK ===== -->
+    <!-- ===== TAB KASIR ===== -->
     <div class="tab-panel" id="tab-kasir">
       <div class="card">
         <h3>🧾 Catat Penjualan</h3>
-        <p class="eos-hint">Untuk transaksi jual-beli produk (order lewat WhatsApp, tunai di tempat, dll). Pilih produk dan (opsional) pelanggan dari Leads; diskon dihitung otomatis sesuai promo tapi bisa Anda ubah. Tersimpan sekaligus sebagai <b>Order</b> (status Dibayar) dan baris <b>Kasir</b> (Masuk).</p>
+        <p class="eos-hint">Untuk transaksi jual-beli produk (order lewat WhatsApp, tunai di tempat, dll). Pilih produk dan (opsional) pelanggan dari Leads; diskon dihitung otomatis sesuai promo tapi bisa Anda ubah. Tersimpan sekaligus sebagai <b>Order</b> (status Dibayar) dan baris <b>Kasir</b> (Masuk). Jika nama dan WhatsApp diisi tetapi belum ada di data pelanggan, pelanggan baru dibuat otomatis.</p>
         <div class="sale-form">
           <div class="sale-row">
             <div><label>Tanggal</label><input type="date" id="sl-tanggal"></div>
@@ -492,6 +522,54 @@
       </div>
     </div>
 
+    <!-- ===== TAB PELANGGAN ===== -->
+    <div class="tab-panel" id="tab-pelanggan">
+      <div class="stat-grid" id="pelStats"></div>
+      <div id="pelEditor"></div>
+      <div class="card">
+        <h3>👥 Data Pelanggan</h3>
+        <p class="eos-hint">Pelanggan berasal dari form leads di web atau Anda tambahkan manual. Riwayat beli dicocokkan lewat lead atau nomor WhatsApp. Transaksinya dicatat di tab <b>Kasir</b>.</p>
+        <div class="pel-toolbar">
+          <input type="text" id="pel-q" placeholder="Cari nama / WhatsApp / kota...">
+          <select id="pel-status"><option value="">Semua status</option><option value="NEW">Baru</option><option value="DIHUBUNGI">Dihubungi</option><option value="DEAL">Deal</option><option value="TIDAK_JADI">Tidak Jadi</option></select>
+          <select id="pel-sort"><option value="baru">Terbaru masuk</option><option value="belanja">Belanja terbesar</option><option value="nama">Nama A–Z</option></select>
+          <button type="button" class="btn-primary" id="pelNew">+ Pelanggan Baru</button>
+        </div>
+        <div class="table-wrap rtable"><table id="pelTable"></table></div>
+      </div>
+    </div>
+
+    <!-- ===== TAB FOLLOW-UP ===== -->
+    <div class="tab-panel" id="tab-followup">
+      <div class="card">
+        <h3>📣 Follow-up Pelanggan</h3>
+        <p class="eos-hint">Pilih segmen, pilih template (boleh diedit), lalu klik <b>Kirim WA</b> pada tiap pelanggan. Pesan otomatis terisi nama dan konteksnya. Angka di tiap segmen menunjukkan jumlah orang yang perlu disapa.</p>
+        <div class="fu-seg" id="fuSegs"></div>
+      </div>
+
+      <div class="card">
+        <h3 id="fuSegTitle"></h3>
+        <p class="eos-hint" id="fuSegDesc"></p>
+        <div class="fu-opts" id="fuOpts"></div>
+        <textarea id="fuText" rows="6"></textarea>
+        <div class="fu-tools">
+          <label class="lk-lab">Sapaan <input type="text" id="fuSapaan" value="Bunda" maxlength="20"></label>
+          <button type="button" class="btn-ghost" id="fuReset">Reset template ini</button>
+        </div>
+        <p class="fu-vars">Variabel: {sapaan} {nama} {anak} {usia} {layanan} {produk} {keranjang} {hari} {n} {terakhir} {promo_min} {promo_pct} {promo_max_pct} {link_katalog}</p>
+      </div>
+
+      <div class="card">
+        <div class="fu-toolbar">
+          <input type="text" id="fuQ" placeholder="Cari nama / WhatsApp...">
+          <select id="fuSort"><option value="prioritas">Prioritas (belum pernah di-FU dulu)</option><option value="nilai">Belanja terbesar</option><option value="nama">Nama A–Z</option></select>
+          <label class="lk-act"><input type="checkbox" id="fuHide" checked> Sembunyikan yang sudah di-FU ≤7 hari</label>
+        </div>
+        <div class="table-wrap rtable"><table id="fuTable"></table></div>
+      </div>
+    </div>
+
+    <!-- ===== TAB MITRA ===== -->
     <div class="tab-panel" id="tab-mitra">
       <div class="card">
         <h3>🤝 Mitra &amp; Referral</h3>
@@ -505,6 +583,7 @@
       </div>
     </div>
 
+    <!-- ===== TAB LINK BIO ===== -->
     <div class="tab-panel" id="tab-links">
       <div class="card">
         <h3>🔗 Halaman Link (mirip Linktree)</h3>
@@ -560,6 +639,7 @@
       </div>
     </div>
 
+    <!-- ===== TAB ANALITIK ===== -->
     <div class="tab-panel" id="tab-analitik">
       <div class="stat-grid" id="statGrid"></div>
 
@@ -663,6 +743,7 @@
         if (!res.ok) { document.getElementById('loginError').textContent = res.error || 'Gagal masuk.'; return; }
         password = pw;
         DATA = res;
+        DATA._loaded = res.server_time || '';   // dipakai supaya mitra yang daftar mandiri saat admin terbuka tidak terhapus
         sessionStorage.setItem('bfk_admin_pw', pw);
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('app').style.display = 'block';
@@ -687,6 +768,10 @@
       document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
       btn.classList.add('active');
       document.getElementById('tab-' + btn.getAttribute('data-tab')).classList.add('active');
+      // segarkan tab yang datanya bergantung pada penjualan/pelanggan terbaru
+      var t = btn.getAttribute('data-tab');
+      if (t === 'followup') renderFollowup();
+      else if (t === 'pelanggan') renderPelanggan();
     });
   });
 
@@ -700,6 +785,8 @@
     renderProducts();
     renderPromos();
     renderAnalytics();
+    renderPelanggan();
+    renderFollowup();
   }
 
   /* ---------- PRODUK ---------- */
@@ -1519,9 +1606,12 @@
     }
     if (bad) { msg.textContent = bad; msg.style.color = '#B03A2E'; return; }
     msg.style.color = ''; msg.textContent = 'Menyimpan...';
-    fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ type: 'mitra_save', password: password, mitra: mitraEdit }) })
+    fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ type: 'mitra_save', password: password, mitra: mitraEdit, loaded_at: DATA._loaded || '' }) })
       .then(function (r) { return r.json(); }).then(function (res) {
-        if (res.ok) DATA.mitra = mitraEdit.map(function (m) { return Object.assign({}, m); });
+        if (res.ok) {
+          DATA.mitra = Array.isArray(res.mitra) ? res.mitra : mitraEdit.map(function (m) { return Object.assign({}, m); });
+          if (Array.isArray(res.mitra)) mitraLoad();   // tampilkan mitra yang baru mendaftar sendiri
+        }
         msg.textContent = res.ok ? 'Tersimpan ✓' : 'Gagal: ' + (res.error || 'coba lagi');
       }).catch(function () { msg.textContent = 'Gagal terhubung ke Apps Script.'; });
   });
@@ -1620,7 +1710,9 @@
       saleLeadId = match.lead_id;
       document.getElementById('sl-cust-name').value = match.name;
       document.getElementById('sl-cust-wa').value = match.whatsapp;
-      hint.style.display = ''; hint.textContent = 'Tertaut ke lead: ' + match.name + (match.service_interest ? ' · minat: ' + match.service_interest : '');
+      hint.style.display = '';
+      hint.innerHTML = 'Tertaut ke lead: <b>' + esc(match.name) + '</b>' + (match.service_interest ? ' · minat: ' + esc(match.service_interest) : '') +
+        ' · <a href="#" onclick="document.querySelector(\'.tab-btn[data-tab=pelanggan]\').click(); pelSelected=\'' + esc(match.lead_id) + '\'; renderPelEditor(); return false;">lihat profil</a>';
     } else {
       saleLeadId = ''; hint.style.display = 'none';
       document.getElementById('sl-cust-name').value = v;
@@ -1646,7 +1738,7 @@
       lead_id: saleLeadId, discount_pct: Number(document.getElementById('sl-diskon').value) || 0,
       items: items.map(function (it) { return { product_id: it.product_id, name: it.name, price: it.price, qty: it.qty }; })
     };
-    fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+    ensureLead(payload).then(function () { return fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }); })
       .then(function (r) { return r.json(); }).then(function (res) {
         if (!res.ok) { msg.style.color = '#B03A2E'; msg.textContent = 'Gagal: ' + (res.error || 'coba lagi'); return; }
         var o = res.order;
@@ -1660,7 +1752,7 @@
           id: o.kasir_id, created_at: new Date().toISOString(), tanggal: tanggal, tipe: 'Masuk', kategori: 'Penjualan',
           keterangan: o.items_summary, metode: payload.metode, jumlah: o.total, ref_order_id: o.order_id, void: 'NO'
         });
-        saleReset(); renderKasir(); renderAnalytics();
+        saleReset(); renderKasir(); renderAnalytics(); renderPelanggan(); renderFollowup();
       }).catch(function () { msg.style.color = '#B03A2E'; msg.textContent = 'Gagal terhubung ke Apps Script.'; });
   });
 
@@ -1795,6 +1887,393 @@
         DATA.kasir.push({ id: res.id, created_at: new Date().toISOString(), tanggal: payload.tanggal, tipe: 'Masuk', kategori: 'Penjualan', keterangan: payload.keterangan, metode: '', jumlah: payload.jumlah, ref_order_id: oid, void: 'NO' });
         renderKasirOrderActions(); renderKasir();
       }).catch(function () { b.disabled = false; b.textContent = '+ Kasir'; alert('Gagal terhubung ke Apps Script.'); });
+  });
+
+  /* ---------- PELANGGAN ---------- */
+  var pelSelected = '';   // lead_id, atau '__new__'
+  function digits(v) { return String(v == null ? '' : v).replace(/\D/g, ''); }
+  function waLink(v) { var d = digits(v); if (d.indexOf('0') === 0) d = '62' + d.slice(1); return d ? 'https://wa.me/' + d : ''; }
+  function findLead(id) { return (DATA.leads || []).filter(function (l) { return l.lead_id === id; })[0]; }
+  function pelOrders(l) {
+    var wa = digits(l.whatsapp);
+    return (DATA.orders || []).filter(function (o) {
+      if (o.status === 'DIBATALKAN') return false;
+      return (o.lead_id && o.lead_id === l.lead_id) || (wa.length >= 9 && digits(o.customer_whatsapp) === wa);
+    }).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+  }
+  function pelEvents(l) {
+    var wa = digits(l.whatsapp);
+    return (DATA.lead_events || []).filter(function (e) {
+      return (e.lead_id && e.lead_id === l.lead_id) || (wa.length >= 9 && digits(e.whatsapp) === wa);
+    }).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+  }
+  function pelStat(l) {
+    var os = pelOrders(l), total = os.reduce(function (a, o) { return a + (Number(o.total) || 0); }, 0);
+    return { orders: os, n: os.length, total: total, last: os.length ? os[0].created_at : '' };
+  }
+
+  function renderPelanggan() {
+    var leads = (DATA.leads || []).filter(function (l) { return l.lead_id; });
+    var rows = leads.map(function (l) { return { l: l, s: pelStat(l) }; });
+    var buyers = rows.filter(function (r) { return r.s.n > 0; }).length;
+    var repeat = rows.filter(function (r) { return r.s.n > 1; }).length;
+    var sum = rows.reduce(function (a, r) { return a + r.s.total; }, 0);
+    document.getElementById('pelStats').innerHTML = [
+      ['Total Pelanggan', leads.length], ['Sudah Pernah Beli', buyers], ['Pelanggan Repeat (≥2x)', repeat], ['Total Belanja', fmt(sum)]
+    ].map(function (s) { return '<div class="stat"><b>' + s[1] + '</b><span>' + s[0] + '</span></div>'; }).join('');
+
+    var q = document.getElementById('pel-q').value.trim().toLowerCase(), st = document.getElementById('pel-status').value, sort = document.getElementById('pel-sort').value;
+    rows = rows.filter(function (r) {
+      var l = r.l;
+      if (st && (l.status || 'NEW') !== st) return false;
+      if (q && (String(l.name) + ' ' + l.whatsapp + ' ' + l.city + ' ' + l.child_age).toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+    rows.sort(function (a, b) {
+      if (sort === 'belanja') return b.s.total - a.s.total;
+      if (sort === 'nama') return String(a.l.name).localeCompare(String(b.l.name));
+      return new Date(b.l.created_at) - new Date(a.l.created_at);
+    });
+    renderTable('pelTable', ['Nama', 'WhatsApp', 'Anak / Kota', 'Belanja', 'Terakhir Beli', 'Status', 'Aksi'],
+      rows.map(function (r) {
+        var l = r.l, s = r.s;
+        return [
+          '<b>' + esc(l.name) + '</b>' + (l.notes ? '<br><small>' + esc(String(l.notes).slice(0, 60)) + '</small>' : ''),
+          esc(l.whatsapp),
+          esc(l.child_age || '-') + (l.city ? '<br><small>' + esc(l.city) + '</small>' : ''),
+          s.n ? s.n + 'x · ' + fmt(s.total) : '<small>belum beli</small>',
+          s.last ? fmtDate(s.last) : '-',
+          statusSelectHtml('lead', l.lead_id, l.status),
+          '<div class="row-actions"><button type="button" data-pel-open="' + esc(l.lead_id) + '">Detail</button><button type="button" data-pel-sale="' + esc(l.lead_id) + '">🧾 Jual</button></div>'
+        ];
+      }), [2, 4]);
+    renderPelEditor();
+  }
+
+  function renderPelEditor() {
+    var box = document.getElementById('pelEditor');
+    if (!pelSelected) { box.innerHTML = ''; return; }
+    var isNew = pelSelected === '__new__', l = isNew ? { name: '', whatsapp: '', child_age: '', city: '', notes: '', service_interest: '' } : findLead(pelSelected);
+    if (!l) { box.innerHTML = ''; return; }
+    var hist = '';
+    if (!isNew) {
+      var s = pelStat(l), ev = pelEvents(l), wl = waLink(l.whatsapp);
+      hist = '<div class="pel-cols"><div><h3>Riwayat Beli</h3>' +
+        '<p class="eos-hint">' + (s.n ? '<b>' + s.n + '</b> order · total <b>' + fmt(s.total) + '</b> · rata-rata <b>' + fmt(s.total / s.n) + '</b>' : 'Belum ada pembelian tercatat.') + '</p>' +
+        '<ul class="pel-hist">' + s.orders.slice(0, 15).map(function (o) {
+          return '<li><b>' + fmt(o.total) + '</b> · ' + fmtDate(o.created_at) + (Number(o.discount_pct) ? ' · diskon ' + esc(o.discount_pct) + '%' : '') + '<br><small>' + esc(o.items_summary) + '</small></li>';
+        }).join('') + '</ul></div>' +
+        '<div><h3>Riwayat Minat</h3><ul class="pel-hist">' + (ev.length ? ev.slice(0, 15).map(function (e) {
+          return '<li>' + esc(e.service_interest || '-') + ' · <small>' + fmtDate(e.created_at) + '</small></li>';
+        }).join('') : '<li><small>Belum ada.</small></li>') + '</ul>' +
+        '<p class="eos-hint" style="margin-top:10px;">Asal: ' + esc(l.source || '-') + (l.medium ? ' / ' + esc(l.medium) : '') + (l.first_reseller_code ? ' · mitra: ' + esc(l.first_reseller_code) : '') + ' · masuk ' + fmtDate(l.created_at) + '</p>' +
+        '</div></div>';
+      hist += '<div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">' +
+        '<button type="button" class="btn-primary" data-pel-sale="' + esc(l.lead_id) + '">🧾 Catat Penjualan</button>' +
+        (wl ? '<a href="' + wl + '" target="_blank" rel="noopener"><button type="button" class="btn-ghost">Chat WhatsApp</button></a>' : '') + '</div>';
+    }
+    box.innerHTML = '<div class="card"><h3>' + (isNew ? 'Pelanggan Baru' : 'Profil: ' + esc(l.name)) + '</h3>' +
+      '<div class="pel-form">' +
+        '<div><label>Nama *</label><input type="text" id="pl-name" value="' + esc(l.name) + '"></div>' +
+        '<div><label>WhatsApp *</label><input type="text" id="pl-wa" value="' + esc(l.whatsapp) + '" placeholder="08xxxxxxxxxx"></div>' +
+        '<div><label>Usia anak</label><input type="text" id="pl-age" value="' + esc(l.child_age) + '" placeholder="mis. 4 th, 7 th"></div>' +
+        '<div><label>Domisili</label><input type="text" id="pl-city" value="' + esc(l.city) + '"></div>' +
+        (isNew ? '<div class="full"><label>Minat layanan</label><input type="text" id="pl-svc" placeholder="mis. frozen food"></div>' : '') +
+        '<div class="full"><label>Catatan (alergi, preferensi, kebiasaan beli)</label><textarea id="pl-notes" rows="2">' + esc(l.notes) + '</textarea></div>' +
+      '</div>' +
+      '<div style="margin-top:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">' +
+        '<button type="button" class="btn-primary" id="pelSave">Simpan</button><button type="button" class="btn-ghost" id="pelClose">Tutup</button><span class="save-msg" id="pelMsg"></span></div>' +
+      hist + '</div>';
+  }
+
+  document.getElementById('pelNew').addEventListener('click', function () { pelSelected = '__new__'; renderPelEditor(); document.getElementById('pelEditor').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  ['pel-q', 'pel-status', 'pel-sort'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', renderPelanggan);
+    document.getElementById(id).addEventListener('change', renderPelanggan);
+  });
+
+  function pelSale(id) {
+    var l = findLead(id); if (!l) return;
+    var s = document.getElementById('sl-cust-search');
+    s.value = l.name + ' — ' + l.whatsapp;
+    s.dispatchEvent(new Event('input'));    // memakai logika pencocokan lead yang sudah ada
+    document.querySelector('.tab-btn[data-tab="kasir"]').click();
+    s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  document.getElementById('tab-pelanggan').addEventListener('click', function (e) {
+    var o = e.target.closest('[data-pel-open]'), sl = e.target.closest('[data-pel-sale]');
+    if (o) { pelSelected = o.getAttribute('data-pel-open'); renderPelEditor(); document.getElementById('pelEditor').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    if (sl) { pelSale(sl.getAttribute('data-pel-sale')); return; }
+    if (e.target.id === 'pelClose') { pelSelected = ''; renderPelEditor(); return; }
+    if (e.target.id === 'pelSave') pelSave(e.target);
+  });
+
+  function pelSave(btn) {
+    var msg = document.getElementById('pelMsg'), isNew = pelSelected === '__new__', cur = isNew ? null : findLead(pelSelected);
+    var svc = document.getElementById('pl-svc');
+    var payload = {
+      type: 'lead_save', password: password, lead_id: isNew ? '' : pelSelected,
+      name: document.getElementById('pl-name').value.trim(), whatsapp: document.getElementById('pl-wa').value.trim(),
+      child_age: document.getElementById('pl-age').value.trim(), city: document.getElementById('pl-city').value.trim(),
+      notes: document.getElementById('pl-notes').value, service_interest: svc ? svc.value.trim() : ''
+    };
+    if (!payload.name) { msg.style.color = '#B03A2E'; msg.textContent = 'Nama wajib diisi.'; return; }
+    msg.style.color = ''; msg.textContent = 'Menyimpan...'; btn.disabled = true;
+    post(payload).then(function (res) {
+      btn.disabled = false;
+      if (!res.ok) {
+        msg.style.color = '#B03A2E'; msg.textContent = res.error || 'Gagal menyimpan.';
+        if (res.existing_lead_id) { msg.innerHTML = esc(res.error) + ' <button type="button" class="btn-ghost" data-pel-open="' + esc(res.existing_lead_id) + '">Buka profilnya</button>'; }
+        return;
+      }
+      var digs = digits(payload.whatsapp);
+      if (isNew) {
+        DATA.leads = DATA.leads || [];
+        DATA.leads.push({ lead_id: res.lead_id, created_at: res.created_at, name: payload.name, whatsapp: digs, child_age: payload.child_age, city: payload.city,
+          consent: 'MANUAL', source: 'admin', medium: 'manual', status: 'NEW', service_interest: payload.service_interest, notes: payload.notes });
+        pelSelected = res.lead_id;
+      } else if (cur) {
+        cur.name = payload.name; cur.whatsapp = digs; cur.child_age = payload.child_age; cur.city = payload.city; cur.notes = payload.notes;
+      }
+      saleLeadOptionsRefresh(); renderAnalytics(); renderPelanggan(); renderFollowup();
+      var m2 = document.getElementById('pelMsg'); if (m2) m2.textContent = 'Tersimpan ✓';
+    }).catch(function () { btn.disabled = false; msg.style.color = '#B03A2E'; msg.textContent = 'Gagal terhubung ke Apps Script.'; });
+  }
+
+  // Dipakai Kasir: kalau pembeli belum tertaut ke lead tapi nama + WhatsApp diisi, buatkan pelanggan otomatis.
+  function ensureLead(p) {
+    if (p.lead_id || !p.customer_name || digits(p.customer_whatsapp).length < 9) return Promise.resolve();
+    return post({ type: 'lead_save', password: password, name: p.customer_name, whatsapp: p.customer_whatsapp }).then(function (res) {
+      if (res.ok) {
+        p.lead_id = res.lead_id;
+        DATA.leads = DATA.leads || [];
+        DATA.leads.push({ lead_id: res.lead_id, created_at: res.created_at, name: p.customer_name, whatsapp: digits(p.customer_whatsapp), child_age: '', city: '',
+          consent: 'MANUAL', source: 'admin', medium: 'manual', status: 'NEW', service_interest: '', notes: '' });
+        saleLeadOptionsRefresh();
+      } else if (res.existing_lead_id) { p.lead_id = res.existing_lead_id; }
+    }).catch(function () {});
+  }
+
+  /* ---------- FOLLOW-UP PELANGGAN ---------- */
+  var FU_SEGS = [
+    { id: 'baru', icon: '🌱', label: 'Lead baru', desc: 'Mengisi form ≤3 hari lalu dan belum pernah beli. Sapa selagi masih hangat.', tpl: [
+      ['Sapaan hangat', 'Halo {sapaan} {nama} 😊 Terima kasih sudah mampir ke Bento for Kids. Saya lihat {sapaan} tertarik dengan {layanan}. Ada yang ingin ditanyakan? Dengan senang hati kami bantu pilihkan yang cocok untuk {anak}.'],
+      ['Tanya kebutuhan', 'Halo {sapaan} {nama}, ini dari Bento for Kids 🍱 Supaya rekomendasinya pas, boleh tahu {anak} biasanya suka lauk apa? Kami punya nugget, sosis, dan rolade tanpa MSG & pengawet. Nanti saya bantu pilihkan ya, {sapaan}.'],
+      ['Kirim katalog', 'Halo {sapaan} {nama} 👋 Ini katalog menu Bento for Kids: {link_katalog}\nKalau sudah ada yang menarik, kabari saya ya, nanti saya bantu hitungkan paketnya.'],
+      ['✏️ Tulis sendiri', 'Halo {sapaan} {nama}, ']
+    ] },
+    { id: 'mendingin', icon: '🌫️', label: 'Mulai mendingin', desc: 'Sudah >3 hari sejak mengisi form dan belum beli. Sapa ringan, tanpa menekan.', tpl: [
+      ['Check-in lembut', 'Halo {sapaan} {nama}, kemarin sempat tanya-tanya soal {layanan} di Bento for Kids ya 😊 Apakah masih ada yang bisa kami bantu? Kalau masih bingung memilih, saya siap bantu, {sapaan}.'],
+      ['Nilai produk', 'Halo {sapaan} {nama} 🌿 Berbagi sedikit ya: menu Bento for Kids dibuat tanpa MSG & pengawet supaya praktis untuk bekal {anak} tanpa rasa khawatir. Kalau mau coba, mulai dari 1–2 pack juga boleh kok.'],
+      ['Info promo', 'Halo {sapaan} {nama}, ada info promo: belanja mulai {promo_min} dapat diskon {promo_pct}% 🎁 Cocok buat stok bekal {anak}. Mau saya bantu pilihkan menunya?'],
+      ['✏️ Tulis sendiri', 'Halo {sapaan} {nama}, ']
+    ] },
+    { id: 'parsial', icon: '🛒', label: 'Isi form belum kirim', desc: 'Sudah mengisi sebagian form (kadang dengan keranjang) tapi belum kirim. Tanyakan kendalanya dengan ramah.', tpl: [
+      ['Tanya kendala', 'Halo {sapaan} {nama} 😊 Tadi {sapaan} sempat mengisi data di web Bento for Kids tapi belum sampai selesai. Ada kendala? Kalau mau, bisa langsung pesan lewat chat ini saja ya.'],
+      ['Keranjang tersimpan', 'Halo {sapaan} {nama}, pilihan {keranjang} masih tersimpan lho 🛒 Mau saya bantu lanjutkan pesanannya lewat WhatsApp ini?'],
+      ['Bantu jawab keraguan', 'Halo {sapaan} {nama}, ini Bento for Kids 🍱 Kalau ada yang membuat ragu (harga, isi menu, atau pengiriman), boleh tanya langsung di sini ya. Kami jawab dengan senang hati.'],
+      ['✏️ Tulis sendiri', 'Halo {sapaan} {nama}, ']
+    ] },
+    { id: 'pertama', icon: '🎉', label: 'Pembeli pertama', desc: 'Baru beli pertama kali (≤14 hari). Bangun hubungan: tanya kesan, beri tips, minta cerita.', tpl: [
+      ['Terima kasih + kesan', 'Halo {sapaan} {nama} 🙏 Terima kasih sudah mencoba {produk}. Bagaimana kesan {anak}, suka tidak? Masukan {sapaan} sangat berarti buat kami.'],
+      ['Tips penyajian', 'Halo {sapaan} {nama} 😊 Tips dari kami: {produk} enak dipadukan dengan nasi hangat dan sayur untuk bekal {anak}. Kalau ada pertanyaan cara menyajikan, tanya saya ya.'],
+      ['Minta cerita/testimoni', 'Halo {sapaan} {nama}, kalau {anak} suka, boleh bagikan foto atau cerita singkat bekalnya? Kami senang sekali dan bisa jadi inspirasi orang tua lain 💚 Terima kasih ya, {sapaan}.'],
+      ['✏️ Tulis sendiri', 'Halo {sapaan} {nama}, ']
+    ] },
+    { id: 'repurchase', icon: '🔁', label: 'Waktunya isi ulang', desc: 'Terakhir beli 21–60 hari lalu. Biasanya stok mulai menipis.', tpl: [
+      ['Cek stok', 'Halo {sapaan} {nama} 😊 Sudah sekitar {hari} hari sejak {sapaan} pesan {produk}. Stok bekal {anak} masih aman? Kalau mau isi ulang, kabari saya ya.'],
+      ['Isi ulang + promo', 'Halo {sapaan} {nama}, waktunya isi ulang stok? 🍱 Belanja mulai {promo_min} ada diskon {promo_pct}%. Mau saya siapkan seperti pesanan terakhir ({produk})?'],
+      ['Tawarkan variasi', 'Halo {sapaan} {nama} 🌿 Biar {anak} tidak bosan, mau coba variasi menu lain selain {produk}? Saya bisa rekomendasikan yang seru untuk bekal minggu ini.'],
+      ['✏️ Tulis sendiri', 'Halo {sapaan} {nama}, ']
+    ] },
+    { id: 'dormant', icon: '💤', label: 'Lama tidak belanja', desc: 'Terakhir beli >60 hari lalu. Sapa hangat, tawarkan alasan kembali, atau tanya masukannya.', tpl: [
+      ['Sapa kangen', 'Halo {sapaan} {nama}, apa kabar? 😊 Sudah lama tidak ngobrol sejak pesanan {produk} dulu. Semoga {anak} sehat selalu. Kalau butuh stok bekal lagi, kami siap bantu ya.'],
+      ['Ajak kembali + promo', 'Halo {sapaan} {nama} 🎁 Kami rindu! Untuk {sapaan}, belanja mulai {promo_min} tetap dapat diskon {promo_pct}%. Mau lihat menu terbarunya? {link_katalog}'],
+      ['Minta masukan', 'Halo {sapaan} {nama}, boleh minta 1 menit untuk masukan? Apa yang bisa kami perbaiki supaya {sapaan} nyaman belanja lagi di Bento for Kids? Terima kasih banyak 🙏'],
+      ['✏️ Tulis sendiri', 'Halo {sapaan} {nama}, ']
+    ] },
+    { id: 'loyal', icon: '💚', label: 'Pelanggan setia', desc: '≥3 kali order dan masih aktif. Apresiasi, tawarkan paket stok, atau ajak jadi bagian komunitas/mitra.', tpl: [
+      ['Apresiasi', 'Halo {sapaan} {nama} 💚 Terima kasih sudah {n} kali belanja di Bento for Kids. Kepercayaan {sapaan} sangat berarti buat kami.'],
+      ['Paket stok bulanan', 'Halo {sapaan} {nama}, karena sudah jadi langganan, mau saya buatkan paket stok untuk 1 bulan? Makin banyak belanja, diskon makin besar (sampai {promo_max_pct}%) 😊'],
+      ['Ajak komunitas/mitra', 'Halo {sapaan} {nama} 🌿 Tertarik gabung komunitas orang tua atau jadi mitra/reseller Bento for Kids? Bisa dapat komisi sambil berbagi makanan sehat. Kalau berminat, saya jelaskan ya.'],
+      ['✏️ Tulis sendiri', 'Halo {sapaan} {nama}, ']
+    ] }
+  ];
+  var fuSeg = 'baru', fuOpt = 0, fuData = [];
+
+  function fuStore(k, def) { try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? def : v; } catch (e) { return def; } }
+  function fuPut(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function fuDigits(v) { return String(v == null ? '' : v).replace(/\D/g, ''); }
+  function fuDaysSince(iso) { var d = new Date(iso); return isNaN(d) ? null : Math.max(0, Math.floor((Date.now() - d.getTime()) / 864e5)); }
+  function fuWaNum(d) { if (d.indexOf('0') === 0) return '62' + d.slice(1); if (d.indexOf('8') === 0) return '62' + d; return d; }
+  function fuSegDef(id) { return FU_SEGS.filter(function (s) { return s.id === id; })[0]; }
+  function fuProduct(s) { var m = /-\s*([^|]+?)\s+x\d+/.exec(String(s || '')); return m ? m[1].trim() : ''; }
+  function fuSapaan() { return (document.getElementById('fuSapaan').value || 'Bunda').trim() || 'Bunda'; }
+
+  function fuTplText(seg, i) { var ov = fuStore('bfk_fu_tpl', {}); var k = seg.id + ':' + i; return ov[k] != null ? ov[k] : seg.tpl[i][1]; }
+
+  function fuBuild() {
+    var orders = (DATA.orders || []).filter(function (o) { return o.status !== 'DIBATALKAN'; });
+    var byWa = {}, byLead = {};
+    orders.forEach(function (o) {
+      var d = fuDigits(o.customer_whatsapp); if (d.length >= 9) (byWa[d] = byWa[d] || []).push(o);
+      if (o.lead_id) (byLead[o.lead_id] = byLead[o.lead_id] || []).push(o);
+    });
+    var log = fuStore('bfk_fu_log', {}), out = [], seen = {}, sessById = {};
+    (DATA.sessions || []).forEach(function (s) { sessById[s.session_id] = s; });
+
+    function fuDaysOf(d, notes) {
+      var best = null, m, re = /FU (\d{4}-\d{2}-\d{2})/g, dts = [];
+      while ((m = re.exec(String(notes || '')))) dts.push(new Date(m[1] + 'T12:00:00').getTime());
+      if (log[d]) dts.push(new Date(log[d]).getTime());
+      dts.forEach(function (t) { if (!isNaN(t) && (best === null || t > best)) best = t; });
+      return best === null ? null : Math.max(0, Math.floor((Date.now() - best) / 864e5));
+    }
+
+    (DATA.leads || []).forEach(function (l) {
+      var d = fuDigits(l.whatsapp); if (!l.lead_id || d.length < 9 || l.status === 'TIDAK_JADI') return;
+      seen[d] = 1;
+      var seenO = {}, os = [];
+      (byLead[l.lead_id] || []).concat(byWa[d] || []).forEach(function (o) { if (!seenO[o.order_id]) { seenO[o.order_id] = 1; os.push(o); } });
+      os.sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+      var total = os.reduce(function (a, o) { return a + (Number(o.total) || 0); }, 0);
+      out.push({ type: 'lead', ref: l, d: d, name: String(l.name || ''), wa: String(l.whatsapp), age: String(l.child_age || ''), svc: String(l.service_interest || ''),
+        n: os.length, total: total, lastAt: os.length ? os[0].created_at : '', product: os.length ? fuProduct(os[0].items_summary) : '',
+        dLast: os.length ? fuDaysSince(os[0].created_at) : null, dCreated: fuDaysSince(l.created_at), cart: '', fuDays: fuDaysOf(d, l.notes) });
+    });
+
+    var parts = {};
+    (DATA.partial_leads || []).forEach(function (p) {
+      var d = fuDigits(p.whatsapp); if (d.length < 9 || p.status === 'CONVERTED' || seen[d] || byWa[d]) return;
+      if (!parts[d] || new Date(p.last_updated) > new Date(parts[d].last_updated)) parts[d] = p;
+    });
+    Object.keys(parts).forEach(function (d) {
+      var p = parts[d], s = sessById[p.session_id];
+      out.push({ type: 'partial', ref: p, d: d, name: String(p.name || ''), wa: String(p.whatsapp), age: String(p.child_age || ''), svc: '', n: 0, total: 0, lastAt: '', product: '',
+        dLast: null, dCreated: fuDaysSince(p.last_updated), cart: s && s.cart_snapshot ? String(s.cart_snapshot).slice(0, 90) : '', fuDays: fuDaysOf(d, '') });
+    });
+
+    out.forEach(function (c) {
+      var dl = c.dLast == null ? 0 : c.dLast;
+      c.seg = c.type === 'partial' ? 'parsial'
+        : c.n === 0 ? (c.dCreated != null && c.dCreated <= 3 ? 'baru' : 'mendingin')
+        : (c.n === 1 && dl <= 14) ? 'pertama'
+        : dl > 60 ? 'dormant' : dl >= 21 ? 'repurchase' : c.n >= 3 ? 'loyal' : '';
+    });
+    return out;
+  }
+
+  function fuVars(c) {
+    var pr = DATA.promos || {}, rates = [Number(pr.tier1_rate) || 0, Number(pr.tier2_rate) || 0, Number(pr.tier3_rate) || 0];
+    var first = String(c.name || '').trim().split(/\s+/)[0] || '';
+    return {
+      sapaan: fuSapaan(), nama: first, anak: 'si kecil', usia: c.age, layanan: c.svc || 'produk kami',
+      produk: c.product || 'menu pilihan kami', keranjang: c.cart || 'pilihan menu tadi',
+      hari: c.dLast == null ? '' : c.dLast, n: c.n || '', terakhir: c.lastAt ? fmtDate(c.lastAt) : '',
+      promo_min: fmt(pr.tier1_min), promo_pct: Math.round(rates[0] * 1000) / 10, promo_max_pct: Math.round(Math.max.apply(null, rates) * 1000) / 10,
+      link_katalog: location.origin + '/#katalog'
+    };
+  }
+  function fuFill(text, v) { return text.replace(/\{(\w+)\}/g, function (m, k) { return v.hasOwnProperty(k) ? v[k] : m; }); }
+  function fuMsgFor(c) { return fuFill(document.getElementById('fuText').value, fuVars(c)); }
+  function fuFind(d) { return fuData.filter(function (c) { return c.d === d; })[0]; }
+
+  function fuContext(c) {
+    var t = [];
+    if (c.type === 'partial') { t.push('isi form ' + (c.dCreated === 0 ? 'hari ini' : c.dCreated + ' hari lalu')); if (c.cart) t.push('keranjang: ' + esc(c.cart)); }
+    else if (c.n === 0) { t.push('masuk ' + (c.dCreated === 0 ? 'hari ini' : c.dCreated + ' hari lalu')); if (c.svc) t.push('minat: ' + esc(c.svc)); }
+    else { t.push('terakhir beli ' + (c.dLast === 0 ? 'hari ini' : c.dLast + ' hari lalu')); t.push(c.n + 'x · ' + fmt(c.total)); if (c.product) t.push(esc(c.product)); }
+    if (c.age) t.push('anak: ' + esc(c.age));
+    return '<span class="fu-ctx">' + t.join(' · ') + '</span>';
+  }
+
+  function renderFollowup() {
+    fuData = fuBuild();
+    var counts = {}; FU_SEGS.forEach(function (s) { counts[s.id] = 0; });
+    fuData.forEach(function (c) { if (c.seg) counts[c.seg]++; });
+    document.getElementById('fuSegs').innerHTML = FU_SEGS.map(function (s) {
+      return '<button type="button" class="fu-chip' + (s.id === fuSeg ? ' on' : '') + '" data-fu-seg="' + s.id + '"><span>' + s.icon + ' ' + s.label + '</span><b>' + counts[s.id] + '</b></button>';
+    }).join('');
+    var seg = fuSegDef(fuSeg);
+    document.getElementById('fuSegTitle').textContent = seg.icon + ' ' + seg.label;
+    document.getElementById('fuSegDesc').textContent = seg.desc;
+    document.getElementById('fuOpts').innerHTML = seg.tpl.map(function (t, i) {
+      return '<button type="button" class="fu-opt' + (i === fuOpt ? ' on' : '') + '" data-fu-opt="' + i + '">' + esc(t[0]) + '</button>';
+    }).join('');
+    document.getElementById('fuText').value = fuTplText(seg, fuOpt);
+
+    var q = document.getElementById('fuQ').value.trim().toLowerCase(), hide = document.getElementById('fuHide').checked, sort = document.getElementById('fuSort').value;
+    var rows = fuData.filter(function (c) { return c.seg === fuSeg; }).filter(function (c) {
+      if (q && (c.name + ' ' + c.wa).toLowerCase().indexOf(q) === -1) return false;
+      if (hide && c.fuDays != null && c.fuDays <= 7) return false;
+      return true;
+    });
+    rows.sort(function (a, b) {
+      if (sort === 'nilai') return b.total - a.total;
+      if (sort === 'nama') return a.name.localeCompare(b.name);
+      return (b.fuDays == null ? 1e9 : b.fuDays) - (a.fuDays == null ? 1e9 : a.fuDays);
+    });
+    renderTable('fuTable', ['Nama', 'WhatsApp', 'Konteks', 'FU terakhir', 'Aksi'], rows.map(function (c) {
+      return [
+        '<b>' + esc(c.name || '-') + '</b>', esc(c.wa), fuContext(c),
+        c.fuDays == null ? '<small>belum pernah</small>' : (c.fuDays === 0 ? 'hari ini' : c.fuDays + ' hari lalu'),
+        '<div class="row-actions"><button type="button" class="btn-primary" data-fu-send="' + esc(c.d) + '">Kirim WA</button>' +
+        '<button type="button" data-fu-copy="' + esc(c.d) + '">Salin</button><button type="button" data-fu-sale="' + esc(c.d) + '">🧾 Jual</button></div>'
+      ];
+    }), [1]);
+  }
+
+  function fuMarkSent(c) {
+    var log = fuStore('bfk_fu_log', {}); log[c.d] = new Date().toISOString(); fuPut('bfk_fu_log', log);
+    if (c.type === 'lead') {
+      var l = c.ref, notes = String(l.notes || '') + (l.notes ? ' | ' : '') + 'FU ' + todayISO() + ' ' + fuSeg;
+      if (notes.length > 500) notes = notes.slice(notes.length - 500);
+      post({ type: 'lead_save', password: password, lead_id: l.lead_id, name: l.name, whatsapp: l.whatsapp, child_age: l.child_age, city: l.city, notes: notes })
+        .then(function (res) { if (res.ok) l.notes = notes; })
+        .then(function () {
+          if (l.status && l.status !== 'NEW') return;
+          return post({ type: 'status_update', password: password, target: 'lead', id: l.lead_id, status: 'DIHUBUNGI' }).then(function (r) { if (r.ok) l.status = 'DIHUBUNGI'; });
+        }).catch(function () {});
+    }
+    renderFollowup();
+  }
+
+  document.getElementById('tab-followup').addEventListener('click', function (e) {
+    var t;
+    if ((t = e.target.closest('[data-fu-seg]'))) { fuSeg = t.getAttribute('data-fu-seg'); fuOpt = 0; renderFollowup(); return; }
+    if ((t = e.target.closest('[data-fu-opt]'))) { fuOpt = Number(t.getAttribute('data-fu-opt')); renderFollowup(); return; }
+    if (e.target.id === 'fuReset') {
+      var ov = fuStore('bfk_fu_tpl', {}); delete ov[fuSeg + ':' + fuOpt]; fuPut('bfk_fu_tpl', ov); renderFollowup(); return;
+    }
+    if ((t = e.target.closest('[data-fu-send]'))) {
+      var c = fuFind(t.getAttribute('data-fu-send')); if (!c) return;
+      window.open('https://wa.me/' + fuWaNum(c.d) + '?text=' + encodeURIComponent(fuMsgFor(c)), '_blank', 'noopener');
+      fuMarkSent(c); return;
+    }
+    if ((t = e.target.closest('[data-fu-copy]'))) {
+      var c2 = fuFind(t.getAttribute('data-fu-copy')); if (!c2) return;
+      var msg = fuMsgFor(c2), b = t;
+      (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(function () { var o = b.textContent; b.textContent = 'Tersalin ✓'; setTimeout(function () { b.textContent = o; }, 1500); }, function () { window.prompt('Salin pesan ini:', msg); });
+      return;
+    }
+    if ((t = e.target.closest('[data-fu-sale]'))) {
+      var c3 = fuFind(t.getAttribute('data-fu-sale')); if (!c3) return;
+      document.querySelector('.tab-btn[data-tab="kasir"]').click();
+      var s = document.getElementById('sl-cust-search');
+      if (c3.type === 'lead') { s.value = c3.name + ' — ' + c3.ref.whatsapp; s.dispatchEvent(new Event('input')); }
+      else { s.value = ''; s.dispatchEvent(new Event('input')); document.getElementById('sl-cust-name').value = c3.name; document.getElementById('sl-cust-wa').value = c3.wa; }
+      s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+  document.getElementById('fuText').addEventListener('input', function () {
+    var ov = fuStore('bfk_fu_tpl', {}); ov[fuSeg + ':' + fuOpt] = this.value; fuPut('bfk_fu_tpl', ov);
+  });
+  document.getElementById('fuSapaan').value = fuStore('bfk_fu_sapaan', 'Bunda');
+  document.getElementById('fuSapaan').addEventListener('change', function () { fuPut('bfk_fu_sapaan', this.value); });
+  ['fuQ', 'fuSort', 'fuHide'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', renderFollowup);
+    document.getElementById(id).addEventListener('change', renderFollowup);
   });
 
   /* ---------- RINGKASAN MINGGUAN (EOS) ---------- */
