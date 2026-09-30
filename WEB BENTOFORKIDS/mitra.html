@@ -2,262 +2,1090 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mitra — Bento for Kids</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dashboard Mitra — Bento for Kids</title>
+<meta name="description" content="Daftar jadi mitra Bento for Kids dan pantau performa link referral Anda.">
 <meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream:#FBF6EC; --cream-2:#F3ECD9; --moss:#5E7F58; --moss-dark:#41593C;
-    --marigold:#E8A33D; --coral:#E8735C; --ink:#263230; --ink-soft:#5B6864; --line:#E4DCC8; --white:#FFFFFF;
+    --marigold:#E8A33D; --coral:#C8492F; --wa:#15803D; --wa-dark:#166534;
+    --ink:#263230; --ink-soft:#5B6864; --line:#E4DCC8; --white:#FFFFFF; --radius:22px;
+    --bad:#B03D26; --bad-bg:#FBEAE5; --pending-bg:#FCF1DB; --pending-fg:#8A5A12; --ok-bg:#E6EFE3; --ok-fg:#2F5A2A; --prog-bg:#EAF0F6; --prog-fg:#2F6DA6;
   }
   *{box-sizing:border-box;}
-  body{margin:0; font-family:'Plus Jakarta Sans',sans-serif; background:var(--cream); color:var(--ink);}
-  h1,h2,h3{font-family:'Baloo 2',sans-serif; color:var(--moss-dark); margin:0 0 .4em;}
-  .wrap{max-width:900px; margin:0 auto; padding:24px 20px 60px;}
-  .brand{text-align:center; margin:8px 0 18px;}
-  .brand h1{font-size:26px; margin:0;}
-  .brand p{margin:4px 0 0; color:var(--ink-soft); font-size:14px;}
-  input,select,textarea,button{font-family:inherit; font-size:15px;}
-  input,select,textarea{width:100%; padding:14px 16px; border:1.5px solid var(--line); border-radius:14px; background:var(--cream); color:var(--ink);}
-  input:focus,textarea:focus{outline:2px solid var(--moss); border-color:var(--moss);}
-  label{display:block; font-weight:700; font-size:14px; margin:0 0 6px;}
-  .field{margin-bottom:16px;}
-  .hint{font-size:12.5px; color:var(--ink-soft); margin:5px 0 0;}
-  button{cursor:pointer; border:none; font-weight:700;}
-  .btn{width:100%; padding:16px; border-radius:999px; background:var(--moss-dark); color:#fff; font-size:16px;}
-  .btn:hover{background:var(--moss);}
-  .btn:disabled{opacity:.6; cursor:wait;}
-  .btn-ghost{background:var(--cream-2); color:var(--moss-dark); border-radius:10px; padding:8px 14px; font-size:13px;}
-  .tabs{display:grid; grid-template-columns:1fr 1fr; gap:4px; background:var(--cream-2); border-radius:999px; padding:6px; margin-bottom:16px;}
-  .tabs button{padding:14px; border-radius:999px; background:none; color:var(--ink-soft); font-size:15px;}
-  .tabs button.on{background:#fff; color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,.08);}
-  .card{background:#fff; border:1px solid var(--line); border-radius:24px; padding:24px; margin-bottom:16px;}
-  .msg{border-radius:12px; padding:13px 16px; font-size:14px; margin-top:14px; display:none;}
-  .msg.err{display:block; background:#FBE6E1; color:#B03A2E;}
-  .msg.ok{display:block; background:#E4EFDF; color:var(--moss-dark);}
-  .foot{font-size:13.5px; color:var(--ink-soft); margin:14px 0 0;}
-  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
-  @media(max-width:560px){ .grid2{grid-template-columns:1fr;} }
-  .hidden{display:none !important;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:var(--ink); background:var(--cream); line-height:1.55;}
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+  header{padding:18px 0;}
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);}
+  .brand .logo{width:38px; height:38px; border-radius:11px; background:var(--marigold); display:grid; place-items:center; font-size:19px;}
+  .brand b{font-family:'Baloo 2',sans-serif; font-size:18px;}
+  .hero{padding:18px 0 6px;}
+  .kicker{display:inline-block; font-size:12px; font-weight:700; color:var(--moss); text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px;}
+  h1{font-family:'Baloo 2',sans-serif; font-size:clamp(24px,5vw,34px); line-height:1.15; margin:0 0 10px; color:var(--moss-dark);}
+  .sub{font-size:15.5px; color:var(--ink-soft); max-width:56ch; margin:0 0 18px;}
 
-  /* dashboard */
-  .dash-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; margin-bottom:14px;}
-  .dash-head h2{margin:0; font-size:24px;}
-  .dash-head small{color:var(--ink-soft);}
-  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:16px;}
-  .stat{background:#fff; border:1px solid var(--line); border-radius:18px; padding:16px;}
-  .stat b{display:block; font-family:'Baloo 2',sans-serif; font-size:24px; color:var(--coral); line-height:1.2;}
-  .stat span{font-size:12.5px; color:var(--ink-soft); font-weight:600;}
-  .stat.hl{background:var(--moss-dark);} .stat.hl b{color:#fff;} .stat.hl span{color:#DCE7D8;}
-  .linkrow{display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; padding:12px 0; border-bottom:1px solid var(--line);}
-  .linkrow:last-child{border-bottom:none;}
-  .linkrow b{font-size:14px;} .linkrow small{display:block; color:var(--ink-soft); font-size:12px; word-break:break-all; max-width:520px;}
-  .linkrow .acts{display:flex; gap:8px; flex-wrap:wrap;}
-  table{width:100%; border-collapse:collapse; font-size:13.5px;}
-  th,td{text-align:left; padding:9px 8px; border-bottom:1px solid var(--line);}
-  th{font-size:11.5px; text-transform:uppercase; color:var(--ink-soft); letter-spacing:.02em;}
+  .tabs{display:flex; gap:8px; margin:18px 0 20px; background:var(--cream-2); border-radius:999px; padding:4px;}
+  .tab-btn{flex:1; border:none; background:transparent; padding:10px 14px; border-radius:999px; font-weight:700; font-size:14px; color:var(--ink-soft); cursor:pointer; font-family:inherit;}
+  .tab-btn.active{background:var(--white); color:var(--moss-dark); box-shadow:0 1px 3px rgba(0,0,0,.08);}
+
+  .card{background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin:14px 0;}
+  label{display:block; font-size:13px; font-weight:700; color:var(--ink); margin:14px 0 6px;}
+  label:first-child{margin-top:0;}
+  input[type=text], input[type=tel], select{width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; font-size:15px; font-family:inherit; background:var(--cream); color:var(--ink);}
+  select{appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%235B6864'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;}
+  input:focus, select:focus{outline:none; border-color:var(--moss);}
+  .hint{font-size:12.5px; color:var(--ink-soft); margin-top:5px;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-weight:700; font-size:15px; padding:13px 22px; border-radius:999px; border:1.5px solid transparent; cursor:pointer; width:100%; font-family:inherit;}
+  .btn-primary{background:var(--moss-dark); color:#fff;}
+  .btn-primary:hover{background:#354b31;}
+  .btn-primary:disabled{opacity:.6; cursor:default;}
+  .btn-wa{background:var(--wa); color:#fff;}
+  .btn-wa:hover{background:var(--wa-dark);}
+  .msg{font-size:13.5px; border-radius:12px; padding:10px 14px; margin-top:12px; display:none;}
+  .msg.err{display:block; background:var(--bad-bg); color:var(--bad);}
+  .msg.ok{display:block; background:var(--ok-bg); color:var(--ok-fg);}
+
+  .badge{display:inline-block; font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; background:var(--pending-bg); color:var(--pending-fg);}
+  .badge.pending{background:var(--pending-bg); color:var(--pending-fg);}
+  .badge.approved, .badge.good{background:var(--ok-bg); color:var(--ok-fg);}
+  .badge.bad{background:var(--bad-bg); color:var(--bad);}
+  .badge.prog{background:var(--prog-bg); color:var(--prog-fg);}
+
+  .achieve-card{background:linear-gradient(135deg, var(--moss-dark), var(--moss)); border-radius:var(--radius); padding:20px; margin:16px 0; color:#fff;}
+  .achieve-top{display:flex; align-items:center; gap:12px;}
+  .achieve-emoji{font-size:34px; line-height:1;}
+  .achieve-top b{font-family:'Baloo 2',sans-serif; font-size:17px; display:block;}
+  .achieve-top span{font-size:12.5px; opacity:.85;}
+  .progress-track{background:rgba(255,255,255,.25); border-radius:999px; height:9px; margin-top:14px; overflow:hidden;}
+  .progress-fill{background:#fff; height:100%; border-radius:999px;}
+  .achieve-note{font-size:12.5px; margin-top:8px; opacity:.9;}
+
+  .target-card{background:var(--cream-2); border-radius:var(--radius); padding:18px 20px; margin:14px 0;}
+  .target-card .progress-track{background:var(--line);}
+  .target-card .progress-fill{background:var(--marigold);}
+  .target-card .achieve-note{color:var(--ink-soft); opacity:1;}
+
+  .profile-info{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 4px;}
+  .profile-info span{font-size:12px; background:var(--cream-2); color:var(--ink-soft); padding:5px 11px; border-radius:999px;}
+
+  .faq details{border-bottom:1px solid var(--line); padding:12px 0;}
+  .faq summary{cursor:pointer; font-weight:700; font-size:14.5px; color:var(--ink);}
+  .faq .a{margin:8px 0 0; font-size:13.5px; color:var(--ink-soft); line-height:1.6;}
+  .faq .a li{margin-bottom:6px;}
+  .cal-text{white-space:pre-wrap; font-size:13.5px; color:var(--ink); background:var(--cream); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin:10px 0 8px; line-height:1.6;}
+  .cal-copy{background:var(--moss-dark); color:#fff; border:none; font-weight:700; font-size:12.5px; padding:8px 16px; border-radius:999px; cursor:pointer; font-family:inherit;}
+  .cal-copy.copied{background:var(--marigold);}
+
+  .dash-head{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:4px;}
+  .dash-head h2{font-family:'Baloo 2',sans-serif; font-size:20px; color:var(--moss-dark); margin:0;}
+  .head-acts{display:flex; gap:12px; align-items:center;}
+
+  .stats{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:16px 0;}
+  @media(min-width:560px){ .stats{grid-template-columns:repeat(3,1fr);} }
+  .stat{background:var(--cream-2); border-radius:16px; padding:14px;}
+  .stat .num{font-family:'Baloo 2',sans-serif; font-size:22px; color:var(--moss-dark); line-height:1.1;}
+  .stat .lbl{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .stat.hl{background:var(--moss-dark);} .stat.hl .num{color:#fff;} .stat.hl .lbl{color:#DCE7D8;}
+
+  h3{font-family:'Baloo 2',sans-serif; font-size:16.5px; color:var(--ink); margin:22px 0 10px;}
+  .link-row{display:flex; align-items:center; gap:10px; background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:10px; flex-wrap:wrap;}
+  .link-row .info{flex:1; min-width:180px;}
+  .link-row .info b{display:block; font-size:14px;}
+  .link-row .info span{font-size:12px; color:var(--ink-soft); word-break:break-all;}
+  .link-row .acts{display:flex; gap:8px; flex-wrap:wrap;}
+  .copy{flex:none; background:var(--white); border:1.5px solid var(--moss-dark); color:var(--moss-dark); font-weight:700; font-size:12.5px; padding:8px 14px; border-radius:999px; cursor:pointer; font-family:inherit; text-decoration:none; display:inline-flex; align-items:center;}
+  .copy.copied{background:var(--moss-dark); color:#fff;}
+
   .tw{overflow-x:auto;}
-  .badge{display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:700; background:#FFF4E0; color:#7A5A16;}
-  .badge.good{background:#E4EFDF; color:var(--moss-dark);} .badge.bad{background:#FBE6E1; color:#B03A2E;} .badge.prog{background:#EAF0F6; color:#2F6DA6;}
-  .code-box{font-family:'Baloo 2',sans-serif; font-size:30px; color:var(--moss-dark); background:var(--cream-2); border-radius:14px; padding:12px 16px; text-align:center; letter-spacing:.03em; margin:12px 0;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:6px;}
+  th, td{text-align:left; padding:9px 8px; border-bottom:1px solid var(--line);}
+  th{color:var(--ink-soft); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em;}
+  .empty{color:var(--ink-soft); font-size:13.5px; padding:10px 0;}
+
+  .logout{background:transparent; border:none; color:var(--ink-soft); font-size:13px; text-decoration:underline; cursor:pointer; font-family:inherit; padding:0;}
+  footer{padding:26px 0 40px; font-size:12.5px; color:var(--ink-soft); text-align:center;}
+  footer a{color:var(--ink-soft);}
+  .spin{display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="brand">
-    <h1>🍱 Mitra Bento for Kids</h1>
-    <p>Bagikan makanan sehat untuk anak, dapatkan komisi dari setiap pesanan.</p>
-  </div>
+<header class="wrap">
+  <a href="/" class="brand"><span class="logo">🍱</span><b>Bento for Kids</b></a>
+</header>
 
-  <!-- ===== Halaman masuk / daftar ===== -->
+<main class="wrap">
+  <section class="hero">
+    <span class="kicker">Dashboard Mitra</span>
+    <h1 id="pageTitle">Daftar &amp; pantau performa referral Anda</h1>
+    <p class="sub" id="pageSub">Daftar sekali sebagai mitra, lalu login kapan saja dengan kode &amp; nomor WhatsApp Anda untuk melihat jumlah lead, pesanan, dan estimasi komisi dari link Anda.</p>
+  </section>
+
+  <section id="posterSection">
+    <!-- Simpan gambar poster sebagai /poster-kemitraan.jpg di folder yang sama dengan mitra.html. Jika file belum ada, bagian ini otomatis tersembunyi. -->
+    <div class="card" id="posterCard" style="padding:14px;">
+      <img src="/poster-kemitraan.jpg" alt="Sistem Kemitraan Bento for Kids: Reseller Stok, Affiliate, Maklon" style="width:100%; height:auto; border-radius:14px; display:block;" onerror="document.getElementById('posterCard').style.display='none'">
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg, var(--moss-dark), var(--moss)); color:#fff; border:none;">
+      <h2 style="font-family:'Baloo 2',sans-serif; font-size:20px; margin:0 0 8px; color:#fff;">🎉 Penawaran Spesial: Diskon 15–20%</h2>
+      <p style="margin:0 0 14px; font-size:14.5px; color:#EAF1E7;">Tanpa perlu menunggu capai target penjualan bulanan dulu — langsung dapat harga terbaik lewat sistem deposit sesuai paket di bawah.</p>
+
+      <div style="background:rgba(255,255,255,.12); border-radius:14px; padding:14px 16px; margin-bottom:10px;">
+        <b style="display:block; font-size:14.5px; margin-bottom:4px;">📦 Reseller Stok — min. 50 pcs</b>
+        <span style="font-size:13.5px; color:#EAF1E7;">Diskon <b>Rp5.000</b> dari setiap harga eceran produk.</span>
+      </div>
+      <div style="background:rgba(255,255,255,.12); border-radius:14px; padding:14px 16px; margin-bottom:10px;">
+        <b style="display:block; font-size:14.5px; margin-bottom:4px;">🔗 Affiliate/Agen — min. 300 pcs</b>
+        <span style="font-size:13.5px; color:#EAF1E7;">Dapat diskon + subsidi ongkir — detail nominal tanya admin sesuai lokasi &amp; kebutuhan Anda.</span>
+      </div>
+      <div style="background:rgba(255,255,255,.12); border-radius:14px; padding:14px 16px; margin-bottom:14px;">
+        <b style="display:block; font-size:14.5px; margin-bottom:4px;">🏭 Maklon — min. 500 pcs</b>
+        <span style="font-size:13.5px; color:#EAF1E7;">Dapat diskon + subsidi ongkir — detail nominal tanya admin sesuai spesifikasi produk Anda.</span>
+      </div>
+
+      <ul style="margin:0 0 16px; padding-left:20px; font-size:14px; color:#EAF1E7; line-height:1.7;">
+        <li>Sistem <b>deposit</b>: minimal belanja sesuai jumlah pcs paket di atas.</li>
+        <li>Pengambilan stok <b>fleksibel</b> — bisa bertahap sesuai kapasitas simpan/jual Anda, tidak harus diambil sekaligus di awal.</li>
+      </ul>
+      <a class="btn btn-wa" href="#" id="posterWaBtn" target="_blank" rel="noopener" style="background:#fff; color:var(--moss-dark);">💬 Tanya Paket Deposit &amp; Diskon</a>
+    </div>
+  </section>
+
+  <!-- ===== AUTH VIEW ===== -->
   <div id="authView">
-    <div class="tabs" id="authTabs">
-      <button type="button" class="on" data-t="login">Login Mitra</button>
-      <button type="button" data-t="register">Daftar Mitra Baru</button>
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLoginBtn" onclick="showAuthTab('login')">Login Mitra</button>
+      <button class="tab-btn" id="tabRegisterBtn" onclick="showAuthTab('register')">Daftar Mitra Baru</button>
     </div>
 
     <div class="card" id="loginCard">
-      <div class="field"><label for="lgCode">Kode Mitra</label><input id="lgCode" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="mis. sari01"></div>
-      <div class="field"><label for="lgWa">Nomor WhatsApp Terdaftar</label><input id="lgWa" type="tel" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx"></div>
-      <button type="button" class="btn" id="lgBtn">Masuk ke Dashboard</button>
-      <div class="msg" id="lgMsg"></div>
-      <p class="foot">Lupa kode Anda? Hubungi tim kami via <a id="waHelp" href="#" target="_blank" rel="noopener">WhatsApp</a>.</p>
+      <label for="loginCode">Kode Mitra</label>
+      <input type="text" id="loginCode" placeholder="mis. sinta" autocapitalize="none" spellcheck="false" autocomplete="username">
+      <label for="loginWa">Nomor WhatsApp Terdaftar</label>
+      <input type="tel" id="loginWa" placeholder="08xxxxxxxxxx" autocomplete="tel">
+      <button class="btn btn-primary" id="loginSubmit" style="margin-top:18px" onclick="doLogin()">Masuk ke Dashboard</button>
+      <div class="msg" id="loginMsg"></div>
+      <p class="hint">Lupa kode Anda? Hubungi tim kami via <a href="#" id="loginWaHelp">WhatsApp</a>.</p>
     </div>
 
-    <div class="card hidden" id="regCard">
-      <div id="regForm">
-        <div class="grid2">
-          <div class="field"><label for="rgName">Nama Lengkap *</label><input id="rgName" type="text" maxlength="80" autocomplete="name" placeholder="Nama Anda"></div>
-          <div class="field"><label for="rgWa">Nomor WhatsApp *</label><input id="rgWa" type="tel" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx"></div>
-        </div>
-        <div class="field"><label for="rgCode">Kode Mitra yang Diinginkan (opsional)</label>
-          <input id="rgCode" type="text" maxlength="30" autocapitalize="none" spellcheck="false" placeholder="mis. sari01">
-          <p class="hint">Huruf, angka, - atau _ (2–30 karakter, tanpa spasi). Dikosongkan = dibuatkan otomatis dari nama Anda.</p></div>
-        <div class="grid2">
-          <div class="field"><label for="rgCity">Kota / Domisili</label><input id="rgCity" type="text" maxlength="60" placeholder="mis. Bandar Lampung"></div>
-          <div class="field"><label for="rgSocial">Instagram / TikTok (opsional)</label><input id="rgSocial" type="text" maxlength="80" placeholder="@akun"></div>
-        </div>
-        <div class="field"><label for="rgNote">Ceritakan singkat rencana Anda (opsional)</label><textarea id="rgNote" rows="3" maxlength="300" placeholder="mis. saya aktif di komunitas ibu-ibu sekolah"></textarea></div>
-        <button type="button" class="btn" id="rgBtn">Daftar Sebagai Mitra</button>
-        <div class="msg" id="rgMsg"></div>
-      </div>
-      <div id="regDone" class="hidden">
-        <h3>🎉 Pendaftaran berhasil!</h3>
-        <p id="regDoneText"></p>
-        <div class="code-box" id="regDoneCode"></div>
-        <p class="hint">Simpan kode ini. Untuk masuk, Anda memerlukan <b>kode mitra</b> dan <b>nomor WhatsApp</b> yang didaftarkan.</p>
-        <button type="button" class="btn" id="regGoLogin" style="margin-top:12px;">Lanjut ke Login</button>
-      </div>
+    <div class="card" id="registerCard" style="display:none">
+      <label for="regName">Nama Lengkap</label>
+      <input type="text" id="regName" placeholder="Nama Anda" maxlength="80" autocomplete="name">
+      <label for="regWa">Nomor WhatsApp</label>
+      <input type="tel" id="regWa" placeholder="08xxxxxxxxxx" autocomplete="tel">
+      <label for="regDomisili">Domisili (Kota/Kecamatan)</label>
+      <input type="text" id="regDomisili" placeholder="mis. Bandar Lampung, Kedaton" maxlength="80">
+      <label for="regTokoNama">Nama Toko <span style="font-weight:500;color:var(--ink-soft)">(kalau ada)</span></label>
+      <input type="text" id="regTokoNama" placeholder="mis. Toko Sinta Frozen" maxlength="80">
+      <label for="regPunyaToko">Apakah Anda punya toko fisik?</label>
+      <select id="regPunyaToko"><option value="0">Belum, jual dari rumah/online</option><option value="1">Ya, punya toko</option></select>
+      <label for="regPunyaFreezer">Apakah Anda punya freezer sendiri?</label>
+      <select id="regPunyaFreezer"><option value="0">Belum punya</option><option value="1">Ya, punya freezer</option></select>
+      <label for="regPernahJual">Pernah titip jual/jual produk frozen food sebelumnya?</label>
+      <select id="regPernahJual"><option value="0">Belum pernah</option><option value="1">Pernah/sedang berjalan</option></select>
+      <label for="regTarget">Target Penjualan Anda per Bulan <span style="font-weight:500;color:var(--ink-soft)">(opsional, dalam Rupiah)</span></label>
+      <input type="text" inputmode="numeric" id="regTarget" placeholder="mis. 1000000">
+      <label for="regCode">Kode Referral Pilihan <span style="font-weight:500;color:var(--ink-soft)">(opsional)</span></label>
+      <input type="text" id="regCode" placeholder="mis. sinta — huruf/angka, tanpa spasi" maxlength="30" autocapitalize="none" spellcheck="false">
+      <p class="hint" style="margin-top:-2px">Kosongkan agar dibuatkan otomatis dari nama Anda. Ini akan jadi bagian dari link referral Anda.</p>
+      <label for="regNotes">Catatan <span style="font-weight:500;color:var(--ink-soft)">(opsional)</span></label>
+      <input type="text" id="regNotes" placeholder="mis. komunitas / sekolah / area Anda" maxlength="300">
+      <button class="btn btn-primary" id="regSubmit" style="margin-top:18px" onclick="doRegister()">Daftar Sekarang</button>
+      <div class="msg" id="regMsg"></div>
+      <p class="hint">Akun Anda langsung <b>aktif dengan komisi 5%</b> dan link referral bisa langsung dipakai. Data toko/freezer di atas membantu tim kami menyiapkan dukungan yang paling pas untuk Anda.</p>
     </div>
   </div>
 
-  <!-- ===== Dashboard mitra ===== -->
-  <div id="dashView" class="hidden">
+  <!-- ===== DASHBOARD VIEW ===== -->
+  <div id="dashView" style="display:none">
     <div class="dash-head">
-      <div><h2 id="dName"></h2><small id="dSub"></small></div>
-      <div style="display:flex; gap:8px;"><button type="button" class="btn-ghost" id="dRefresh">↻ Perbarui</button><button type="button" class="btn-ghost" id="dLogout">Keluar</button></div>
+      <h2 id="dashName">Halo!</h2>
+      <div class="head-acts">
+        <button class="logout" onclick="refreshDashboard()">↻ Perbarui</button>
+        <button class="logout" onclick="doLogout()">Keluar</button>
+      </div>
     </div>
-    <div class="stats" id="dStats"></div>
+    <span class="badge" id="statusBadge">—</span>
+    <div class="profile-info" id="profileInfo"></div>
 
-    <div class="card">
-      <h3>🔗 Link Referral Anda</h3>
-      <p class="hint" style="margin-top:0;">Bagikan salah satu link di bawah. Setiap kunjungan, lead, dan pesanan dari link ini otomatis tercatat atas nama Anda.</p>
-      <div id="dLinks"></div>
+    <div class="stats">
+      <div class="stat hl" id="statConfirmedBox" style="display:none"><div class="num" id="statConfirmed">Rp0</div><div class="lbl">Komisi pasti (Dibayar/Dikirim/Selesai)</div></div>
+      <div class="stat"><div class="num" id="statCommission">Rp0</div><div class="lbl">Estimasi komisi (<span id="commissionPct">0</span>%)</div></div>
+      <div class="stat" id="statVisitsBox" style="display:none"><div class="num" id="statVisits">0</div><div class="lbl">Kunjungan</div></div>
+      <div class="stat"><div class="num" id="statLeads">0</div><div class="lbl">Lead masuk</div></div>
+      <div class="stat"><div class="num" id="statOrders">0</div><div class="lbl">Pesanan</div></div>
+      <div class="stat"><div class="num" id="statRevenue">Rp0</div><div class="lbl">Omzet dari Anda</div></div>
     </div>
 
-    <div class="card">
+    <div class="achieve-card" id="achieveCard">
+      <div class="achieve-top">
+        <div class="achieve-emoji" id="achieveEmoji">🌱</div>
+        <div><b id="achieveLabel">Mitra Baru</b><span id="achieveSub">Mulai bagikan link Anda!</span></div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="achieveProgressFill" style="width:0%"></div></div>
+      <p class="achieve-note" id="achieveNote"></p>
+    </div>
+
+    <div class="target-card" id="targetCard" style="display:none">
+      <b style="font-family:'Baloo 2',sans-serif; font-size:15px; color:var(--ink);">🎯 Target Bulanan Anda</b>
+      <div class="progress-track"><div class="progress-fill" id="targetProgressFill" style="width:0%"></div></div>
+      <p class="achieve-note" id="targetNote"></p>
+    </div>
+
+    <h3>Link referral Anda</h3>
+    <p class="hint" style="margin-top:-4px">Bagikan salah satu link ini ke orang tua yang Anda kenal. Semua kunjungan &amp; pesanan lewat link ini tercatat otomatis atas nama Anda.</p>
+    <div id="linkList"></div>
+
+    <h3>Performa per jenis link</h3>
+    <table id="linkTable">
+      <thead><tr><th>Jenis Link</th><th>Kunjungan</th></tr></thead>
+      <tbody id="linkTableBody"></tbody>
+    </table>
+    <p class="empty" id="linkTableEmpty" style="display:none">Belum ada data kunjungan dari link Anda.</p>
+
+    <div id="ordersSection" style="display:none">
       <h3>📋 Pesanan dari Referral Anda</h3>
-      <p class="hint" style="margin-top:0;">Komisi pasti dihitung dari pesanan berstatus Dibayar, Dikirim, atau Selesai. Pesanan Baru masih berupa estimasi.</p>
-      <div class="tw"><table id="dOrders"></table></div>
+      <p class="hint" style="margin-top:-4px">Komisi pasti dihitung dari pesanan berstatus Dibayar, Dikirim, atau Selesai. Pesanan Baru masih berupa estimasi.</p>
+      <div class="tw"><table><thead><tr><th>Tanggal</th><th>Total</th><th>Status</th><th>Komisi</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
     </div>
 
-    <div class="card">
+    <div id="leadsSection" style="display:none">
       <h3>👥 Calon Pelanggan (Lead)</h3>
-      <div class="tw"><table id="dLeads"></table></div>
+      <div class="tw"><table><thead><tr><th>Tanggal</th><th>Nama</th><th>Status</th></tr></thead><tbody id="leadsBody"></tbody></table></div>
+    </div>
+
+    <h3>Materi Konten &amp; Promosi</h3>
+    <div class="link-row">
+      <div class="info"><b>📁 Folder Konten Bento for Kids</b><span>Foto produk, video, dan template caption siap pakai — unduh dan bagikan langsung</span></div>
+      <a class="copy" href="https://drive.google.com/drive/folders/1-9_KXW3Sqa7qgEz-Pdi56kFo9crZjg5K" target="_blank" rel="noopener">Buka Folder</a>
+    </div>
+    <div class="link-row">
+      <div class="info"><b>💬 Kumpulan Caption Lengkap (ChatGPT)</b><span>Semua caption dalam satu percakapan — bisa Anda minta variasi baru langsung di sana</span></div>
+      <a class="copy" href="https://chatgpt.com/share/6ab718db-dc00-83ec-8340-31739b4fd225" target="_blank" rel="noopener">Buka Chat</a>
+    </div>
+
+    <h3>🗓️ Kalender Konten 30 Hari — Siap Kirim ke WhatsApp/Status</h3>
+    <p class="hint" style="margin-top:-4px">Tinggal buka hari yang sesuai, salin, lalu tempel ke status WhatsApp atau chat pribadi. Tidak perlu urut tanggal — pilih saja yang paling cocok dengan situasi Anda hari ini.</p>
+    <div class="faq" id="contentCalendar"></div>
+
+    <h3>📚 Panduan Mitra</h3>
+    <p class="hint" style="margin-top:-4px">Baru pertama jadi mitra? Baca ini dulu — sudah dirangkum supaya Anda cepat mulai.</p>
+    <div class="faq">
+      <details open>
+        <summary>Bagaimana cara kerjanya?</summary>
+        <div class="a">
+          <ol style="margin:8px 0 0; padding-left:18px;">
+            <li>Anda sudah punya kode &amp; 3 link referral di atas (Beranda, Katalog, Halaman Link).</li>
+            <li>Bagikan salah satu link itu ke WhatsApp, status, atau grup yang Anda ikuti.</li>
+            <li>Siapa pun yang klik dan akhirnya isi form lead atau pesan lewat link Anda, otomatis tercatat atas nama Anda (yang membawa pengunjung pertama kali yang dapat kredit).</li>
+            <li>Dashboard ini terisi otomatis: jumlah lead, pesanan, omzet, dan estimasi komisi Anda.</li>
+            <li>Komisi direkap dan dibayarkan sesuai kesepakatan — hubungi tim kami lewat tombol WhatsApp di bawah untuk pencairan.</li>
+          </ol>
+        </div>
+      </details>
+      <details>
+        <summary>Strategi tercepat menuju Rp1.000.000 pertama</summary>
+        <div class="a">
+          <ul style="margin:8px 0 0; padding-left:18px;">
+            <li><b>Mulai dari lingkaran terdekat</b> — keluarga, tetangga yang punya anak kecil, grup WA arisan/sekolah/posyandu tempat Anda sudah dipercaya.</li>
+            <li><b>Jangan cuma kirim link kosong</b> — sertakan foto/video produk asli dan cerita singkat (rasa, praktis buat bekal, tanpa MSG &amp; pengawet). Ambil materinya dari folder Konten di atas.</li>
+            <li><b>Fokus 1 manfaat yang jelas</b> per pesan, misalnya "bekal sehat 5 menit jadi tanpa ribet masak pagi-pagi" — lebih kena daripada sekadar "yuk beli frozen food".</li>
+            <li><b>Follow up H+1–2</b> setelah share pertama. Kebanyakan closing terjadi di follow up kedua atau ketiga, bukan share pertama.</li>
+            <li><b>Manfaatkan momen</b>: awal bulan gajian, weekend belanja mingguan, atau menjelang anak masuk sekolah.</li>
+            <li><b>Tawarkan bantu hitung kebutuhan gizi anak</b> lewat kalkulator di website — bikin obrolan terasa membantu, bukan jualan.</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>Apa saja yang perlu disiapkan?</summary>
+        <div class="a">
+          <ul style="margin:8px 0 0; padding-left:18px;">
+            <li>Nomor WhatsApp aktif dengan foto profil yang jelas dan ramah.</li>
+            <li>Kalau memungkinkan, coba dulu produknya sendiri — supaya bisa cerita rasa asli, bukan cuma baca deskripsi.</li>
+            <li>Simpan foto/video dan contoh caption dari folder Konten agar mudah tinggal kirim kapan saja.</li>
+            <li>Waktu rutin ±10–15 menit/hari untuk posting status atau follow up chat yang belum closing.</li>
+            <li>Konsistensi — mitra yang cepat capai Rp1 juta pertama biasanya aktif share &amp; follow up selama 1–2 minggu, bukan kirim link sekali lalu berhenti.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div class="card" style="margin-top:24px; text-align:center;">
+      <p style="margin:0 0 14px; font-size:14px;">Ada pertanyaan soal komisi atau pembayaran?</p>
+      <a class="btn btn-wa" id="dashWaHelp" href="#" target="_blank" rel="noopener">Hubungi Tim via WhatsApp</a>
     </div>
   </div>
-</div>
+</main>
+
+<footer>
+  <p>Bento for Kids — Healthy Lifestyle Brand for Kids · Bandar Lampung · <a href="/">Kembali ke beranda</a></p>
+</footer>
 
 <script>
-  // Samakan dengan APPS_SCRIPT_URL di admin.html dan index.html
+  // Samakan dengan APPS_SCRIPT_URL di index.html / admin.html
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz94KoVYS7YGz2DxN9pVyGRaeq6BtsZm3OzVuR7p_K5DQvlETZ9rcOuMmQecmYLkSrW/exec';
-  var HELP_WA = '';   // opsional: isi nomor admin format 62812xxxx untuk tautan "WhatsApp" di bawah tombol masuk
+  var SITE_ORIGIN = window.location.origin;
+  var WA_NUMBER = '628117919119'; // nomor WhatsApp admin Bento for Kids
+  var session = null;
 
   function $(id) { return document.getElementById(id); }
-  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function fmt(n) { return 'Rp' + (Number(n) || 0).toLocaleString('id-ID'); }
+  function callApi(obj) {
+    return fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(obj) })
+      .then(function (r) { return r.json(); });
+  }
+  function fmtIDR(n) { return 'Rp' + Math.round(Number(n) || 0).toLocaleString('id-ID'); }
   function fmtDate(iso) { var d = new Date(iso); return isNaN(d) ? '-' : d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }); }
-  function post(obj) {
-    return fetch(APPS_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(obj) }).then(function (r) { return r.json(); });
+  function setMsg(el, text, ok) { el.textContent = text; el.className = 'msg ' + (ok ? 'ok' : 'err'); }
+  function clearMsg(el) { el.textContent = ''; el.className = 'msg'; }
+
+  $('loginWaHelp').href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent('Halo, saya lupa kode mitra Bento for Kids saya.');
+  $('posterWaBtn').href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent('Halo, saya tertarik dengan penawaran deposit Reseller/Affiliate/Maklon (Reseller min 50pcs diskon Rp5.000/produk, Agen min 300pcs, Maklon min 500pcs). Boleh info detailnya?');
+
+  function showAuthTab(which) {
+    var isLogin = which === 'login';
+    $('tabLoginBtn').classList.toggle('active', isLogin);
+    $('tabRegisterBtn').classList.toggle('active', !isLogin);
+    $('loginCard').style.display = isLogin ? 'block' : 'none';
+    $('registerCard').style.display = isLogin ? 'none' : 'block';
   }
-  function show(el, text, cls) { el.className = 'msg ' + (cls || 'err'); el.textContent = text; }
-  function hide(el) { el.className = 'msg'; el.textContent = ''; }
-  if (HELP_WA) $('waHelp').href = 'https://wa.me/' + HELP_WA; else $('waHelp').removeAttribute('href');
 
-  /* ---- tab ---- */
-  document.querySelectorAll('#authTabs button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      document.querySelectorAll('#authTabs button').forEach(function (x) { x.classList.toggle('on', x === b); });
-      var reg = b.getAttribute('data-t') === 'register';
-      $('loginCard').classList.toggle('hidden', reg); $('regCard').classList.toggle('hidden', !reg);
-    });
-  });
+  function doRegister() {
+    var name = $('regName').value.trim();
+    var wa = $('regWa').value.trim();
+    var domisili = $('regDomisili').value.trim();
+    var namaToko = $('regTokoNama').value.trim();
+    var punyaToko = $('regPunyaToko').value === '1';
+    var punyaFreezer = $('regPunyaFreezer').value === '1';
+    var pernahJual = $('regPernahJual').value === '1';
+    var target = $('regTarget').value.replace(/\D/g, '');
+    var code = $('regCode').value.trim();
+    var notes = $('regNotes').value.trim();
+    var msgEl = $('regMsg');
+    clearMsg(msgEl);
+    if (name.length < 2 || !wa) { setMsg(msgEl, 'Nama dan nomor WhatsApp wajib diisi.', false); return; }
+    if (wa.replace(/\D/g, '').length < 9) { setMsg(msgEl, 'Nomor WhatsApp tidak valid.', false); return; }
+    if (!domisili) { setMsg(msgEl, 'Domisili wajib diisi.', false); return; }
+    if (code && !/^[A-Za-z0-9_-]{2,30}$/.test(code)) { setMsg(msgEl, 'Kode hanya boleh huruf, angka, - atau _ (2–30 karakter, tanpa spasi).', false); return; }
 
-  /* ---- login ---- */
-  var session = null;   // { code, wa }
-  function doLogin(code, wa, silent) {
-    var btn = $('lgBtn'); btn.disabled = true; hide($('lgMsg'));
-    return post({ type: 'mitra_login', code: code, whatsapp: wa }).then(function (res) {
-      btn.disabled = false;
-      if (!res.ok) { if (!silent) show($('lgMsg'), res.error || 'Gagal masuk.'); sessionStorage.removeItem('bfk_mitra'); return; }
-      session = { code: code, wa: wa };
-      sessionStorage.setItem('bfk_mitra', JSON.stringify(session));
-      renderDash(res);
-    }).catch(function () { btn.disabled = false; if (!silent) show($('lgMsg'), 'Tidak bisa terhubung ke server. Periksa koneksi Anda.'); });
-  }
-  $('lgBtn').addEventListener('click', function () {
-    var code = $('lgCode').value.trim(), wa = $('lgWa').value.trim();
-    if (!code || !wa) { show($('lgMsg'), 'Isi kode mitra dan nomor WhatsApp.'); return; }
-    doLogin(code, wa);
-  });
-  [$('lgCode'), $('lgWa')].forEach(function (el) { el.addEventListener('keydown', function (e) { if (e.key === 'Enter') $('lgBtn').click(); }); });
-
-  /* ---- daftar ---- */
-  $('rgBtn').addEventListener('click', function () {
-    var name = $('rgName').value.trim(), wa = $('rgWa').value.trim(), code = $('rgCode').value.trim(), msg = $('rgMsg');
-    if (name.length < 2) { show(msg, 'Isi nama lengkap Anda.'); return; }
-    if (wa.replace(/\D/g, '').length < 9) { show(msg, 'Nomor WhatsApp tidak valid.'); return; }
-    if (code && !/^[A-Za-z0-9_-]{2,30}$/.test(code)) { show(msg, 'Kode hanya boleh huruf, angka, - atau _ (2–30 karakter, tanpa spasi).'); return; }
-    var btn = $('rgBtn'); btn.disabled = true; btn.textContent = 'Mendaftarkan...'; hide(msg);
-    post({ type: 'mitra_register', name: name, whatsapp: wa, code: code, city: $('rgCity').value.trim(), social: $('rgSocial').value.trim(), notes: $('rgNote').value.trim() })
+    var btn = $('regSubmit');
+    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Mendaftarkan...';
+    callApi({
+      type: 'mitra_register', name: name, whatsapp: wa, code: code, notes: notes,
+      domisili: domisili, nama_toko: namaToko, punya_toko: punyaToko, punya_freezer: punyaFreezer,
+      pernah_jual_frozen: pernahJual, target_penjualan: target ? Number(target) : 0
+    })
       .then(function (res) {
-        btn.disabled = false; btn.textContent = 'Daftar Sebagai Mitra';
-        if (!res.ok) { show(msg, res.error || 'Pendaftaran gagal. Coba lagi.'); return; }
-        $('regForm').classList.add('hidden'); $('regDone').classList.remove('hidden');
-        $('regDoneCode').textContent = res.code;
-        $('regDoneText').textContent = res.active
-          ? 'Selamat bergabung, ' + name + '! Akun Anda sudah aktif. Ini kode mitra Anda:'
-          : 'Terima kasih, ' + name + '! Pendaftaran Anda kami terima dan akan segera ditinjau tim kami. Ini kode mitra Anda:';
-        $('lgCode').value = res.code; $('lgWa').value = wa;
-      }).catch(function () { btn.disabled = false; btn.textContent = 'Daftar Sebagai Mitra'; show(msg, 'Tidak bisa terhubung ke server. Periksa koneksi Anda.'); });
-  });
-  $('regGoLogin').addEventListener('click', function () { document.querySelector('#authTabs button[data-t="login"]').click(); });
+        btn.disabled = false; btn.textContent = 'Daftar Sekarang';
+        if (!res.ok) { setMsg(msgEl, res.error || 'Gagal mendaftar.', false); return; }
+        setMsg(msgEl, 'Berhasil! Kode mitra Anda: ' + res.code + '. Simpan baik-baik, lalu masuk lewat tab Login.', true);
+        $('loginCode').value = res.code;
+        $('loginWa').value = wa;
+        setTimeout(function () { showAuthTab('login'); }, 1400);
+      })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Daftar Sekarang'; setMsg(msgEl, 'Terjadi kesalahan jaringan. Coba lagi.', false); });
+  }
 
-  /* ---- dashboard ---- */
-  var LINKS = [
-    ['Beranda', 'home', function (c) { return location.origin + '/?ref=' + encodeURIComponent(c) + '&utm_source=mitra&utm_medium=referral&utm_content=home'; }],
-    ['Katalog', 'katalog', function (c) { return location.origin + '/?ref=' + encodeURIComponent(c) + '&utm_source=mitra&utm_medium=referral&utm_content=katalog#katalog'; }],
-    ['Halaman Link', 'linkbio', function (c) { return location.origin + '/links.html?ref=' + encodeURIComponent(c) + '&utm_source=mitra&utm_medium=referral&utm_content=linkbio'; }]
+  function doLogin() {
+    var code = $('loginCode').value.trim();
+    var wa = $('loginWa').value.trim();
+    var msgEl = $('loginMsg');
+    clearMsg(msgEl);
+    if (!code || !wa) { setMsg(msgEl, 'Kode dan nomor WhatsApp wajib diisi.', false); return; }
+
+    var btn = $('loginSubmit');
+    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Memeriksa...';
+    callApi({ type: 'mitra_login', code: code, whatsapp: wa })
+      .then(function (res) {
+        btn.disabled = false; btn.textContent = 'Masuk ke Dashboard';
+        if (!res.ok) { setMsg(msgEl, res.error || 'Gagal masuk.', false); return; }
+        session = { code: code, whatsapp: wa };
+        try { localStorage.setItem('bfk_mitra_auth', JSON.stringify(session)); } catch (e) {}
+        renderDashboard(res);
+      })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Masuk ke Dashboard'; setMsg(msgEl, 'Terjadi kesalahan jaringan. Coba lagi.', false); });
+  }
+
+  function refreshDashboard() {
+    if (!session) return;
+    callApi({ type: 'mitra_login', code: session.code, whatsapp: session.whatsapp })
+      .then(function (res) { if (res.ok) renderDashboard(res); })
+      .catch(function () {});
+  }
+
+  function doLogout() {
+    session = null;
+    try { localStorage.removeItem('bfk_mitra_auth'); } catch (e) {}
+    $('dashView').style.display = 'none';
+    $('authView').style.display = 'block';
+    $('posterSection').style.display = 'block';
+    $('pageTitle').textContent = 'Daftar & pantau performa referral Anda';
+    $('loginWa').value = '';
+  }
+
+  var LINK_VARIANTS = [
+    { key: 'home', label: 'Link Beranda', desc: 'Membuka halaman utama — cocok dibagikan di story/chat', path: '/' },
+    { key: 'katalog', label: 'Link Katalog', desc: 'Langsung ke daftar menu frozen food', path: '/#katalog' },
+    { key: 'linkbio', label: 'Link Halaman Link', desc: 'Satu link untuk semua (link-in-bio Instagram)', path: '/links.html' }
   ];
+
+  // Query harus ditaruh SEBELUM hash agar tetap terbaca.
+  function buildLink(v, code) {
+    var hashIdx = v.path.indexOf('#');
+    var base = hashIdx > -1 ? v.path.slice(0, hashIdx) : v.path;
+    var hash = hashIdx > -1 ? v.path.slice(hashIdx) : '';
+    var sep = base.indexOf('?') > -1 ? '&' : '?';
+    return SITE_ORIGIN + base + sep + 'ref=' + encodeURIComponent(code) + '&utm_source=mitra&utm_medium=referral&utm_content=' + v.key + hash;
+  }
+
+  function renderLinks(code) {
+    var wrap = $('linkList');
+    wrap.innerHTML = '';
+    LINK_VARIANTS.forEach(function (v) {
+      var url = buildLink(v, code);
+      var row = document.createElement('div');
+      row.className = 'link-row';
+
+      var info = document.createElement('div');
+      info.className = 'info';
+      var b = document.createElement('b'); b.textContent = v.label;
+      var d = document.createElement('span'); d.textContent = v.desc;
+      var u = document.createElement('span'); u.style.display = 'block'; u.textContent = url;
+      info.appendChild(b); info.appendChild(d); info.appendChild(u);
+
+      var acts = document.createElement('div');
+      acts.className = 'acts';
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'copy'; copyBtn.textContent = 'Salin';
+      copyBtn.addEventListener('click', function () {
+        var done = function () {
+          copyBtn.textContent = 'Tersalin!'; copyBtn.classList.add('copied');
+          setTimeout(function () { copyBtn.textContent = 'Salin'; copyBtn.classList.remove('copied'); }, 1600);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(url).then(done).catch(function () { window.prompt('Salin link ini:', url); });
+        else window.prompt('Salin link ini:', url);
+      });
+      var wa = document.createElement('a');
+      wa.className = 'copy'; wa.target = '_blank'; wa.rel = 'noopener'; wa.textContent = 'Bagikan WA';
+      wa.href = 'https://wa.me/?text=' + encodeURIComponent('Yuk coba frozen food sehat untuk anak dari Bento for Kids 🍱 ' + url);
+      acts.appendChild(copyBtn); acts.appendChild(wa);
+
+      row.appendChild(info); row.appendChild(acts);
+      wrap.appendChild(row);
+    });
+  }
+
+  function renderLinkTable(links) {
+    var tbody = $('linkTableBody');
+    var emptyEl = $('linkTableEmpty');
+    tbody.innerHTML = '';
+    var labelMap = {}; LINK_VARIANTS.forEach(function (v) { labelMap[v.key] = v.label; });
+    var keys = Object.keys(links || {});
+    if (!keys.length) { emptyEl.style.display = 'block'; return; }
+    emptyEl.style.display = 'none';
+    keys.sort(function (a, b) { return (links[b] || 0) - (links[a] || 0); });
+    keys.forEach(function (k) {
+      var tr = document.createElement('tr');
+      var td1 = document.createElement('td'); td1.textContent = labelMap[k] || k;
+      var td2 = document.createElement('td'); td2.textContent = links[k] || 0;
+      tr.appendChild(td1); tr.appendChild(td2);
+      tbody.appendChild(tr);
+    });
+  }
+
   var ST_CLASS = { NEW: '', DIBAYAR: 'good', DIKIRIM: 'prog', SELESAI: 'good', DIHUBUNGI: 'prog', DEAL: 'good', TIDAK_JADI: 'bad' };
   var ST_LABEL = { NEW: 'Baru', DIBAYAR: 'Dibayar', DIKIRIM: 'Dikirim', SELESAI: 'Selesai', DIHUBUNGI: 'Dihubungi', DEAL: 'Deal', TIDAK_JADI: 'Tidak Jadi' };
-  function badge(s) { s = s || 'NEW'; return '<span class="badge ' + (ST_CLASS[s] || '') + '">' + esc(ST_LABEL[s] || s) + '</span>'; }
-
-  function renderDash(res) {
-    var m = res.mitra, s = res.stats;
-    $('authView').classList.add('hidden'); $('dashView').classList.remove('hidden');
-    $('dName').textContent = 'Halo, ' + (m.name || m.code) + ' 👋';
-    $('dSub').textContent = 'Kode mitra: ' + m.code + ' · Komisi ' + (m.commission_pct || 0) + '%';
-    $('dStats').innerHTML = [
-      ['Komisi Pasti', fmt(s.commission_confirmed), true], ['Estimasi Komisi', fmt(s.commission_estimated)],
-      ['Kunjungan', s.visits], ['Lead', s.leads], ['Pesanan', s.orders], ['Nilai Pesanan', fmt(s.revenue)]
-    ].map(function (x) { return '<div class="stat' + (x[2] ? ' hl' : '') + '"><b>' + x[1] + '</b><span>' + x[0] + '</span></div>'; }).join('');
-
-    $('dLinks').innerHTML = LINKS.map(function (l) {
-      var url = l[2](m.code), n = (res.links || {})[l[1]] || 0;
-      return '<div class="linkrow"><div><b>' + l[0] + '</b> <span class="hint">· ' + n + ' kunjungan</span><small>' + esc(url) + '</small></div>' +
-        '<div class="acts"><button type="button" class="btn-ghost" data-copy="' + esc(url) + '">Salin</button>' +
-        '<a href="https://wa.me/?text=' + encodeURIComponent('Yuk coba frozen food sehat untuk anak dari Bento for Kids 🍱 ' + url) + '" target="_blank" rel="noopener"><button type="button" class="btn-ghost">Bagikan WA</button></a></div></div>';
-    }).join('');
-
-    var oh = ['Tanggal', 'Total', 'Status', 'Komisi'];
-    $('dOrders').innerHTML = '<thead><tr>' + oh.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
-      ((res.orders || []).length ? res.orders.map(function (o) {
-        return '<tr><td>' + fmtDate(o.date) + '</td><td>' + fmt(o.total) + '</td><td>' + badge(o.status) + '</td><td>' + fmt(o.commission) + '</td></tr>';
-      }).join('') : '<tr><td colspan="4">Belum ada pesanan dari link Anda.</td></tr>') + '</tbody>';
-
-    var lh = ['Tanggal', 'Nama', 'Status'];
-    $('dLeads').innerHTML = '<thead><tr>' + lh.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' +
-      ((res.leads || []).length ? res.leads.map(function (l) {
-        return '<tr><td>' + fmtDate(l.date) + '</td><td>' + esc(l.name) + '</td><td>' + badge(l.status) + '</td></tr>';
-      }).join('') : '<tr><td colspan="3">Belum ada lead dari link Anda.</td></tr>') + '</tbody>';
+  function statusBadge(s) {
+    s = s || 'NEW';
+    var sp = document.createElement('span');
+    sp.className = 'badge ' + (ST_CLASS[s] || '');
+    sp.textContent = ST_LABEL[s] || s;
+    return sp;
   }
-  $('dLinks').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-copy]'); if (!b) return;
-    var text = b.getAttribute('data-copy');
-    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
-      var o = b.textContent; b.textContent = 'Tersalin ✓'; setTimeout(function () { b.textContent = o; }, 1500);
-    }, function () { window.prompt('Salin link ini:', text); });
-  });
-  $('dRefresh').addEventListener('click', function () { if (session) doLogin(session.code, session.wa, true); });
-  $('dLogout').addEventListener('click', function () {
-    sessionStorage.removeItem('bfk_mitra'); session = null;
-    $('dashView').classList.add('hidden'); $('authView').classList.remove('hidden'); $('lgWa').value = '';
-  });
+  function addRow(tbody, cells) {
+    var tr = document.createElement('tr');
+    cells.forEach(function (c) {
+      var td = document.createElement('td');
+      if (c && c.nodeType) td.appendChild(c); else td.textContent = c;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  }
 
-  // masuk otomatis bila sesi masih ada di tab ini
-  try { var saved = JSON.parse(sessionStorage.getItem('bfk_mitra') || 'null'); if (saved && saved.code) { $('lgCode').value = saved.code; $('lgWa').value = saved.wa; doLogin(saved.code, saved.wa, true); } } catch (e) {}
+  function renderOrdersLeads(res) {
+    var orders = res.orders, leads = res.leads;
+    if (Array.isArray(orders)) {
+      $('ordersSection').style.display = 'block';
+      var ob = $('ordersBody'); ob.innerHTML = '';
+      if (!orders.length) { var tr = document.createElement('tr'); var td = document.createElement('td'); td.colSpan = 4; td.textContent = 'Belum ada pesanan dari link Anda.'; tr.appendChild(td); ob.appendChild(tr); }
+      orders.forEach(function (o) { addRow(ob, [fmtDate(o.date), fmtIDR(o.total), statusBadge(o.status), fmtIDR(o.commission)]); });
+    } else { $('ordersSection').style.display = 'none'; }
+    if (Array.isArray(leads)) {
+      $('leadsSection').style.display = 'block';
+      var lb = $('leadsBody'); lb.innerHTML = '';
+      if (!leads.length) { var tr2 = document.createElement('tr'); var td2 = document.createElement('td'); td2.colSpan = 3; td2.textContent = 'Belum ada lead dari link Anda.'; tr2.appendChild(td2); lb.appendChild(tr2); }
+      leads.forEach(function (l) { addRow(lb, [fmtDate(l.date), l.name || '-', statusBadge(l.status)]); });
+    } else { $('leadsSection').style.display = 'none'; }
+  }
+
+  var BADGE_TIERS = [
+    { min: 0, label: 'Mitra Baru', emoji: '🌱' },
+    { min: 500000, label: 'Starter', emoji: '🥉' },
+    { min: 1500000, label: 'Rising Star', emoji: '🥈' },
+    { min: 3000000, label: 'Top Seller', emoji: '🥇' },
+    { min: 5000000, label: 'Elite Partner', emoji: '💎' }
+  ];
+
+  function renderAchievement(revenue) {
+    revenue = Number(revenue) || 0;
+    var current = BADGE_TIERS[0], next = null;
+    for (var i = 0; i < BADGE_TIERS.length; i++) {
+      if (revenue >= BADGE_TIERS[i].min) current = BADGE_TIERS[i];
+      else { next = BADGE_TIERS[i]; break; }
+    }
+    $('achieveEmoji').textContent = current.emoji;
+    $('achieveLabel').textContent = current.label;
+    $('achieveSub').textContent = 'Anda saat ini mencapai ' + fmtIDR(revenue) + ' total penjualan referral';
+
+    var fill = $('achieveProgressFill');
+    var note = $('achieveNote');
+    if (next) {
+      var pct = Math.min(100, Math.round((revenue - current.min) / (next.min - current.min) * 100));
+      fill.style.width = pct + '%';
+      note.textContent = fmtIDR(next.min - revenue) + ' lagi menuju badge ' + next.emoji + ' ' + next.label + ' (' + fmtIDR(next.min) + ')';
+    } else {
+      fill.style.width = '100%';
+      note.textContent = 'Anda sudah mencapai level tertinggi kami saat ini. Terima kasih atas kontribusinya! 🎉';
+    }
+  }
+
+  function renderTarget(revenue, target) {
+    var card = $('targetCard');
+    target = Number(target) || 0;
+    if (!target) { card.style.display = 'none'; return; }
+    card.style.display = 'block';
+    var pct = Math.min(100, Math.round((Number(revenue) || 0) / target * 100));
+    $('targetProgressFill').style.width = pct + '%';
+    $('targetNote').textContent = 'Anda sudah mencapai ' + fmtIDR(revenue) + ' dari target ' + fmtIDR(target) + ' Anda (' + pct + '%)';
+  }
+
+  function renderProfileInfo(mitra) {
+    var wrap = $('profileInfo');
+    wrap.innerHTML = '';
+    var chips = [];
+    if (mitra.domisili) chips.push('📍 ' + mitra.domisili);
+    if (mitra.nama_toko) chips.push('🏪 ' + mitra.nama_toko);
+    if (mitra.punya_toko) chips.push('✅ Punya toko fisik');
+    if (mitra.punya_freezer) chips.push('❄️ Punya freezer');
+    if (mitra.pernah_jual_frozen) chips.push('📦 Pernah jual frozen food');
+    chips.forEach(function (c) { var s = document.createElement('span'); s.textContent = c; wrap.appendChild(s); });
+  }
+
+  var CONTENT_CALENDAR = [
+    { day: 1, title: 'Bekal Mingguan', text: `🍱 Bunda masih bingung siapkan bekal anak setiap hari?
+
+Senin mikir menu.
+Selasa cari stok.
+Rabu mulai bingung lagi. 😅
+
+Sekarang bisa lebih praktis.
+
+Bento For Kids membantu Bunda menyiapkan pilihan bekal anak untuk beberapa hari sekaligus.
+
+📦 Tinggal pilih menu sesuai kebutuhan.
+
+Mau lihat katalognya?
+👉 Chat saya: *KATALOG*` },
+    { day: 2, title: 'Pagi Hari', text: `Pagi-pagi sudah sibuk urus anak? 😵‍💫
+
+Bangunkan anak ✔️
+Siapkan sekolah ✔️
+Urus sarapan ✔️
+Siapkan bekal ✔️
+
+Jangan sampai urusan bekal bikin pagi makin hectic.
+
+Dengan stok Bento For Kids di rumah, persiapan bekal bisa lebih praktis. 🍱
+
+📲 Mau lihat menunya?
+Chat saya *KATALOG*.` },
+    { day: 3, title: 'Program 7 Hari', text: `🍱 *PROGRAM BEKAL 7 HARI*
+
+Mau lebih praktis menyiapkan bekal anak?
+
+Mulai dari *Rp350.000*.
+
+✓ Pilih menu dari katalog
+✓ Bisa atur pilihan sendiri
+✓ Cocok untuk stok bekal mingguan
+✓ Lebih mudah merencanakan bekal
+
+Satu kali belanja, kebutuhan bekal beberapa hari lebih siap.
+
+📲 Mau detail paket?
+Ketik *7 HARI*.` },
+    { day: 4, title: 'Anak Bosan', text: `"Bunda, bekalnya itu lagi…" 😅
+
+Pernah dengar anak bilang begitu?
+
+Salah satu cara membuat bekal lebih menarik adalah memberikan variasi menu.
+
+Bento For Kids menyediakan berbagai pilihan yang bisa Bunda rotasi untuk bekal anak.
+
+🍱 Senin menu A
+🍱 Selasa menu B
+🍱 Rabu menu C
+
+📲 Mau lihat pilihan menunya?
+Chat *KATALOG*.` },
+    { day: 5, title: 'Stok', text: `Bunda pernah baru sadar…
+
+"Waduh, stok bekal habis!" 😭
+
+Akhirnya pagi-pagi harus cari makanan lagi.
+
+Daripada mendadak kehabisan, lebih enak punya stok yang sudah direncanakan.
+
+📦 Siapkan untuk beberapa hari.
+🍱 Tinggal sesuaikan dengan jadwal bekal.
+
+Mau saya kirim katalognya?
+👉 Chat *KATALOG*.` },
+    { day: 6, title: 'Praktis', text: `Bunda nggak harus selalu membuat semuanya dari nol.
+
+Kadang yang dibutuhkan adalah solusi yang membuat rutinitas lebih praktis. ❤️
+
+Bento For Kids bisa membantu menyiapkan stok pilihan bekal anak di rumah.
+
+Cocok untuk Bunda yang punya aktivitas padat.
+
+📲 Mau cek menunya?
+Chat saya *MENU*.` },
+    { day: 7, title: 'Weekend', text: `Weekend waktunya istirahat. ❤️
+
+Tapi jangan lupa siapkan kebutuhan sekolah anak untuk minggu depan.
+
+Daripada Minggu malam baru bingung:
+
+"Besok bekalnya apa?"
+
+Lebih baik siapkan stok dari sekarang. 🍱
+
+Bento For Kids siap membantu.
+
+📲 Mau lihat paket bekal mingguan?
+Chat *7 HARI*.` },
+    { day: 8, title: '14 Hari', text: `🍱 *MAU STOK LEBIH PANJANG?*
+
+Ada juga pilihan *Program Bekal 14 Hari*.
+
+Cocok untuk Bunda yang ingin lebih praktis mengatur stok bekal anak.
+
+✓ Pilih menu
+✓ Atur kebutuhan
+✓ Siapkan stok
+✓ Lebih terencana
+
+Tidak perlu setiap hari mulai dari nol.
+
+📲 Mau tahu detailnya?
+Chat *14 HARI*.` },
+    { day: 9, title: 'Relatable', text: `POV Bunda jam 6 pagi:
+
+"Bangun!"
+"Cepat mandi!"
+"Seragam!"
+"Jangan lupa bekal!"
+
+😂😂😂
+
+Kalau stok bekal sudah tersedia, setidaknya satu urusan sudah lebih siap.
+
+🍱 Bento For Kids
+
+*Bekal lebih siap, pagi lebih tenang.*
+
+📲 Mau katalog?
+Chat saya.` },
+    { day: 10, title: 'Katalog', text: `Ada yang baru kenal Bento For Kids? 👋
+
+Kami punya berbagai pilihan menu untuk membantu kebutuhan bekal anak.
+
+Bunda bisa lihat katalog,
+pilih menu yang disukai,
+lalu tentukan kebutuhan sesuai keluarga.
+
+🍱 Praktis
+📦 Bisa stok
+🗓️ Bisa direncanakan
+
+📲 Mau saya kirim katalognya?
+Ketik *KATALOG*.` },
+    { day: 11, title: 'Hemat Waktu', text: `Kadang yang paling mahal bukan harga makanan…
+
+Tapi *waktu dan tenaga* yang habis karena harus memikirkan semuanya setiap hari. 😅
+
+Dengan stok bekal yang sudah tersedia, Bunda bisa lebih mudah mengatur persiapan.
+
+🍱 Pilih.
+📦 Simpan.
+🗓️ Atur.
+
+📲 Mau coba mulai dari paket 7 hari?
+Chat *7 HARI*.` },
+    { day: 12, title: 'Menu Favorit', text: `Anak punya menu favorit? ❤️
+
+Daripada beli satu kali lalu habis…
+
+Bunda bisa masukkan menu favorit ke dalam rencana bekal mingguan.
+
+Jadi lebih mudah mengatur stok dan jadwal bekal.
+
+🍱 Pilih sesuai kebutuhan anak.
+
+📲 Mau lihat katalognya?
+Chat *MENU*.` },
+    { day: 13, title: 'Bekal Sekolah', text: `Bekal sekolah tidak harus selalu ribet.
+
+Yang penting:
+✓ Ada rencana
+✓ Ada stok
+✓ Ada variasi
+✓ Mudah disiapkan
+
+Bento For Kids membantu Bunda di bagian stok bekalnya. 🍱
+
+Jadi pagi hari tinggal fokus ke anak dan persiapan sekolah.
+
+📲 Mau lihat pilihan menu?
+Chat *KATALOG*.` },
+    { day: 14, title: 'Minggu Malam', text: `Minggu malam…
+
+Seragam sudah?
+Tas sudah?
+Buku sudah?
+
+Bekal? 👀
+
+Kalau belum, masih ada waktu untuk menyiapkannya.
+
+🍱 Siapkan stok Bento For Kids untuk minggu depan.
+
+📲 Mau dibantu pilih paket?
+Chat *PAKET*.` },
+    { day: 15, title: 'Soft Selling', text: `Bunda nggak perlu langsung beli banyak.
+
+Bisa mulai dari kebutuhan yang paling sering digunakan.
+
+Pilih beberapa menu favorit,
+coba untuk bekal,
+lihat mana yang paling disukai anak. ❤️
+
+Kalau cocok, baru atur stok berikutnya.
+
+🍱 Bento For Kids
+
+📲 Mau lihat pilihan menu?
+Chat *KATALOG*.` },
+    { day: 16, title: 'Problem', text: `Setiap malam:
+
+"Besok anak bawa bekal apa?"
+
+Kalau pertanyaan itu muncul terus setiap hari…
+
+Mungkin masalahnya bukan kekurangan ide.
+
+Tapi belum punya *rencana dan stok bekal*. 😉
+
+🍱 Yuk mulai siapkan bekal mingguan.
+
+📲 Chat *7 HARI* untuk info paket.` },
+    { day: 17, title: 'Untuk Ibu Bekerja', text: `Bunda yang bekerja pasti tahu…
+
+Pagi hari waktunya terbatas. ⏰
+
+Karena itu, persiapan kecil dari malam atau akhir pekan bisa sangat membantu.
+
+Salah satunya menyiapkan stok bekal anak.
+
+🍱 Bento For Kids siap membantu.
+
+📲 Mau lihat katalognya?
+Chat *KATALOG*.` },
+    { day: 18, title: 'Untuk Anak', text: `Anak lebih suka bekal yang bervariasi? ❤️
+
+Coba buat rotasi menu sederhana.
+
+Senin → 🍱
+Selasa → 🍱
+Rabu → 🍱
+Kamis → 🍱
+Jumat → 🍱
+
+Dengan stok yang sudah tersedia, menyusun variasi bekal jadi lebih mudah.
+
+📲 Mau lihat menu Bento For Kids?
+Chat *MENU*.` },
+    { day: 19, title: 'Reminder', text: `🚨 *CEK STOK BEKAL DI RUMAH!*
+
+Masih cukup untuk minggu ini?
+
+Kalau tinggal sedikit, jangan tunggu sampai habis.
+
+Pesan lebih awal supaya persiapan bekal tetap lancar. 🍱
+
+📲 Mau pesan?
+Chat *ORDER*.` },
+    { day: 20, title: 'Paket 7 Hari', text: `Buat Bunda yang ingin lebih praktis…
+
+🍱 *PROGRAM BEKAL 7 HARI*
+
+Minimal belanja *Rp350.000*.
+
+Bisa pilih menu dari katalog dan disusun sesuai kebutuhan.
+
+Estimasi sekitar 10 produk/paket, tergantung pilihan menu.
+
+📲 Mau saya kirim rincian paketnya?
+Ketik *7 HARI*.` },
+    { day: 21, title: 'Emotional', text: `Bekal mungkin cuma satu kotak makanan…
+
+Tapi di dalamnya ada perhatian Bunda untuk anak. ❤️
+
+Tidak harus selalu sempurna.
+
+Yang penting kita terus berusaha menyiapkan yang terbaik sesuai kemampuan keluarga.
+
+🍱 Bento For Kids membantu membuat prosesnya lebih praktis.
+
+📲 Mau lihat menunya?
+Chat *KATALOG*.` },
+    { day: 22, title: 'FAQ', text: `❓ "Bisa pilih menu sendiri?"
+
+Bisa. 👍
+
+Bunda bisa melihat katalog dan memilih menu sesuai kebutuhan.
+
+Tidak perlu bingung mengikuti menu yang tidak disukai anak.
+
+🍱 Pilih menu yang cocok.
+📦 Atur jumlahnya.
+🗓️ Jadikan stok bekal.
+
+📲 Mau lihat katalog?
+Chat *MENU*.` },
+    { day: 23, title: 'Meal Planning', text: `Coba mulai kebiasaan sederhana:
+
+📋 Rencanakan menu bekal
+📦 Cek stok
+🛒 Pesan kebutuhan
+🗓️ Atur untuk beberapa hari
+
+Dengan begitu, setiap pagi tidak perlu mulai berpikir dari nol.
+
+🍱 Bento For Kids bisa jadi bagian dari persiapan bekal Bunda.
+
+📲 Chat *7 HARI*.` },
+    { day: 24, title: 'Soft Selling', text: `Bunda tidak harus menunggu sampai kehabisan stok.
+
+Kalau tahu kebutuhan bekal anak setiap minggu, lebih enak pesan lebih awal.
+
+Jadi ketika pagi datang…
+
+stok sudah siap. ❤️
+
+🍱 Bento For Kids
+
+📲 Mau saya bantu pilihkan paket?
+Chat *PAKET*.` },
+    { day: 25, title: 'Untuk Keluarga', text: `Punya lebih dari satu anak?
+
+Makin penting punya stok bekal yang terencana. 😅
+
+Daripada setiap hari memikirkan menu satu per satu…
+
+Lebih praktis siapkan kebutuhan beberapa hari sekaligus.
+
+🍱 Pilih menu.
+📦 Atur stok.
+🗓️ Siapkan bekal.
+
+📲 Chat *KATALOG* untuk mulai.` },
+    { day: 26, title: 'Anak Aktif', text: `Anak sekolah, les, bermain, dan banyak aktivitas?
+
+Bekal bisa menjadi salah satu bagian dari persiapan hariannya.
+
+Bunda bisa mengatur pilihan menu sesuai kebutuhan keluarga.
+
+🍱 Bento For Kids membantu membuat persiapan bekal lebih praktis.
+
+📲 Mau lihat katalognya?
+Chat *MENU*.` },
+    { day: 27, title: 'Interaksi', text: `Bunda, anak paling suka bekal yang mana? 👇
+
+🍗 Ayam
+🥩 Beef
+🐟 Ikan
+🥚 Telur
+
+Balas dengan pilihan anak Bunda.
+
+Kalau mau, saya juga bisa kirimkan *katalog menu Bento For Kids*. 🍱
+
+📲 Chat *KATALOG*.` },
+    { day: 28, title: 'Weekend Planning', text: `Minggu adalah waktu yang pas untuk menyiapkan minggu depan. 🗓️
+
+Cek:
+☑️ Stok bekal
+☑️ Menu favorit anak
+☑️ Kebutuhan sekolah
+☑️ Jadwal bekal
+
+Kalau stok sudah menipis, waktunya restock. 🍱
+
+📲 Chat *ORDER* untuk pemesanan.` },
+    { day: 29, title: 'Closing', text: `Besok mulai minggu baru. 👀
+
+Jangan sampai pagi-pagi baru kepikiran:
+
+"Bekal anak apa hari ini?"
+
+Siapkan stok dari sekarang.
+
+🍱 *Bento For Kids*
+Solusi praktis untuk membantu persiapan bekal anak.
+
+📲 Mau pesan?
+Chat *ORDER* sekarang.` },
+    { day: 30, title: 'Strong CTA', text: `🍱 *SAATNYA SIAPKAN BEKAL ANAK*
+
+Kalau Bunda ingin:
+✓ Lebih mudah merencanakan bekal
+✓ Punya stok di rumah
+✓ Punya pilihan menu yang bervariasi
+✓ Tidak selalu bingung setiap pagi
+
+Bento For Kids bisa membantu.
+
+Mulai dari kebutuhan beberapa hari dulu juga boleh. ❤️
+
+📲 Mau katalog?
+Ketik *KATALOG*
+
+📲 Mau paket 7 hari?
+Ketik *7 HARI*
+
+📲 Mau langsung pesan?
+Ketik *ORDER*` }
+  ];
+
+  function renderContentCalendar() {
+    var wrap = $('contentCalendar');
+    wrap.innerHTML = '';
+    CONTENT_CALENDAR.forEach(function (item) {
+      var det = document.createElement('details');
+      var sum = document.createElement('summary');
+      sum.textContent = 'Hari ' + item.day + ' — ' + item.title;
+      var a = document.createElement('div');
+      a.className = 'a';
+      var pre = document.createElement('div');
+      pre.className = 'cal-text';
+      pre.textContent = item.text;
+      var btn = document.createElement('button');
+      btn.className = 'cal-copy';
+      btn.textContent = 'Salin Caption';
+      btn.addEventListener('click', function () {
+        var done = function () {
+          btn.textContent = 'Tersalin!'; btn.classList.add('copied');
+          setTimeout(function () { btn.textContent = 'Salin Caption'; btn.classList.remove('copied'); }, 1600);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(item.text).then(done).catch(function () { window.prompt('Salin caption ini:', item.text); });
+        else window.prompt('Salin caption ini:', item.text);
+      });
+      a.appendChild(pre); a.appendChild(btn);
+      det.appendChild(sum); det.appendChild(a);
+      wrap.appendChild(det);
+    });
+  }
+
+  // Mendukung dua bentuk respons backend: { mitra, report } atau { mitra, stats, links, orders, leads }
+  function renderDashboard(res) {
+    var mitra = res.mitra || {};
+    var report = res.report;
+    var confirmed = null, visits = null;
+    if (!report) {
+      var s = res.stats || {};
+      report = { leads: s.leads, orders: s.orders, revenue: s.revenue, est_commission: s.commission_estimated, links: res.links || {} };
+      confirmed = s.commission_confirmed;
+      visits = s.visits;
+    } else {
+      if (res.stats) { confirmed = res.stats.commission_confirmed; visits = res.stats.visits; }
+      if (report.commission_confirmed != null) confirmed = report.commission_confirmed;
+      if (report.visits != null) visits = report.visits;
+    }
+
+    $('authView').style.display = 'none';
+    $('posterSection').style.display = 'none';
+    $('dashView').style.display = 'block';
+    $('pageTitle').textContent = 'Dashboard Mitra';
+    $('pageSub').textContent = 'Ringkasan performa link referral Anda, terbarukan otomatis.';
+
+    $('dashName').textContent = 'Halo, ' + (mitra.name || mitra.code) + '!';
+    var badge = $('statusBadge');
+    if (mitra.status === 'PENDING') { badge.textContent = 'Menunggu Persetujuan'; badge.className = 'badge pending'; }
+    else { badge.textContent = 'Aktif'; badge.className = 'badge approved'; }
+    renderProfileInfo(mitra);
+
+    $('statLeads').textContent = report.leads || 0;
+    $('statOrders').textContent = report.orders || 0;
+    $('statRevenue').textContent = fmtIDR(report.revenue || 0);
+    $('statCommission').textContent = fmtIDR(report.est_commission || 0);
+    $('commissionPct').textContent = mitra.commission_pct || 0;
+    $('statConfirmedBox').style.display = confirmed != null ? 'block' : 'none';
+    if (confirmed != null) $('statConfirmed').textContent = fmtIDR(confirmed);
+    $('statVisitsBox').style.display = visits != null ? 'block' : 'none';
+    if (visits != null) $('statVisits').textContent = visits;
+
+    renderAchievement(report.revenue || 0);
+    renderTarget(report.revenue || 0, mitra.target_penjualan);
+
+    renderLinks(mitra.code);
+    renderLinkTable(report.links);
+    renderOrdersLeads(res);
+
+    $('dashWaHelp').href = 'https://wa.me/' + WA_NUMBER + '?text=' +
+      encodeURIComponent('Halo, saya mitra Bento for Kids (kode: ' + mitra.code + '). Saya ingin bertanya soal komisi.');
+  }
+
+  renderContentCalendar();
+
+  // Auto-login bila ada sesi tersimpan di browser ini.
+  (function tryAutoLogin() {
+    var saved;
+    try { saved = JSON.parse(localStorage.getItem('bfk_mitra_auth') || 'null'); } catch (e) { saved = null; }
+    if (!saved || !saved.code || !saved.whatsapp) return;
+    callApi({ type: 'mitra_login', code: saved.code, whatsapp: saved.whatsapp })
+      .then(function (res) {
+        if (res.ok) { session = saved; renderDashboard(res); }
+        else { try { localStorage.removeItem('bfk_mitra_auth'); } catch (e) {} }
+      })
+      .catch(function () {});
+  })();
+
+  // Prefill kode referral dari query ?ref= bila datang dari link lain
+  (function prefillFromQuery() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('ref')) $('loginCode').value = params.get('ref');
+  })();
+
+  ['loginCode', 'loginWa'].forEach(function (id) {
+    $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+  });
 </script>
 </body>
 </html>
